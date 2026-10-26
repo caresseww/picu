@@ -208,6 +208,11 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
   .card,.emg-sec,.osheet{box-shadow:none; border:1px solid #ccc;}
   .card .cbody{display:block !important;}
 }
+/* ===== 快捷直达条 ===== */
+.quickrow{display:flex; gap:6px; overflow-x:auto; padding:8px 0 4px; -webkit-overflow-scrolling:touch;}
+.quickrow .qchip{flex:0 0 auto; border:1px solid #d3e2f5; background:#f4f8fd; color:var(--navy);
+  border-radius:14px; padding:6px 12px; font-size:12.5px; font-weight:700; cursor:pointer; white-space:nowrap;}
+.quickrow .qchip:active{background:#dfe9f7;}
 </style>
 </head>
 <body>
@@ -262,6 +267,7 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
 
 <div class="page" id="p1">
   <div class="searchrow"><input id="q" type="search" placeholder="搜药名 / 分类 / 参考值（如：美罗、利尿、镇痛、万古）"></div>
+  <div class="quickrow" id="quickrow"></div>
   <div id="groups"></div>
 </div>
 
@@ -281,6 +287,7 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
 
 <div class="page" id="p3">
   <div class="backrow" data-act="go" data-page="0">‹ 模块选择</div>
+  <div class="searchrow" style="padding:0 0 6px;"><input id="q3" type="search" placeholder="搜情景（如：DKA、癫痫、高钾、中毒、ECMO）"></div>
   <div class="emg-hero" style="background:linear-gradient(165deg,#283593,#3949ab 55%,#5e35b1);">
     <div class="et">⚡ 临床情景</div>
     <div class="ed">儿科常见急症的标准处置流程（ISPAD / ILAE / PALS / SSC-P / 中国专家共识等），带体重联动计算器；本院常用药口径已对齐。</div>
@@ -290,6 +297,7 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
 
 <div class="page" id="p4">
   <div class="backrow" data-act="go" data-page="0">‹ 模块选择</div>
+  <div class="searchrow" style="padding:0 0 6px;"><input id="q4" type="search" placeholder="搜评分/参考（如：血压、GCS、Phoenix、公式）"></div>
   <div class="emg-hero" style="background:linear-gradient(150deg,#33691e,#558b2f 60%,#2e7d32);">
     <div class="et">📐 评分与参考</div>
     <div class="ed">可填写的评分表（GCS / Phoenix / pSOFA / PELOD-2）与参考工具（儿童血压百分位 / 生命体征 / 常用公式）。</div>
@@ -1290,7 +1298,7 @@ const SCEN=[
 /* ================= 临床情景批次A：代谢内分泌急症（ISPAD 2022 / 中国儿童DKA指南2024 / PES 2015 / JHACH / UCD国际指南） ================= */
 SCEN.push(
 {id:'dka',ico:'💧',name:'糖尿病酮症酸中毒（DKA）',grp:'代谢内分泌急症',
- tag:'血糖>11 + pH<7.3/HCO₃⁻<18 + 酮体↑；⏱三铁律：扩容先行、胰岛素禁推、防脑水肿',
+ tag:'血糖>11 + pH<7.3/HCO₃⁻<18 + 酮体↑；⏱三铁律：扩容先行、胰岛素禁推、防脑水肿',links:['ins_dka','sb','kcl_iv'],
  srcs:['ISPAD Clinical Practice Consensus Guidelines 2022: DKA (Glaser等, Pediatr Diabetes)','中国儿童DKA诊疗指南(2024, 中华儿科杂志62(12):1128)','Canadian Paediatric Society 2023 DKA立场声明'],
  secs:[
   {t:'① 诊断与分度',html:`<div class="emg-lad">
@@ -1341,7 +1349,7 @@ SCEN.push(
        ck:['外周上限0.3%（40mmol/L）✓；速度须≤0.5mmol/(kg·h)','血K<2.5暂停胰岛素；≥5.5暂用无钾液q1h复查','⚠本院「6‰-10‰稀释」仅限中心静脉']};}}
  ]},
 {id:'hypogly',ico:'🩸',name:'儿童低血糖（含顽固性/高胰岛素血症）',grp:'代谢内分泌急症',
- tag:'<2.7mmol/L处置线；急救D10 2ml/kg→GIR阶梯10→12→15→18；48-72h仍需高糖速=高胰岛素血症，内分泌介入',
+ tag:'<2.7mmol/L处置线；急救D10 2ml/kg→GIR阶梯10→12→15→18；48-72h仍需高糖速=高胰岛素血症，内分泌介入',links:['gs10_low','octreotide'],
  srcs:['PES 2015（Thornton, J Pediatr）持续低血糖评估建议','JHACH新生儿低血糖路径2025','持续低血糖诊治流程（本院在用，源自CHOP）','NICE NG18 糖尿病儿童严重低血糖'],
  secs:[
   {t:'① 阈值（分人群）',html:`<div class="emg-lad">
@@ -1399,7 +1407,7 @@ SCEN.push(
        ck:['≈2-4mg/kg等价（小婴儿折算勿超100mg/剂）','原发者氢考减至<20mg/m²/d后加氟氢可的松50-100μg/d','应激剂量（发热/手术）：维持量×3倍分3-4次']};}}
  ]},
 {id:'hyperammo',ico:'☢️',name:'高氨血症 / 遗传代谢病急性危象',grp:'代谢内分泌急症',
- tag:'血氨>100异常、>200启药物；三步=停蛋白+生糖+排氨；>500或药物无效→CRRT（CVVHD首选）',
+ tag:'血氨>100异常、>200启药物；三步=停蛋白+生糖+排氨；>500或药物无效→CRRT（CVVHD首选）',links:['arginine','carnit'],
  srcs:['Häberle等 UCD国际指南（Orphanet J Rare Dis 2012；JIMD 2019修订）','中国《新生儿高氨血症诊断与治疗专家共识》2023'],
  secs:[
   {t:'① 阈值与识别',html:`<div class="emg-lad">
@@ -1427,7 +1435,7 @@ SCEN.push(
 /* ================= 临床情景批次B：神经急症（ILAE 2015 / ESETT NEJM2019 / NICE NG217 / BTF儿科第4版 / AAP2017 / 儿童脑膜炎指南2025） ================= */
 SCEN.push(
 {id:'se',ico:'⚡',name:'癫痫持续状态（SE）',grp:'神经系统急症',
- tag:'发作≥5min即启动；0-5-20-40分钟时间线：BZD→二线任选其一（LEV/VPA/苯妥英等效）→难治性SE麻醉药+cEEG',
+ tag:'发作≥5min即启动；0-5-20-40分钟时间线：BZD→二线任选其一（LEV/VPA/苯妥英等效）→难治性SE麻醉药+cEEG',links:['diazepam','midaz','levet_iv'],
  srcs:['ILAE 2015 SE指南（Trinka等, Epilepsia）','ESETT（Kapur, NEJM 2019）三药等效试验','NICE NG217 + BNFc 院前年龄剂量带','CAAE《终止SE专家共识》2022（中国首选地西泮）','Abend NS综述（PMC4110742）RSE麻醉剂量'],
  secs:[
   {t:'① 定义与分期',html:`<div class="emg-lad">
@@ -1467,7 +1475,7 @@ SCEN.push(
        ck:['ESETT：LEV60/FOS20PE/VPA40 三药等效——任选其一','⚠丙戊酸禁用于肝病/线粒体病/代谢病，禁与碳青霉烯同用','苯巴比妥20mg/kg备选（呼吸抑制，<2y备插管）']};}}
  ]},
 {id:'icp',ico:'🧠',name:'急性颅内高压 / 脑疝',grp:'神经系统急症',
- tag:'ICP>20mmHg干预；CPP 40-50底线；阶梯=体位镇静→渗透治疗→过渡通气→巴比妥→去骨瓣',
+ tag:'ICP>20mmHg干预；CPP 40-50底线；阶梯=体位镇静→渗透治疗→过渡通气→巴比妥→去骨瓣',links:['mannitol','hsn3'],
  srcs:['Brain Trauma Foundation 儿科TBI指南第3版（Kochanek 2019）','中国颅内静脉/颅内高压相关共识（2020神经外科重症）','中国甘露醇治疗颅内压增高共识2019'],
  secs:[
   {t:'① 识别与分级',html:`<div class="emg-lad">
@@ -1492,7 +1500,7 @@ SCEN.push(
        ck:['脑疝可升级23.4%NaCl 0.5ml/kg（≤30ml，中心静脉）','纠钠过快>10-12mmol/L/d风险脱髓鞘——高钠治疗窗内控制']};}}
  ]},
 {id:'htn_emg',ico:'📈',name:'高血压急症',grp:'神经系统急症',
- tag:'首8h降≤25%、12-24h至P95；静脉滴定：尼卡地平/硝普钠一线；过快降压=脑肾缺血',
+ tag:'首8h降≤25%、12-24h至P95；静脉滴定：尼卡地平/硝普钠一线；过快降压=脑肾缺血',links:['nicard','NTP'],
  srcs:['AAP 2017 儿童高血压筛查与管理临床实践指南（Flynn等）','中国儿童高血压防治相关共识'],
  secs:[
   {t:'① 判定',html:`<div class="emg-lad">
@@ -1515,7 +1523,7 @@ SCEN.push(
        ck:['从0.5起，q15-30min滴定；目标：首8h降≤25%','避光？无需——硝普钠才避光；反射性心动过速常见']};}}
  ]},
 {id:'meningitis',ico:'🦠',name:'细菌性脑膜炎（初始处置）',grp:'神经系统急症',
- tag:'抗菌+地塞米松1小时内——不得因影像/腰穿延误；<3月方案不同；降颅压同步',
+ tag:'抗菌+地塞米松1小时内——不得因影像/腰穿延误；<3月方案不同；降颅压同步',links:['ceftria','vanc'],
  srcs:['《儿童社区获得性细菌性脑膜炎诊断与治疗指南》2025版','AAP/IDSA脑膜炎指南要点','中国专家共识'],
  secs:[
   {t:'① 处置时间线',html:`
@@ -1538,7 +1546,7 @@ SCEN.push(
 /* ================= 临床情景批次C：循环呼吸急症（SSC-P 2020/中国2025共识 / AHA PALS 2020+2025更新 / GINA / CPS croup / 儿童心衰2020） ================= */
 SCEN.push(
 {id:'sepsis',ico:'🔥',name:'脓毒性休克',grp:'循环呼吸急症',
- tag:'1小时集束化：液体10-20ml/kg+广谱抗菌+升压药；儿茶酚胺抵抗→氢考；冷休克EPI/暖休克NE',
+ tag:'1小时集束化：液体10-20ml/kg+广谱抗菌+升压药；儿茶酚胺抵抗→氢考；冷休克EPI/暖休克NE',links:['eph_push','hydrocor','albumin'],
  srcs:['SSC国际儿童脓毒症与脓毒性休克指南2020（Weiss等）','《儿童脓毒性休克管理专家共识（2025）》（中国）','米兰脓毒性休克定义2020'],
  secs:[
   {t:'① 识别（米兰2020）',html:`<div class="emg-lad">
@@ -1564,7 +1572,7 @@ SCEN.push(
        ck:['冷休克首选EPI、暖/血管麻痹首选NE；也可EPI+NE联合','避碱性液同管；外渗→酚妥拉明局部封闭','≥2种足量仍低灌注=儿茶酚胺抵抗→氢考2mg/kg首剂（max50mg）']};}}
  ]},
 {id:'arrest',ico:'🫀',name:'儿童心跳呼吸骤停（PALS）',grp:'循环呼吸急症',
- tag:'高质CPR是核心：100-120次/分、深度1/3前后径、减少中断；肾上腺素0.01mg/kg q3-5min；除颤2→4J/kg',
+ tag:'高质CPR是核心：100-120次/分、深度1/3前后径、减少中断；肾上腺素0.01mg/kg q3-5min；除颤2→4J/kg',links:['eph_push'],
  srcs:['AHA PALS 2020','AHA Part 8 PALS 2025更新（可除颤心律肾上腺素时点）','儿科高级生命支持中文教材'],
  secs:[
   {t:'① 识别与启动',html:`<div class="emg-step">无反应+无呼吸/仅喘息+10s内摸不到脉搏（专业人员）→启动：呼救+取除颤仪+开始按压。儿童骤停多为窒息性（先呼吸停止后心跳停）——<b>通气质量与按压同样重要</b>。</div>`},
@@ -1588,7 +1596,7 @@ SCEN.push(
        ck:['1:10000=0.01mg/ml——0.1ml/kg；原液1:1000严禁静推','气管内给药（无通路时）剂量×2.5-3','2025更新：VF/pVT首剂肾上腺素在首击除颤失败后给']};}}
  ]},
 {id:'asthma',ico:'🫁',name:'哮喘持续状态',grp:'循环呼吸急症',
- tag:'首小时沙丁胺醇q20min×3+激素；SABA持续泵雾化；MgSO₄/氨茶碱三线；PCO₂回升=恶化信号',
+ tag:'首小时沙丁胺醇q20min×3+激素；SABA持续泵雾化；MgSO₄/氨茶碱三线；PCO₂回升=恶化信号',links:['salb_ipo','mepred'],
  srcs:['中国儿童支气管哮喘诊断与防治指南2025','GINA 2024','Status Asthmaticus in the PICU（PMC11348376, 2024）'],
  secs:[
   {t:'① 分度（取最重一项）',html:`<div class="emg-lad">
@@ -1662,7 +1670,7 @@ SCEN.push(
        ck:['⚠低钾/高钙/肾功能不全增加中毒——补钾至4.0-4.5','恶心/呕吐/黄视/新发心律失常=中毒，停药+测浓度','与钙剂错开给药']};}}
  ]},
 {id:'svt',ico:'💥',name:'室上性心动过速（SVT）',grp:'循环呼吸急症',
- tag:'迷走→ATP/腺苷0.1→0.2mg/kg→同步电复律0.5-1J/kg；维拉帕米<1岁禁用；宽QRS当室速处理',
+ tag:'迷走→ATP/腺苷0.1→0.2mg/kg→同步电复律0.5-1J/kg；维拉帕米<1岁禁用；宽QRS当室速处理',links:['atp','verap','amio_load'],
  srcs:['AHA PALS 2020心动过速流程','RCH临床指南 SVT','本院ICU常用药清单'],
  secs:[
   {t:'① 判读',html:`<div class="emg-lad">
@@ -1707,7 +1715,7 @@ SCEN.push(
 /* ================= 临床情景批次D：血液肾脏中毒消化急症（KDIGO 2012 / WS_T 795-2022 / AACT-EAPCCT / 卫健委破伤风2024 / 本地补液手册） ================= */
 SCEN.push(
 {id:'hyperk',ico:'⚠️',name:'高钾血症',grp:'血液肾脏中毒急症',
- tag:'心脏优先（钙）→移钾（胰岛素+糖）→排钾（利尿/树脂/CRRT）；全程断钾源、盯ECG',
+ tag:'心脏优先（钙）→移钾（胰岛素+糖）→排钾（利尿/树脂/CRRT）；全程断钾源、盯ECG',links:['calcglu','ins_hk','furos_push'],
  srcs:['中国儿科急诊相关共识','RCH/UpToDate（儿科高钾管理）','本院ICU常用药清单口径'],
  secs:[
   {t:'① 分级与ECG阶梯',html:`<div class="emg-lad">
@@ -1875,7 +1883,7 @@ SCEN.push(
        ck:[fo>10?'⚠ FO>10%：评估CRRT（尤其呼吸受限/高钾/酸中毒并存时）':'FO≤10%：限液+利尿试验继续','儿童CRRT剂量20-25ml/(kg·h)；枸橼酸抗凝监测离子钙']};}}
  ]},
 {id:'transfusion',ico:'🩸',name:'DIC与急性大出血 / 大量输血',grp:'血液肾脏中毒急症',
- tag:'按比例输血RBC:FFP≈2:1（非创伤）；目标Hb>80、Fib>1.5、PLT>75；每输RBC 40ml/kg→PLT+冷沉淀',
+ tag:'按比例输血RBC:FFP≈2:1（非创伤）；目标Hb>80、Fib>1.5、PLT>75；每输RBC 40ml/kg→PLT+冷沉淀',links:['calcglu','pcc'],
  srcs:['WS/T 795—2022《儿科输血指南》（国家卫健委行业标准）','ISTH/中国DIC诊断积分','儿童脓毒性休克共识2025'],
  secs:[
   {t:'① DIC判定',html:`<div class="emg-lad">
@@ -1897,7 +1905,7 @@ SCEN.push(
        ck:['输后1h/24h复查PLT/Fib/Hb','目标：Hb>80、Fib>1.5、PLT>75（活动出血）']};}}
  ]},
 {id:'poisoning',ico:'☠️',name:'急性中毒总论',grp:'血液肾脏中毒急症',
- tag:'昏迷三针（糖/纳洛酮/氧）先行；洗胃不常规、炭1g/kg、WBI按年龄速率；解毒剂大表+血液净化指征',
+ tag:'昏迷三针（糖/纳洛酮/氧）先行；洗胃不常规、炭1g/kg、WBI按年龄速率；解毒剂大表+血液净化指征',links:['naloxone','charcoal'],
  srcs:['AACT/EAPCCT立场文件（洗胃2013/活性炭2005/全肠灌洗2013-15）','《急性中毒诊断与治疗中国专家共识》','Heard KJ. NEJM 2008（NAC 21h）','Bartlett 2019（CCB-HIET）','Atlantic Canada Poison Centre儿科解毒剂方案'],
  secs:[
   {t:'① 初始处置（顺序=优先级）',html:`
@@ -2044,7 +2052,7 @@ SCEN.push(
        ck:['总量300mg/kg；现配4h内用，换袋无缝衔接','浓度≤'+c+'mg/ml（外周≤20）','过敏样反应（皮疹/喘）→减半速，不停药','口服备选：140mg/kg负荷→70mg/kg q4h×17次']};}}
  ]},
 {id:'organophos',ico:'🐛',name:'有机磷 / 氨基甲酸酯农药中毒',grp:'血液肾脏中毒急症',
- tag:'去污染+阿托品化（剂量不足是第一死因）+复能剂48-72h窗；防反跳、防中间综合征',
+ tag:'去污染+阿托品化（剂量不足是第一死因）+复能剂48-72h窗；防反跳、防中间综合征',links:['atropine','tuoNING2'],
  srcs:['《急性中毒诊断与治疗中国专家共识》','《儿科急诊医学》第5版有机磷章节','长托宁治疗小儿有机磷中毒临床观察（内科急危重症杂志2015）+说明书'],
  secs:[
   {t:'① 识别（毒蕈碱/烟碱征）',html:`<div class="emg-lad">
@@ -2111,6 +2119,151 @@ SCEN.push(
        ck:['尿呈深红色为药物性，1-2天消退','与亚硝酸钠勿叠加（叠加造MetHb）']};
      return {lines:['硫代硫酸钠 '+f(v.w*400)+'mg（400mg/kg）IV（25%制剂='+f(v.w*400/250)+'ml）','配3%亚硝酸钠 0.33ml/kg（如选用传统组合）','100%氧同步'],
        ck:['传统组合在CO暴露者禁用亚硝酸钠','首选羟钴胺']};}}
+ ]});
+
+/* ================= 临床情景批次F：药物过量三专页 + ECMO/CRRT基础知识 ================= */
+SCEN.push(
+{id:'htn_od',ico:'📉',name:'降压药过量',grp:'血液肾脏中毒急症',
+ tag:'儿童最常见三类：CCB缓释（延迟恶化·HIET）、β阻滞剂（胰高糖素）、可乐定（类阿片样）——按类别给解毒路',links:['nicard','NTP','calcglu'],
+ srcs:['Bartlett 2019 CCB中毒管理（HIET/CHOP儿科方案）','AACT/Ontario Poison Centre儿科口径','中国急性中毒共识'],
+ secs:[
+  {t:'① 先分类（药盒决定路径）',html:`<div class="emg-lad">
+    <div class="lrow lred"><span class="lv">CCB</span><span>氨氯地平/硝苯地平缓释/维拉帕米/地尔硫卓——低血压+心动过缓/传导阻滞；<b>缓释剂延迟恶化：无症状也要观察≥24h</b></span></div>
+    <div class="lrow lred"><span class="lv">β阻滞剂</span><span>普萘洛尔/美托洛尔/艾司洛尔——心动过缓+低血压+低血糖（儿童更常见）+支气管痉挛；<b>普萘洛尔/索他洛尔另致QRS增宽与K⁺↑</b></span></div>
+    <div class="lrow lamber"><span class="lv">中枢α2（可乐定）</span><span>嗜睡→昏迷、呼吸抑制、心动过缓、低血压/交替高血压——<b>表现像阿片中毒</b>：纳洛酮可试（部分起效）</span></div>
+    <div class="lrow lamber"><span class="lv">ACEI/ARB</span><span>低血压+高钾+急性肾损（儿童过量多为轻症支持为主）</span></div>
+    <div class="lrow lgray"><span class="lv">利尿剂</span><span>低血容量+电解质紊乱（低钾/低钠）——以纠电解质为主</span></div>
+  </div>`},
+  {t:'② 共同处置',html:`
+   <div class="emg-step"><span class="sno">Step0</span><br>复苏+心电+动脉测压（滴定需要）；血糖（β阻滞剂必查）；活性炭1h内；<b>缓释制剂+活性炭+全肠灌洗（WBI速率见中毒总论）</b>；心电图（QRS/QT）。</div>
+   <div class="emg-step"><span class="sno">Step1 一线循环支持</span><br>NS 10-20ml/kg（心功能差者小量慢给）；<b>钙剂</b>：葡萄糖酸钙30-60mg/kg（或5%氯化钙10-20mg/kg中心静脉）——CCB/β阻滞剂都有效，可q10-20min×2-3次；随后持续泵（CCB尤甚）。阿托品0.02mg/kg试心率（效果有限）。</div>
+   <div class="emg-step"><span class="sno">Step2 类别解毒剂</span><br><b>CCB→HIET（首选重症方案）</b>：常规胰岛素 1U/kg IV负荷+葡萄糖0.5g/kg，随后 0.5-1U/kg/h起（可滴定至2-10）+q1h血糖+q2-4h血钾（HIET低钾常见）；<b>β阻滞剂→胰高糖素</b>：首剂50-150μg/kg（≤1mg）可重复，维持2-10μg/kg/h（只配含糖液、备止吐）；两者难治：脂乳剂1.5ml/kg 20%脂肪乳负荷→0.25ml/kg/min（脂溶性药：普萘洛尔/维拉帕米）±ECMO（中毒中心会诊）。</div>
+   <div class="emg-step"><span class="sno">Step3 升压与支持</span><br>难治性低血压：去甲/EPI泵滴定；索他洛尔高钾→按高钾流程；可乐定：支持+纳洛酮0.01→0.1mg/kg试验（有效则泵维持）、呼吸抑制插管；观察窗：CCB缓释≥24-48h，β阻滞剂缓释≥24h。</div>`},
+  {t:'③ 常见坑',html:`<div class="emg-red">① 缓释CCB"现在没事"就放走（峰值延迟6-12h+）；② 只补液不上钙/HIET；③ HIET不给葡萄糖/不监测血钾；④ 胰高糖素配盐水（沉淀）且忘了止吐；⑤ 可乐定当"安眠药"观察不试纳洛酮；⑥ 少年"药摆拍/自杀意图"没做精神评估与剂量登记。</div>`}],
+ cals:[
+  {id:'htnod_calc',title:'降压药过量 循环支持速算',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:25,step:0.5},{k:'d',lab:'方案',kind:'sel',opts:[['ca','钙剂（一线）'],['hiet','HIET（CCB重症）'],['gnt','胰高糖素（β阻滞剂）']]}],
+   out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
+     if(v.d==='ca')return {lines:['10%葡萄糖酸钙 '+f(v.w*0.3)+'-'+f(v.w*0.6)+'ml（30-60mg/kg）IV缓注，q10-20min×2-3','随后 10%葡萄糖酸钙 10-20mg/kg/h? 持续泵（浓度外周≤10%制剂稀释）'],
+       ck:['外渗风险——中心静脉为宜；心电监护下给']};
+     if(v.d==='hiet')return {lines:['负荷：常规胰岛素 '+f(v.w*1)+'U（1U/kg）+ 50%葡萄糖 '+f(v.w*0.5)+'ml（0.5g/kg）或等量D50稀释','维持：胰岛素 0.5-1U/kg/h起（可滴定至2-10）→ '+f(v.w*0.5)+'-'+f(v.w)+'U/h 起','同步：D10 维持GIR 4-6，q1h血糖×4h后q2h','q2-4h血钾（HIET低钾常见，<3.0补钾）'],
+       ck:['起效15-30min、峰值可持续24h+——勿早停','钙剂同步给']};
+     return {lines:['胰高糖素 首剂 '+f(Math.min(v.w*100,1000))+'μg（50-150μg/kg，≤1mg）IV，无效可重复','维持泵：2-10μg/kg/h = '+f(v.w*2)+'-'+f(v.w*10)+'μg/h，5%GS配至50ml'],
+       ck:['⚠只配含糖液（盐水结晶）','呕吐常见——备昂丹司琼','对CCB无效']};}}
+ ]},
+{id:'dm_od',ico:'🍬',name:'降糖药过量',grp:'血液肾脏中毒急症',
+ tag:'胰岛素（短效观察4-8h/长效24h+）、磺脲类（长效低血糖+奥曲肽）、二甲双胍（乳酸酸中毒+HD）',links:['gs10_low','octreotide'],
+ srcs:['中国急性中毒共识','UpToDate（磺脲类/二甲双胍过量）','美国毒理中心口径'],
+ secs:[
+  {t:'① 分类与危险窗',html:`<div class="emg-lad">
+    <div class="lrow lred"><span class="lv">胰岛素</span><span>速效/短效：<b>4-8h内</b>低血糖；中长效（甘精/地特/NPH）：<b>重复低血糖可达24h+</b>——观察窗按剂型拉长</span></div>
+    <div class="lrow lred"><span class="lv">磺脲类（格列本脲等）</span><span>儿童1片即可严重低血糖；<b>老年人/肾衰者延迟且反复，最长36h+</b>——无症状观察≥24-48h</span></div>
+    <div class="lrow lamber"><span class="lv">二甲双胍</span><span>急性过量→乳酸酸中毒（延迟6-12h）+肾功能——查乳酸/AG/渗透压间隙</span></div>
+    <div class="lrow lgray"><span class="lv">SGLT2i（达格列净类）</span><span>正常血糖酮症（euglycemic DKA）——血糖不高但酮体↑/代酸</span></div>
+  </div>`},
+  {t:'② 处置',html:`
+   <div class="emg-step"><span class="sno">低血糖发作（胰岛素/磺脲）</span><br>D10 2ml/kg推注→GIR起步（见低血糖页）；<b>磺脲类：加奥曲肽 1-2μg/kg q6-12h SC/IV</b>（抑制胰岛素分泌，本院在列）；二氮嗪为二线；顽固者GIR持续+中心静脉（低血糖页阶梯）。</div>
+   <div class="emg-step"><span class="sno">观察与监测</span><br>胰岛素速效：餐前/q1-2h血糖≥6-8h；中长效/磺脲：<b>q1-2h≥24h</b>（儿童必须住院观察，不可放走）；每次血糖<3.5即处理并记录曲线。</div>
+   <div class="emg-step"><span class="sno">二甲双胍过量</span><br>活性炭（1h内）；监测乳酸/血气/AG/肌酐 q4-6h×12-24h；<b>乳酸酸中毒或pH<7.0/AG显著↑→血液透析HD</b>（二甲双胍水溶性小分子——HD清除 золотой标准，见总论血液净化表）；休克/缺氧加重乳酸生成——同步复苏。</div>
+   <div class="emg-step"><span class="sno">SGLT2i</span><br>查酮体（血酮）/血气：正常血糖酮症按DKA流程处理但血糖阈值不同——补糖+胰岛素按酮症清除（遵专科）。</div>`},
+  {t:'③ 常见坑',html:`<div class="emg-red">① 胰岛素过量"推了糖就回家"（中长效24h内反复）；② 磺脲类儿童单片未观察24h；③ 奥曲肽忘了给磺脲低血糖；④ 二甲双胍只看血糖不看乳酸；⑤ 老人/肾衰者剂量更小中毒更久——信息没问到（药是爷爷奶奶的）。</div>`}],
+ cals:[
+  {id:'dmod_calc',title:'降糖药过量 处置速算',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:20,step:0.5},{k:'d',lab:'情境',kind:'sel',opts:[['hypo','低血糖发作（D10+GIR）'],['oct','磺脲类加奥曲肽'],['met','二甲双胍监测HD评估']]}],
+   out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
+     if(v.d==='hypo')return {lines:['D10 '+f(v.w*2)+'ml 推注 → 10%GS '+f(v.w*0.6)+'ml/h（GIR 10）起步','q30min复测→q1-2h（中长效/磺脲观察24h+）'],
+       ck:['一次<2.7或反复2.7-3.4→GIR升档（见低血糖页）']};
+     if(v.d==='oct')return {lines:['奥曲肽 '+f(v.w*1)+'-'+f(v.w*2)+'μg q6-12h SC/IV','首剂可配合D10推注后立即给'],
+       ck:['抑制胰岛素分泌——磺脲类一线辅助；NEC风险警示（早产儿）']};
+     return {lines:['活性炭 1g/kg（1h内）','乳酸/血气/AG/肌酐 q4-6h×12-24h','HD触发：pH<7.0 或 乳酸持续↑/AG>20+恶化 或 常规支持无效'],
+       ck:['二甲双胍水溶性小分子——HD金标准（见总论净化表）']};}}
+ ]},
+{id:'antidep_od',ico:'🌧️',name:'抗抑郁药 / 精神药物过量',grp:'血液肾脏中毒急症',
+ tag:'TCA看QRS（>120ms→碳酸氢钠）；SSRI/SNRI提防5-HT综合征（Hunter标准）；锂中毒盯分级与HD；安非他酮抽搐延迟',links:['sb','diazepam'],
+ srcs:['Hunter Serotonin Toxicity Criteria（Dunkley 2003）','AACT/中毒中心TCA口径（QRS>120ms→NaHCO₃）','中国急性中毒共识'],
+ secs:[
+  {t:'① 分类速判',html:`<div class="emg-lad">
+    <div class="lrow lred"><span class="lv">TCA（阿米替林/丙咪嗪/多塞平）</span><span>抗胆碱（瞳孔散/口干/心动过速）+<b>QRS增宽（钠通道阻滞）</b>+抽搐+昏迷——最致命的一类，<b>QRS≥120ms或低血压即碳酸氢钠</b></span></div>
+    <div class="lrow lamber"><span class="lv">SSRI/SNRI（氟西汀/舍曲林/文拉法辛）</span><span>单独过量多轻；<b>联合用药/加量后→5-HT综合征</b>；文拉法辛过量心血管毒性偏强</span></div>
+    <div class="lrow lamber"><span class="lv">安非他酮</span><span><b>延迟抽搐（可>6h）+震颤/心动过速</b>——缓释剂观察≥24h</span></div>
+    <div class="lrow lred"><span class="lv">锂剂</span><span>急性过量：呕吐/共济失调/震颤→抽搐昏迷；<b>按血锂浓度分三级处理（≥4急性→HD）</b></span></div>
+    <div class="lrow lamber"><span class="lv">抗精神病药（喹硫平/奥氮平）</span><span>镇静+低血压+QT延长；<b>恶性综合征NMS</b>（高热/肌强直/CK↑）是治疗中而非过量常见——鉴别</span></div>
+  </div>`},
+  {t:'② 处置要点',html:`
+   <div class="emg-step"><span class="sno">TCA中毒（时间就是QRS）</span><br>心电监护即刻；<b>碳酸氢钠 1-2mmol/kg IVbolus（8.4% 1-2ml/kg），QRS>120ms即给，目标QRS<120</b>，可重复+随后持续泵（D5W+150mmol/L NaHCO₃按PH维持血pH 7.50-7.55）；<b>禁用生理盐水大负荷+禁 IA类/III类抗心律失常药</b>（加重钠阻滞）；抽搐用BZD（苯妥英禁忌）；脂乳剂为抢救备选；毒扁豆碱仅纯抗胆碱表现且无心脏征者谨慎。</div>
+   <div class="emg-step"><span class="sno">5-HT综合征（Hunter标准：自发性阵挛或诱导性阵挛+眼震/自主不稳/易激惹，或肌阵挛+高热+眼震/反射亢进）</span><br>停5-HT能药；<b>苯二氮卓一线</b>；赛庚啶（口服12mg/kg?——成人12mg首剂+q2h，儿童遵专科2-8mg分次）；重度高热>40℃：镇静+肌松+降温（恶性高热路径）；鉴别NMS（慢起、铅管样强直、CK更高）。</div>
+   <div class="emg-step"><span class="sno">锂中毒分级</span><br>急性过量：测血锂（6-8h后重复，缓释延迟峰值）；<b>HD指征：急性≥4mmol/L、慢性≥2.5伴症状、任何严重神经症状/肾衰/抽搐昏迷</b>——锂小分子水溶性HD效果佳；同时生理盐水扩容（禁噻嗪类/NSAIDs）。</div>
+   <div class="emg-step"><span class="sno">支持线</span><br>活性炭1h内（多次给药：氨苯砜同族）；QT延长按TdP页（硫酸镁）；低血压：NS+去甲；抽搐按SE页；<b>精神科/心理危机评估必做</b>（1:1陪护，防二次自伤）。</div>`},
+  {t:'③ 常见坑',html:`<div class="emg-red">① TCA早期"只是心跳快"没接监护（QRS突然拉宽）；② 用腺苷/β阻滞剂治TCA心动过速（雪上加霜）；③ 碳酸氢钠目标说成pH>7.5越高越好（维持7.5-7.55即可，过量碱中毒低钾）；④ 5-HT综合征当"焦虑躁动"漏诊（Hunter标准过一遍）；⑤ 安非他酮缓释观察<24h放走（延迟抽搐）；⑥ 锂缓释剂按单次浓度定HD（要6-8h重复+趋势）；⑦ 没安排1:1看护与精神科会诊。</div>`}],
+ cals:[
+  {id:'tca_calc',title:'TCA 碳酸氢钠方案（QRS>120ms）',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:25,step:0.5},{k:'ph',lab:'当前pH',unit:'',def:7.25,step:0.05,min:6.8,max:7.7}],
+   out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
+     return {lines:['8.4%碳酸氢钠 '+f(v.w*1)+'-'+f(v.w*2)+'ml（1-2mmol/kg）IV bolus，q3-5min按QRS重复','目标：QRS<120ms、pH 7.50-7.55','持续：NS 500ml+8.4%碳酸氢钠100ml（≈300mmol/L）泵入，按血气调整',
+       '并发：抽搐→地西泮/咪达唑仑；难治休克→脂乳剂'],
+       ck:['血气q15-30min直到QRS收窄','⚠禁苯妥英、禁IA/III类抗心律失常药','8.4%SB 1ml=1mmol']};}}
+ ]},
+{id:'ecmo',ico:'🫀',name:'ECMO 体外膜肺氧合（儿科基础）',grp:'体外支持 · 血液净化',
+ tag:'VA=心肺双替/VV=只替肺；时机=「优化治疗仍恶化」而非心跳停后；儿科目标流量按体重算',
+ srcs:['ELSO Guidelines儿科部分（通用教学口径，具体方案以本院ECMO团队为准）','中国儿童ECMO相关专家共识','PICU教材'],
+ secs:[
+  {t:'① 模式选择（一张表）',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th></th><th>VA（静脉-动脉）</th><th>VV（静脉-静脉）</th></tr>
+    <tr><td>替代</td><td><b>心肺双替</b></td><td>只替肺（依赖自身心功能）</td></tr>
+    <tr><td>插管</td><td class="mono">颈内静脉+颈动脉（新生儿）；股动静脉/右房-主动脉（儿童）</td><td class="mono">颈内双腔（新生儿）；股-颈/双股</td></tr>
+    <tr><td>适应</td><td class="mono">循环衰竭：暴发心肌炎、术后低心排、难治休克、E-CPR；心肺双衰</td><td class="mono">单纯肺衰：ARDS（P/F<80、OI>40）、肺出血、气漏、PPHN</td></tr>
+    <tr><td>监测</td><td class="mono">右上肢/颞动脉血气=全身真实灌注（Neck血）</td><td class="mono">再循环率；引流管位置</td></tr>
+    <tr><td>风险特有</td><td class="mono">动脉插管并发症、栓子入体循环、North-South综合征（肺衰+心功能部分恢复）</td><td class="mono">再循环降低效率、导管错位</td></tr>
+  </table></div>`},
+  {t:'② 时机（核心理念=别等停跳）',html:`
+   <div class="emg-step"><span class="sno">呼吸（VV候选）</span><br>优化治疗（高肺复张策略±NO/高频）仍：P/F<80或OI>40持续、或进行性恶化、不可逆气漏/肺出血——EOLIA式标准提前会诊。</div>
+   <div class="emg-step"><span class="sno">循环（VA候选）</span><br>充分容量+2种以上足量升压药+正性肌力药仍：乳酸持续↑/尿量<0.5ml/(kg·h)/灌注恶化/血管活性评分高（如>20-40分口径）；暴发心肌炎宜<b>早</b>（反复室颤/恶性心律失常前）；<b>E-CPR：常规复苏15-20min无ROSC的潜在可逆病因者，团队预判启动</b>。</div>
+   <div class="emg-step"><span class="sno">权衡禁忌（相对）</span><br>不可逆中枢损伤、终末期原发病无移植可能、多器官不可逆衰竭、难以控制的出血、体重极限（新生儿<2kg相对）；<b>机械通气时间过长（VV >7-10天）预后差</b>。</div>`},
+  {t:'③ 上机初期参数（儿科口径）',html:`
+   <div class="emg-step"><span class="sno">目标流量</span><br>新生儿VA <b>120-180ml/(kg·min)</b>；儿童VA <b>80-120</b>；VV <b>100-130</b>——按灌注终点滴定（乳酸↓/尿量/MAP/GCS），不以"数字到位"为目标。</div>
+   <div class="emg-step"><span class="sno">抗凝（肝素口径）</span><br>置管时肝素50-100U/kg；维持5-30U/kg/h滴定：<b>ACT 180-220s</b>（q1-4h）或APTT 1.5-2倍；ATⅢ<60-80%补充（肝素耐药常见原因）；HIT→比伐芦定；儿童出血（尤其颅内）是最险并发症——血小板目标>80-100×10⁹/L、纤维蛋白原>1.5。</div>
+   <div class="emg-step"><span class="sno">日常管理要点</span><br>①溶血监测：血浆游离Hb↑+尿色深=血栓信号（查膜前后压差）；②血气：膜前（氧合器功能）+膜后+动脉（灌注）三处；③最低肺保护通气继续（防萎陷）；④镇静镇痛充分+每日评估撤离；⑤输血预充：新生儿ABO同型血预充；⑥<b>ECMO期间药物分布容积↑、肾清除变</b>：抗生素剂量上调+TDM；水溶性解毒剂可被ECMO管路吸附（NAC等）。</div>
+   <div class="emg-step"><span class="sno">撤离</span><br>VV：气体扫描仪FiO₂/气流量渐降（原肺氧气化能力评估）→试停气30-60min→拔管；VA：流量渐降至目标30-50%+clamp试验+心超（EF/肺压）→拔管；每日都问一遍"今天能停吗"。</div>`},
+  {t:'④ 常见坑',html:`<div class="emg-red">① 等心跳停才叫ECMO（E-CPR结局显著差于择期上机）；② 只看泵流量不看灌注终点（流量数字≠氧输送）；③ 溶血只当"尿色深"（游離Hb+管路压差——血栓前兆）；④ ATⅢ没查就怪"肝素耐药"；⑤ ECMO期间抗生素按常规剂量（分布容积变大+管路吸附→TDM调量）；⑥ 新生儿VA拔管前忘了查颅脑出血（抗凝+颈动脉结扎）。</div>`}],
+ cals:[
+  {id:'ecmo_calc',title:'ECMO 目标流量速算（ELSO儿科口径）',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:10,step:0.5},{k:'m',lab:'模式',kind:'sel',opts:[['va_neo','VA·新生儿'],['va_ped','VA·儿童'],['vv','VV']]}],
+   out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
+     let lo,hi;
+     if(v.m==='va_neo'){lo=v.w*120;hi=v.w*180;}
+     else if(v.m==='va_ped'){lo=v.w*80;hi=v.w*120;}
+     else{lo=v.w*100;hi=v.w*130;}
+     return {lines:['目标血流量 '+f(lo)+'-'+f(hi)+'ml/min（'+(v.m==='va_neo'?'120-180':v.m==='va_ped'?'80-120':'100-130')+'ml/(kg·min)）'],
+       ck:['按灌注终点滴定：乳酸↓/尿量/MAP/意识','泵速以转流团队处方为准；此为教学口径速查']};}}
+ ]},
+{id:'crrt',ico:'🩸',name:'CRRT 连续血液净化（儿科基础）',grp:'体外支持 · 血液净化',
+ tag:'启动在并发症之前（FO>10-20%即评估）；剂量20-25ml/kg/h；枸橼酸局部抗凝首选',links:['khpo4','calcglu'],
+ srcs:['KDIGO 2012 AKI指南（儿童CRRT章节）','中国儿童连续血液净化相关共识/专家建议','pRIFLE口径'],
+ secs:[
+  {t:'① 模式与原理',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>模式</th><th>原理</th><th>适合</th></tr>
+    <tr><td><b>SCUF</b></td><td>缓慢超滤（无置换液）</td><td class="mono">单纯容量过负荷（心/肾衰消肿）</td></tr>
+    <tr><td><b>CVVH</b></td><td>对流（置换液）</td><td class="mono">中大分子清除（炎症因子、部分中毒）</td></tr>
+    <tr><td><b>CVVHD</b></td><td>弥散（透析液）</td><td class="mono">小分子（尿素/钾/锂/甲醇/乙二醇）——高氨血症首选</td></tr>
+    <tr><td><b>CVVHDF</b></td><td>对流+弥散</td><td class="mono">儿科最常用——兼顾清除谱与稳定性</td></tr>
+  </table></div>
+  <div class="emg-step">血管通路：儿童首选双腔中心静脉导管（颈内/股），<b>管径按体重选（如10-20kg双腔7-8F？按本院耗材）</b>；血流量儿科常用 <b>3-5ml/(kg·min)</b>（婴幼儿绝对值20-50ml/min起，按血压滴定）。</div>`},
+  {t:'② 启动时机（儿科＝更早、更宽）',html:`<div class="emg-step"><b>不必等肌酐飙高/尿毒症 classic 指征</b>——儿童启动看重：<br>
+   ① 液体过负荷 <b>FO>10-20%</b>（或肺水肿/呼吸支持升级难脱）② AKI 2-3期+任一并发症（高钾/酸中毒/高氨）③ 顽固高钾/严重代酸 ④ 尿毒症并发症（脑病/心包炎）⑤ 可清除毒物（甲醇/乙二醇/锂/水杨酸/二甲双胍/毒鼠强）⑥ <b>先天代谢病高氨血症</b>（CVVHD优选）⑦ 肿瘤溶解 ⑧ 重度电解放紊乱难纠。<br>决策原则：<b>出现第一个并发症就评估，不等第二个</b>。</div>`},
+  {t:'③ 处方与抗凝',html:`
+   <div class="emg-step"><span class="sno">剂量（effluent）</span><br><b>20-25ml/(kg·h)</b>（KDIGO推荐剂量）＝总出液（透析液+置换液+净超滤）；<b>净超滤率</b>按FO目标单独设定（婴幼儿目标超滤率常≤总量的20-30%/h? 按血流动力学滴定——防低血压）。</div>
+   <div class="emg-step"><span class="sno">抗凝三选</span><br>· <b>枸橼酸局部抗凝（首选）</b>：ACD-A于滤器前泵入，目标<b>滤器后iCa 0.25-0.35mmol/L、体循环iCa 1.0-1.2</b>；监测总钙/iCa比值>2.5=枸橼酸蓄积（肝损/休克慎用）；每袋置换液相应降钙 · 肝素：5-20U/kg/h，ACT/APTT滴定（出血风险高者不用）· 无抗凝：高出血风险——提高血流量+盐水冲洗+缩短滤器寿命预期。</div>
+   <div class="emg-step"><span class="sno">代谢与药物</span><br>①电解质：低磷/低钾/低镁常见——置换液配方+静脉补（本院复合磷酸氢钾入置换液需换算mmol并核对）；②<b>药物被清除</b>：水溶性/低蛋白结合药（万古/氨基糖苷/β内酰胺）按TDM补量；<b>解毒剂同样被清除</b>（NAC/甲吡唑/纳洛酮——CRRT期间追加）；③体温：低温常见（管路加温）；④营养：蛋白不严格限制（置换丢失氨基酸），热卡足量；⑤血糖q2-4h。</div>
+   <div class="emg-step"><span class="sno">报警与停机</span><br>TMP（跨膜压）持续↑=滤器凝血前兆（查抗凝/血流/Hct）；漏血报警；回输压高=管路打折；停机评估：利尿恢复、FO<5-10%且稳定、溶质与pH达标——每日减量试停而非突然全停。</div>`},
+  {t:'④ 常见坑',html:`<div class="emg-red">① 等尿毒症才启动（儿童看FO和并发症）；② 净超滤太快→低血压（超滤率按血流动力学滴定，不看"脱水目标"蛮干）；③ 枸橼酸没查iCa钙比（蓄积酸中毒）；④ CRRT期间万古/NAC按常规剂量（被清除——TDM/追加）；⑤ 置换液配方当"标准袋"不管电解质个体化（高氨者钠靶不同）；⑥ 滤器反复凝血只加肝素不查ATⅢ/管路/血流量。</div>`}],
+ cals:[
+  {id:'crrt_calc',title:'CRRT 处方速算（剂量/血流量/超滤目标）',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:20,step:0.5},{k:'dose',lab:'处方剂量',unit:'ml/(kg·h)',def:25,step:5},{k:'q',lab:'血流量',unit:'ml/(kg·min)',def:4,step:1},{k:'uf',lab:'24h目标脱水量',unit:'ml',def:200,step:50}],
+   out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
+     const eff=v.dose*v.w, q=v.q*v.w;
+     const ufr=v.uf/24;
+     return {lines:['总出液（effluent）= '+f(eff)+'ml/h（'+v.dose+'ml/(kg·h)）＝透析液+置换液+净超滤合计','血流量 ≈ '+f(q)+'ml/min（3-5ml/(kg·min)滴定）','净超滤率目标 = '+f(ufr)+'ml/h（24h共'+f(v.uf)+'ml）','枸橼酸抗凝监测：滤器后iCa 0.25-0.35 · 体循环iCa 1.0-1.2 · 总钙/iCa<2.5'],
+       ck:['effluent是"总量"概念——机器上各泵速之和（含UF）','净超滤率按血压滴定，勿为脱水目标蛮干','药物TDM：万古/氨基糖苷/NAC等按清除补量']};}}
  ]});
 
 /* ================= 评分与参考（05；血压百分位与脓毒症详表见同目录追加） ================= */
@@ -2662,6 +2815,24 @@ function updateAll(){
   updPnow();
 }
 
+/* ================= 急救快捷直达 ================= */
+const QUICK=['eph_push','atropine','diazepam','midaz','morphine','fentanyl','furos_push','calcglu','naloxone','NTP','ins_dka','mannitol','sb','charcoal'];
+function renderQuick(){
+  const el=$('quickrow'); if(!el)return;
+  el.innerHTML='<span style="flex:0 0 auto;font-size:11.5px;font-weight:800;color:var(--navy2);padding:6px 2px;">⚡急救直达：</span>'+
+    QUICK.filter(id=>DRUGS[id]).map(id=>`<button class="qchip" data-act="quickdrug" data-d="${id}" type="button">${DRUGS[id].n}</button>`).join('');
+}
+function gotoDrugCard(id){
+  if(!DRUGS[id])return;
+  const gi=GRPS.findIndex(g=>g.drugs.includes(id)); if(gi<0)return;
+  go(1);
+  const g=$('grp_'+gi);
+  g.classList.add('open'); g.querySelector('.gbody').style.display='block'; g.querySelector('.gtri').textContent='▾';
+  const c=$('card_'+id);
+  if(c){c.classList.add('open'); c.querySelector('.cbody').style.display='block';
+    const tri=c.querySelector('.tri'); if(tri)tri.textContent='▾';
+    setTimeout(()=>c.scrollIntoView({block:'start'}),60);}
+}
 /* ================= 分组/搜索 ================= */
 function renderGroups(){
   $('groups').innerHTML=GRPS.map((g,gi)=>`
@@ -2674,6 +2845,18 @@ function renderGroups(){
       <div class="gbody" id="gbody_${gi}" style="display:none">${g.drugs.map(id=>cardHtml(id)).join('')}</div>
     </div>`).join('');
   Object.keys(DRUGS).forEach(updCard);
+}
+function filterTiles(listId,qs){
+  const q=(qs||'').trim();
+  document.querySelectorAll('#'+listId+' .gtile').forEach(t=>{
+    t.style.display=(!q||t.textContent.indexOf(q)>=0)?'':'none';
+  });
+  document.querySelectorAll('#'+listId+' .emg-grp').forEach(g=>{
+    const sibs=[...g.nextElementSibling?[]:[]];
+    let any=false, n=g.nextElementSibling;
+    while(n&&n.classList&&n.classList.contains('gtile')){ if(n.style.display!=='none')any=true; n=n.nextElementSibling; }
+    g.style.display=any?'':'none';
+  });
 }
 function applySearch(qs){
   const q=(qs||'').trim();
@@ -2727,6 +2910,7 @@ function scenHtml(s){
   return `<div class="emgview" id="v_${s.id}" style="display:none">
     <div class="backrow" data-act="sback">‹ 临床情景列表</div>
     <div class="emg-hero"><div class="et">${s.ico} ${s.name}</div><div class="ed">${s.tag}</div></div>
+    ${(s.links&&s.links.length)?`<div class="chiprow" style="margin-top:9px;">${s.links.filter(id=>DRUGS[id]).map(id=>`<button class="chip" data-act="quickdrug" data-d="${id}" type="button">💊 ${DRUGS[id].n}</button>`).join('')}<button class="chip" data-act="go" data-page="1" type="button">💊 全部药物</button></div>`:''}
     ${s.secs.map(sec=>`<div class="emg-sec">${sec.t?`<div class="st">${sec.t}</div>`:''}${sec.html}</div>`).join('')}
     ${(s.cals&&s.cals.length)?`<div class="emg-sec"><div class="st">🧮 情景计算器（与顶部体重联动，可加入医嘱单）</div>${s.cals.map(calcHtml).join('')}</div>`:''}
     ${(s.srcs&&s.srcs.length)?`<div class="emg-sec"><details class="emg-det"><summary>依据来源</summary>${s.srcs.map(x=>'<div class="mrow">· '+esc(x)+'</div>').join('')}</details></div>`:''}
@@ -2855,6 +3039,7 @@ document.addEventListener('click',e=>{
   else if(a==='oprint')window.print();
   else if(a==='oclear'){if(!Object.keys(basket).length||confirm('清空医嘱篮？')){Object.keys(basket).forEach(k=>delete basket[k]); try{localStorage.setItem('picuBK','{}');}catch(err){} renderBasket(); renderAdds();}}
   else if(a==='scen')showScen(t.dataset.sc);
+  else if(a==='quickdrug')gotoDrugCard(t.dataset.d);
   else if(a==='sback')go(curViewPg);
   else if(a==='sopt'){
     const sid=t.dataset.s,k=t.dataset.k,v=parseFloat(t.dataset.v);
@@ -2873,6 +3058,8 @@ document.addEventListener('input',e=>{
   if(t.id==='ph'){setPT('h',t.value===''?null:parseFloat(t.value)); return;}
   if(t.id==='psx'){setPT('sx',t.value); return;}
   if(t.id==='q'){applySearch(t.value); return;}
+  if(t.id==='q3'){filterTiles('emglist',t.value); return;}
+  if(t.id==='q4'){filterTiles('scorelist',t.value); return;}
   if(t.dataset.din){const p=t.dataset.din.split(':'); const id=p[0],li=+p[1];
     const st=laneSt(id); st.man[li]=true; st.dose[li]=t.value===''?null:parseFloat(t.value);
     updCard(id); return;}
@@ -2905,7 +3092,7 @@ document.addEventListener('pointerdown',e=>{
 
 /* ================= init ================= */
 function initAll(){
-  renderGroups(); renderScenList(); renderScoreList();
+  renderGroups(); renderQuick(); renderScenList(); renderScoreList();
   $('pw').value=PT.w;
   if(PT.ay!=null)$('pa').value=PT.ay;
   if(PT.am!=null)$('pm').value=PT.am;
