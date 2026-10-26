@@ -236,6 +236,7 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
     <button data-act="go" data-page="1" id="nv1" class="on">💊 药物</button>
     <button data-act="go" data-page="3" id="nv3">⚡ 临床情景</button>
     <button data-act="go" data-page="4" id="nv4">📐 评分参考</button>
+    <button data-act="go" data-page="5" id="nv5">📖 基础知识</button>
     <button data-act="go" data-page="2" id="nv2">📋 医嘱单</button>
   </nav>
 </header>
@@ -253,6 +254,10 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
     <button class="tile c" data-act="go" data-page="4" type="button">
       <div class="ti">📐</div><div class="tt">评分与参考</div>
       <div class="td">GCS·脓毒症评分·儿童血压百分位·生命体征·常用公式</div>
+    </button>
+    <button class="tile" style="background:linear-gradient(150deg,#4a148c,#6a1b9a 60%,#8e24aa);" data-act="go" data-page="5" type="button">
+      <div class="ti">📖</div><div class="tt">基础知识</div>
+      <div class="td">化验正常值·液体疗法·酸碱速查·气道呼吸支持·营养热卡</div>
     </button>
     <button class="tile" style="background:linear-gradient(150deg,#4e342e,#6d4c41 60%,#8d6e63);" data-act="go" data-page="2" type="button">
       <div class="ti">📋</div><div class="tt">医嘱单</div>
@@ -293,6 +298,16 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
     <div class="ed">儿科常见急症的标准处置流程（ISPAD / ILAE / PALS / SSC-P / 中国专家共识等），带体重联动计算器；本院常用药口径已对齐。</div>
   </div>
   <div class="emg-list" id="emglist"></div>
+</div>
+
+<div class="page" id="p5">
+  <div class="backrow" data-act="go" data-page="0">‹ 模块选择</div>
+  <div class="emg-hero" style="background:linear-gradient(150deg,#4a148c,#6a1b9a 60%,#8e24aa);">
+    <div class="et">📖 基础知识</div>
+    <div class="ed">化验正常值 · 液体疗法 · 酸碱速查 · 气道与呼吸支持 · 营养热卡——教材口径速查+速算工具。</div>
+  </div>
+  <div class="searchrow" style="padding:0 0 6px;"><input id="q5" type="search" placeholder="搜基础（如：正常值、液体、酸碱、插管、呼吸机、热卡）"></div>
+  <div class="emg-list" id="reflist"></div>
 </div>
 
 <div class="page" id="p4">
@@ -2203,30 +2218,57 @@ SCEN.push(
        '并发：抽搐→地西泮/咪达唑仑；难治休克→脂乳剂'],
        ck:['血气q15-30min直到QRS收窄','⚠禁苯妥英、禁IA/III类抗心律失常药','8.4%SB 1ml=1mmol']};}}
  ]},
-{id:'ecmo',ico:'🫀',name:'ECMO 体外膜肺氧合（儿科基础）',grp:'体外支持 · 血液净化',
- tag:'VA=心肺双替/VV=只替肺；时机=「优化治疗仍恶化」而非心跳停后；儿科目标流量按体重算',
- srcs:['ELSO Guidelines儿科部分（通用教学口径，具体方案以本院ECMO团队为准）','中国儿童ECMO相关专家共识','PICU教材'],
+{id:'ecmo',ico:'🫀',name:'ECMO 体外膜肺氧合（零基础教学版）',grp:'体外支持 · 血液净化',
+ tag:'完全不会ECMO从这页开始：它是什么/名词人话词典/交接必问10件事/床旁每小时看什么/报警了先查什么',
+ srcs:['ELSO Guidelines儿科部分（通用教学口径）','中国儿童ECMO相关专家共识','本院ECMO团队规程（具体数值以上级与团队为准）'],
  secs:[
-  {t:'① 模式选择（一张表）',html:`<div class="tblwrap"><table class="tbl">
-    <tr><th></th><th>VA（静脉-动脉）</th><th>VV（静脉-静脉）</th></tr>
-    <tr><td>替代</td><td><b>心肺双替</b></td><td>只替肺（依赖自身心功能）</td></tr>
-    <tr><td>插管</td><td class="mono">颈内静脉+颈动脉（新生儿）；股动静脉/右房-主动脉（儿童）</td><td class="mono">颈内双腔（新生儿）；股-颈/双股</td></tr>
-    <tr><td>适应</td><td class="mono">循环衰竭：暴发心肌炎、术后低心排、难治休克、E-CPR；心肺双衰</td><td class="mono">单纯肺衰：ARDS（P/F<80、OI>40）、肺出血、气漏、PPHN</td></tr>
-    <tr><td>监测</td><td class="mono">右上肢/颞动脉血气=全身真实灌注（Neck血）</td><td class="mono">再循环率；引流管位置</td></tr>
-    <tr><td>风险特有</td><td class="mono">动脉插管并发症、栓子入体循环、North-South综合征（肺衰+心功能部分恢复）</td><td class="mono">再循环降低效率、导管错位</td></tr>
+  {t:'⓪ 先说人话：它是个什么东西',html:`
+   <div class="emg-step">想象心肺「罢工」了，机器在体外临时替它干活：<b>一根管子把静脉血（暗红色的缺氧血）引出来 → 泵把血往前推 → 过一个「膜肺」（人工肺：氧气进、二氧化碳出，血变鲜红）→ 再输回体内</b>。<br>
+   回输到<b>动脉</b>=VA模式（心肺两个器官全替）；回输到<b>静脉</b>=VV模式（只替肺干活，心脏还得自己跳）。<br>
+   关键认知：①ECMO是<b> bridge（桥）不是治疗</b>——它争取时间等心肺恢复/手术/移植；②它不便宜也不安全（出血是最大敌人）；③<b>越早上是桥，太晚上是「抢救仪式」</b>。</div>`},
+  {t:'① 名词小词典（每个词一句话）',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>名词</th><th>人话解释</th></tr>
+    <tr><td><b>泵流量</b></td><td>每分钟机器搬运多少血（ml/min）——越大替得越多；按体重算目标（下方计算器）</td></tr>
+    <tr><td><b>气流量（sweep）</b></td><td>往膜肺里吹多少气——主要决定CO₂排多少（VV模式的「呼吸机频率」）</td></tr>
+    <tr><td><b>膜前压/膜后压</b></td><td>血进膜肺前后管子里的压力；<b>前后压差越来越大=膜肺里在长血栓</b>（报警前兆）</td></tr>
+    <tr><td><b>TMP跨膜压</b></td><td>同上，机器自动算的压差指标，持续↑=换膜肺评估</td></tr>
+    <tr><td><b>ACT / APTT</b></td><td>血「多不容易凝」的床旁/化验指标——ECMO靠肝素把ACT维持在180-220s（不让管路里凝血，也不能出血失控）</td></tr>
+    <tr><td><b>ATⅢ</b></td><td>肝素的「搭档」蛋白；ATⅢ低→肝素「不起效」（假性耐药）→补ATⅢ/血浆</td></tr>
+    <tr><td><b>溶血</b></td><td>红细胞被管路/血栓磨破——<b>尿变酱油色+血浆游离Hb↑</b>=管路里可能有血栓，急报ECMO团队</td></tr>
+    <tr><td><b>再循环</b></td><td>VV模式自己的「刚引出来的血又被管路吸回去」——插管位置不好时浪费流量</td></tr>
+    <tr><td><b>North-South综合征</b></td><td>VA模式肺自己恢复了一点点+心还没好：上半身供的是患者自己肺里来的差血（发绀）——看右上肢血气</td></tr>
+    <tr><td><b>E-CPR</b></td><td>心跳停了直接上机抢救——结局比择期上机差得多，所以更要「早会诊」</td></tr>
+    <tr><td><b>clamp试验</b></td><td>VA撤离前把管路夹住几分钟看心脏自己行不行（监护+随时松开）</td></tr>
   </table></div>`},
-  {t:'② 时机（核心理念=别等停跳）',html:`
-   <div class="emg-step"><span class="sno">呼吸（VV候选）</span><br>优化治疗（高肺复张策略±NO/高频）仍：P/F<80或OI>40持续、或进行性恶化、不可逆气漏/肺出血——EOLIA式标准提前会诊。</div>
-   <div class="emg-step"><span class="sno">循环（VA候选）</span><br>充分容量+2种以上足量升压药+正性肌力药仍：乳酸持续↑/尿量<0.5ml/(kg·h)/灌注恶化/血管活性评分高（如>20-40分口径）；暴发心肌炎宜<b>早</b>（反复室颤/恶性心律失常前）；<b>E-CPR：常规复苏15-20min无ROSC的潜在可逆病因者，团队预判启动</b>。</div>
-   <div class="emg-step"><span class="sno">权衡禁忌（相对）</span><br>不可逆中枢损伤、终末期原发病无移植可能、多器官不可逆衰竭、难以控制的出血、体重极限（新生儿<2kg相对）；<b>机械通气时间过长（VV >7-10天）预后差</b>。</div>`},
-  {t:'③ 上机初期参数（儿科口径）',html:`
-   <div class="emg-step"><span class="sno">目标流量</span><br>新生儿VA <b>120-180ml/(kg·min)</b>；儿童VA <b>80-120</b>；VV <b>100-130</b>——按灌注终点滴定（乳酸↓/尿量/MAP/GCS），不以"数字到位"为目标。</div>
-   <div class="emg-step"><span class="sno">抗凝（肝素口径）</span><br>置管时肝素50-100U/kg；维持5-30U/kg/h滴定：<b>ACT 180-220s</b>（q1-4h）或APTT 1.5-2倍；ATⅢ<60-80%补充（肝素耐药常见原因）；HIT→比伐芦定；儿童出血（尤其颅内）是最险并发症——血小板目标>80-100×10⁹/L、纤维蛋白原>1.5。</div>
-   <div class="emg-step"><span class="sno">日常管理要点</span><br>①溶血监测：血浆游离Hb↑+尿色深=血栓信号（查膜前后压差）；②血气：膜前（氧合器功能）+膜后+动脉（灌注）三处；③最低肺保护通气继续（防萎陷）；④镇静镇痛充分+每日评估撤离；⑤输血预充：新生儿ABO同型血预充；⑥<b>ECMO期间药物分布容积↑、肾清除变</b>：抗生素剂量上调+TDM；水溶性解毒剂可被ECMO管路吸附（NAC等）。</div>
-   <div class="emg-step"><span class="sno">撤离</span><br>VV：气体扫描仪FiO₂/气流量渐降（原肺氧气化能力评估）→试停气30-60min→拔管；VA：流量渐降至目标30-50%+clamp试验+心超（EF/肺压）→拔管；每日都问一遍"今天能停吗"。</div>`},
-  {t:'④ 常见坑',html:`<div class="emg-red">① 等心跳停才叫ECMO（E-CPR结局显著差于择期上机）；② 只看泵流量不看灌注终点（流量数字≠氧输送）；③ 溶血只当"尿色深"（游離Hb+管路压差——血栓前兆）；④ ATⅢ没查就怪"肝素耐药"；⑤ ECMO期间抗生素按常规剂量（分布容积变大+管路吸附→TDM调量）；⑥ 新生儿VA拔管前忘了查颅脑出血（抗凝+颈动脉结扎）。</div>`}],
+  {t:'② 交接班必问10件事（新收ECMO病人，照着问）',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>#</th><th>问什么</th><th>为什么</th></tr>
+    <tr><td>1</td><td class="mono">模式？VA还是VV？插在哪（颈/股）？管径多少？</td><td>决定监测重点（VA看右上肢血气/VV看再循环）</td></tr>
+    <tr><td>2</td><td class="mono">上机第几天？什么原因上的？</td><td>判断「今天该谈撤离还是谈结局」</td></tr>
+    <tr><td>3</td><td class="mono">泵流量目标？现在多少？</td><td>波动&gt;10-15%要找原因</td></tr>
+    <tr><td>4</td><td class="mono">气流量/FiO₂多少？</td><td>VV模式这就是他的「呼吸机参数」</td></tr>
+    <tr><td>5</td><td class="mono">ACT目标和现在值？肝素走多快？最近一次ATⅢ？</td><td>抗凝是每天最大的事</td></tr>
+    <tr><td>6</td><td class="mono">血小板/Fib/Hb最新值？输血阈值多少？</td><td>出血vs血栓的平衡线</td></tr>
+    <tr><td>7</td><td class="mono">膜前后压差/TMP趋势？滤过游离Hb？尿色？</td><td>血栓/溶血早识别</td></tr>
+    <tr><td>8</td><td class="mono">镇静镇痛泵有哪些？肌松在不在用？</td><td>躁动=流量波动的第一大原因</td></tr>
+    <tr><td>9</td><td class="mono">最近一次头颅影像（新生儿/新上机）？</td><td>颅内出血=最险并发症</td></tr>
+    <tr><td>10</td><td class="mono">ECMO团队谁负责？撤离计划是什么？</td><td>每天都要问「今天能不能减/停」</td></tr>
+  </table></div>`},
+  {t:'③ 床旁巡视清单（每小时扫一遍）',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>看什么</th><th>正常</th><th>不对劲</th></tr>
+    <tr><td>泵流量</td><td class="mono">稳定在目标±10%</td><td>突然↓：管路打折/患者躁动/容量掉/胸内压↑</td></tr>
+    <tr><td>氧合器颜色+压差</td><td class="mono">鲜红、压差平稳</td><td>发暗/压差↑：膜肺血栓</td></tr>
+    <tr><td>尿色+游离Hb</td><td class="mono">清亮/淡黄</td><td>酱油色：溶血→急报</td></tr>
+    <tr><td>插管侧肢体</td><td class="mono">温暖、色正常</td><td>发白/发花/凉：缺血（股动脉插管侧）</td></tr>
+    <tr><td>出血点</td><td class="mono">无</td><td>穿刺点渗血/消化道出血/瞳孔不等（颅内！）</td></tr>
+    <tr><td>ACT/生命体征</td><td class="mono">按处方目标</td><td>超窗按团队规程调肝素</td></tr>
+  </table></div>`},
+  {t:'④ 用药在ECMO上怎么变',html:`
+   <div class="emg-step">①<b>肝素</b>：维持5-30U/kg/h滴定ACT 180-220s；置管时负荷50-100U/kg（团队给）；②<b>抗生素</b>：分布容积变大+管路吸附——剂量上调+TDM（万古/氨基糖苷必测）；③<b>镇静镇痛</b>：咪达唑仑/芬太尼常用，但管路也吸附一部分——躁动先想镇静不足再想别的；④<b>输血阈值</b>：团队口径（常Hb&lt;80-100维持携氧，PLT&gt;80-100、Fib&gt;1.5防出血）；⑤<b>水溶性药会被管路「吃掉」</b>（如NAC等解毒剂需追加）；⑥血制品按低中心静脉...按团队规程，输血后流量可能波动（容量动）。</div>`},
+  {t:'⑤ 时机与撤离（谁该上/什么时候拔）',html:`
+   <div class="emg-step"><b>呼吸（VV）</b>：最优治疗（肺保护通气±NO/高频）仍P/F&lt;80或OI&gt;40、进行性恶化、不可逆气漏/肺出血→会诊。<b>循环（VA）</b>：足量容量+2种升压+正性肌力仍乳酸↑/尿少/灌注差；暴发心肌炎宜早；E-CPR=复苏15-20min无ROSC且病因可逆。<br><b>撤离</b>：VV=降气流量试停气30-60min看原肺；VA=降流量至30-50%+clamp试验+心超；<b>每天早交班问一句「今天能试减吗」</b>。</div>
+   <div class="emg-red"><b>常见坑</b>：①等心跳停才叫ECMO；②只盯流量数字不看乳酸/尿量等灌注终点；③溶血当「尿色深」忽略；④不查ATⅢ就怪「肝素耐药」狂加肝素；⑤抗生素常规剂量（管路吸附+分布变大）；⑥躁动不作处理（撕管+流量崩）；⑦忘了每天评估撤离。</div>`}],
  cals:[
-  {id:'ecmo_calc',title:'ECMO 目标流量速算（ELSO儿科口径）',
+  {id:'ecmo_calc',title:'ECMO 目标流量速算（ELSO儿科口径，团队处方为准）',
    inputs:[{k:'w',lab:'体重',unit:'kg',def:10,step:0.5},{k:'m',lab:'模式',kind:'sel',opts:[['va_neo','VA·新生儿'],['va_ped','VA·儿童'],['vv','VV']]}],
    out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
      let lo,hi;
@@ -2234,28 +2276,61 @@ SCEN.push(
      else if(v.m==='va_ped'){lo=v.w*80;hi=v.w*120;}
      else{lo=v.w*100;hi=v.w*130;}
      return {lines:['目标血流量 '+f(lo)+'-'+f(hi)+'ml/min（'+(v.m==='va_neo'?'120-180':v.m==='va_ped'?'80-120':'100-130')+'ml/(kg·min)）'],
-       ck:['按灌注终点滴定：乳酸↓/尿量/MAP/意识','泵速以转流团队处方为准；此为教学口径速查']};}}
+       ck:['按灌注终点滴定：乳酸↓/尿量/MAP/意识——数字只是起点','气流量（sweep）与FiO₂由团队按血气调']};}}
  ]},
-{id:'crrt',ico:'🩸',name:'CRRT 连续血液净化（儿科基础）',grp:'体外支持 · 血液净化',
- tag:'启动在并发症之前（FO>10-20%即评估）；剂量20-25ml/kg/h；枸橼酸局部抗凝首选',links:['khpo4','calcglu'],
- srcs:['KDIGO 2012 AKI指南（儿童CRRT章节）','中国儿童连续血液净化相关共识/专家建议','pRIFLE口径'],
+{id:'crrt',ico:'🩸',name:'CRRT 连续血液净化（零基础教学版）',grp:'体外支持 · 血液净化',
+ tag:'完全不会CRRT从这页开始：它是什么/名词人话词典/处方怎么开/交接必问/每小时看什么/报警对照表',
+ srcs:['KDIGO 2012（儿童CRRT章节）','中国儿童连续血液净化专家共识','本院CRRT规程（参数以团队为准）'],
  secs:[
-  {t:'① 模式与原理',html:`<div class="tblwrap"><table class="tbl">
-    <tr><th>模式</th><th>原理</th><th>适合</th></tr>
-    <tr><td><b>SCUF</b></td><td>缓慢超滤（无置换液）</td><td class="mono">单纯容量过负荷（心/肾衰消肿）</td></tr>
-    <tr><td><b>CVVH</b></td><td>对流（置换液）</td><td class="mono">中大分子清除（炎症因子、部分中毒）</td></tr>
-    <tr><td><b>CVVHD</b></td><td>弥散（透析液）</td><td class="mono">小分子（尿素/钾/锂/甲醇/乙二醇）——高氨血症首选</td></tr>
-    <tr><td><b>CVVHDF</b></td><td>对流+弥散</td><td class="mono">儿科最常用——兼顾清除谱与稳定性</td></tr>
+  {t:'⓪ 先说人话：它是个什么东西',html:`
+   <div class="emg-step">CRRT=「人工肾」床旁版：一根双腔管从静脉把血引出来 → 一个<b>血泵</b>推着走 → 过一个<b>滤器</b>（像筛子：水和小分子废物透过膜被带走，血细胞和蛋白留下）→ 血输回体内。它<b>每天24小时慢慢地干</b>，不像普通血透几小时猛干——所以血压稳、小孩扛得住。<br>
+   它能干的四件事：①<b>排水</b>（消肿/肺水肿）②<b>排废物</b>（尿素/肌酐/钾/药物）③<b>纠正酸碱电解质</b>④<b>降温/清除某些毒物</b>。<br>
+   四种模式一句话：<b>SCUF=只脱水；CVVHD=靠「透析液」洗小分子；CVVH=靠「置换液」冲中分子；CVVHDF=两者都上（儿科最常用）</b>。</div>`},
+  {t:'① 名词小词典',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>名词</th><th>人话解释</th></tr>
+    <tr><td><b>血流量（QB）</b></td><td>泵每分钟引多少血出血管（儿科3-5ml/(kg·min)）；太慢→管路爱凝，太快→血压掉</td></tr>
+    <tr><td><b>置换液/透析液</b></td><td>「配好的干净水」：置换液直接混进血里（对流），透析液在滤器另一侧「对冲」（弥散）——成分按患儿电解质个体化配</td></tr>
+    <tr><td><b>effluent（废液）</b></td><td>最终从机器流走的总量=透析液+置换液+超滤出来的水——<b>「剂量20-25ml/(kg·h)」说的就是它</b></td></tr>
+    <tr><td><b>净超滤</b></td><td>真正从患儿身上「净脱水」的部分——脱多少按容量目标定，<b>脱太快=血压崩</b></td></tr>
+    <tr><td><b>TMP跨膜压</b></td><td>滤器膜内外的压力差——持续升高=滤器快凝了</td></tr>
+    <tr><td><b>枸橼酸局部抗凝</b></td><td>只在「管路里」抗凝：枸橼酸螯合钙让血不凝，回到体内前补钙——所以要监测两个钙（滤器后低、体内正常）</td></tr>
+    <tr><td><b>iCa（离子钙）</b></td><td>真正起作用的钙；枸橼酸方案查滤器后iCa 0.25-0.35＋体内iCa 1.0-1.2</td></tr>
+    <tr><td><b>总钙/iCa比值</b></td><td>&gt;2.5=枸橼酸「蓄积」体内了（肝功能差/休克时）——酸中毒加重，要减枸橼酸</td></tr>
+    <tr><td><b>滤器寿命</b></td><td>一根滤器用多久就凝——越短越说明抗凝不足/血流量问题</td></tr>
+    <tr><td><b>FO液体过负荷</b></td><td>（进-出）÷体重×100%；&gt;10-20%是启动CRRT的重要理由</td></tr>
+  </table></div>`},
+  {t:'② 处方怎么开（一张单子说清）',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>处方项</th><th>儿科常用起点</th><th>备注</th></tr>
+    <tr><td>血流量QB</td><td class="mono">3-5ml/(kg·min)（婴幼儿绝对值常20-50ml/min起）</td><td>血压不稳从小起滴定</td></tr>
+    <tr><td>effluent总量</td><td class="mono">20-25ml/(kg·h)</td><td>=透析液+置换液+净超滤之和</td></tr>
+    <tr><td>净超滤率</td><td class="mono">按容量目标算（如24h脱200ml→约8ml/h）</td><td>⚠按血压滴定，勿蛮干</td></tr>
+    <tr><td>抗凝</td><td class="mono">枸橼酸首选｜肝素5-20U/kg/h｜无抗凝（高出血）</td><td>枸橼酸目标：滤器后iCa 0.25-0.35＋体内iCa 1.0-1.2</td></tr>
+    <tr><td>置换液成分</td><td class="mono">按电解质个体化（钠/钾/糖/碱基）</td><td>高氨血症者钠靶不同；磷常需额外补</td></tr>
+    <tr><td>监测</td><td class="mono">血气+电解质q4-6h｜iCa按抗凝方案q4-6h｜血糖q2-4h</td><td></td></tr>
   </table></div>
-  <div class="emg-step">血管通路：儿童首选双腔中心静脉导管（颈内/股），<b>管径按体重选（如10-20kg双腔7-8F？按本院耗材）</b>；血流量儿科常用 <b>3-5ml/(kg·min)</b>（婴幼儿绝对值20-50ml/min起，按血压滴定）。</div>`},
-  {t:'② 启动时机（儿科＝更早、更宽）',html:`<div class="emg-step"><b>不必等肌酐飙高/尿毒症 classic 指征</b>——儿童启动看重：<br>
-   ① 液体过负荷 <b>FO>10-20%</b>（或肺水肿/呼吸支持升级难脱）② AKI 2-3期+任一并发症（高钾/酸中毒/高氨）③ 顽固高钾/严重代酸 ④ 尿毒症并发症（脑病/心包炎）⑤ 可清除毒物（甲醇/乙二醇/锂/水杨酸/二甲双胍/毒鼠强）⑥ <b>先天代谢病高氨血症</b>（CVVHD优选）⑦ 肿瘤溶解 ⑧ 重度电解放紊乱难纠。<br>决策原则：<b>出现第一个并发症就评估，不等第二个</b>。</div>`},
-  {t:'③ 处方与抗凝',html:`
-   <div class="emg-step"><span class="sno">剂量（effluent）</span><br><b>20-25ml/(kg·h)</b>（KDIGO推荐剂量）＝总出液（透析液+置换液+净超滤）；<b>净超滤率</b>按FO目标单独设定（婴幼儿目标超滤率常≤总量的20-30%/h? 按血流动力学滴定——防低血压）。</div>
-   <div class="emg-step"><span class="sno">抗凝三选</span><br>· <b>枸橼酸局部抗凝（首选）</b>：ACD-A于滤器前泵入，目标<b>滤器后iCa 0.25-0.35mmol/L、体循环iCa 1.0-1.2</b>；监测总钙/iCa比值>2.5=枸橼酸蓄积（肝损/休克慎用）；每袋置换液相应降钙 · 肝素：5-20U/kg/h，ACT/APTT滴定（出血风险高者不用）· 无抗凝：高出血风险——提高血流量+盐水冲洗+缩短滤器寿命预期。</div>
-   <div class="emg-step"><span class="sno">代谢与药物</span><br>①电解质：低磷/低钾/低镁常见——置换液配方+静脉补（本院复合磷酸氢钾入置换液需换算mmol并核对）；②<b>药物被清除</b>：水溶性/低蛋白结合药（万古/氨基糖苷/β内酰胺）按TDM补量；<b>解毒剂同样被清除</b>（NAC/甲吡唑/纳洛酮——CRRT期间追加）；③体温：低温常见（管路加温）；④营养：蛋白不严格限制（置换丢失氨基酸），热卡足量；⑤血糖q2-4h。</div>
-   <div class="emg-step"><span class="sno">报警与停机</span><br>TMP（跨膜压）持续↑=滤器凝血前兆（查抗凝/血流/Hct）；漏血报警；回输压高=管路打折；停机评估：利尿恢复、FO<5-10%且稳定、溶质与pH达标——每日减量试停而非突然全停。</div>`},
-  {t:'④ 常见坑',html:`<div class="emg-red">① 等尿毒症才启动（儿童看FO和并发症）；② 净超滤太快→低血压（超滤率按血流动力学滴定，不看"脱水目标"蛮干）；③ 枸橼酸没查iCa钙比（蓄积酸中毒）；④ CRRT期间万古/NAC按常规剂量（被清除——TDM/追加）；⑤ 置换液配方当"标准袋"不管电解质个体化（高氨者钠靶不同）；⑥ 滤器反复凝血只加肝素不查ATⅢ/管路/血流量。</div>`}],
+  <div class="emg-step"><b>启动时机（儿科=更早更宽）</b>：FO&gt;10-20%；AKI 2-3期+任一并发症（高钾/酸中毒/高氨）；顽固高钾/严重代酸；尿毒症脑病心包炎；可清除毒物（甲醇/乙二醇/锂/水杨酸/二甲双胍/毒鼠强）；先天代谢病高氨（CVVHD首选）；肿瘤溶解。<b>出现第一个并发症就评估，不等第二个</b>。</div>`},
+  {t:'③ 交接班必问8件事',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>#</th><th>问什么</th><th>为什么</th></tr>
+    <tr><td>1</td><td class="mono">模式？为什么上？第几天？</td><td>判断今天的目标（脱水？排钾？撑到肾功能恢复？）</td></tr>
+    <tr><td>2</td><td class="mono">血流量多少？引血顺畅吗？</td><td>动脉压报警=引血不畅的前科</td></tr>
+    <tr><td>3</td><td class="mono">抗凝方案+目标值+现在iCa/ACT？</td><td>凝血与出血的平衡线</td></tr>
+    <tr><td>4</td><td class="mono">effluent总量多少？净超滤目标多少？今天已经脱了多少？</td><td>容量管理是每天的主线</td></tr>
+    <tr><td>5</td><td class="mono">滤器用了多久？TMP趋势？换过几次？</td><td>凝血倾向预警</td></tr>
+    <tr><td>6</td><td class="mono">最近血钾/磷/镁/血气？在补什么？</td><td>CRRT会「洗掉」电解质和药</td></tr>
+    <tr><td>7</td><td class="mono">哪些药被清除需要补量？（万古/氨基糖苷/NAC…）</td><td>不补=治疗不足</td></tr>
+    <tr><td>8</td><td class="mono">今天计划：继续/减量/试停？</td><td>每天评估，不无限挂着</td></tr>
+  </table></div>`},
+  {t:'④ 报警/异常对照表（先查什么）',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>情况</th><th>先查</th><th>处理方向</th></tr>
+    <tr><td><b>动脉压（引血端）过低报警</b></td><td>导管贴壁/患者躁动/容量不足</td><td>换体位、镇静、补容量；反复=导管位置问题</td></tr>
+    <tr><td><b>静脉压（回血端）过高</b></td><td>回输管打折/夹闭/导管头贴壁</td><td>理管；持续=导管问题</td></tr>
+    <tr><td><b>TMP持续升高</b></td><td>滤器凝血（看颜色变深/有血块）</td><td>查抗凝剂量/iCa目标/血流量/血Hct；按团队冲管或换滤器</td></tr>
+    <tr><td><b>血压掉了</b></td><td>净超滤太快？引血量太大？</td><td>先减/停超滤+补容量，再谈机器参数</td></tr>
+    <tr><td><b>滤器/管路颜色变深</b></td><td>凝血在进行</td><td>同TMP——早报团队，别等完全堵死</td></tr>
+    <tr><td><b>血气酸中毒加重</b></td><td>枸橼酸蓄积？（总钙/iCa&gt;2.5）</td><td>减枸橼酸/换肝素/查肝功能</td></tr>
+  </table></div>
+  <div class="emg-step"><b>每天都要想的四件事</b>：①今天脱多少水？②钾磷镁钙补不补？③哪些药要补量？④能不能减停？——CRRT不是「挂上就不用管」，它每小时都在改你的电解质和药浓度。</div>`},
+  {t:'⑤ 常见坑',html:`<div class="emg-red">① 等尿毒症才启动（儿科看FO和第一个并发症）；② 净超滤按「脱水目标」猛脱→低血压（超滤率跟着血压走）；③ 枸橼酸方案不查钙比值（蓄积酸中毒）；④ 万古/氨基糖苷/NAC不补量（被机器洗掉了）；⑤ 置换液拿「标准袋」不管个体化（高氨患者钠靶不同）；⑥ 滤器反复凝血只会加肝素（不查ATⅢ/血流量/导管）；⑦ 突然全停不试减（应每日减量评估）；⑧ 低温不管（管路加温+保温）。</div>`}],
  cals:[
   {id:'crrt_calc',title:'CRRT 处方速算（剂量/血流量/超滤目标）',
    inputs:[{k:'w',lab:'体重',unit:'kg',def:20,step:0.5},{k:'dose',lab:'处方剂量',unit:'ml/(kg·h)',def:25,step:5},{k:'q',lab:'血流量',unit:'ml/(kg·min)',def:4,step:1},{k:'uf',lab:'24h目标脱水量',unit:'ml',def:200,step:50}],
@@ -2263,7 +2338,7 @@ SCEN.push(
      const eff=v.dose*v.w, q=v.q*v.w;
      const ufr=v.uf/24;
      return {lines:['总出液（effluent）= '+f(eff)+'ml/h（'+v.dose+'ml/(kg·h)）＝透析液+置换液+净超滤合计','血流量 ≈ '+f(q)+'ml/min（3-5ml/(kg·min)滴定）','净超滤率目标 = '+f(ufr)+'ml/h（24h共'+f(v.uf)+'ml）','枸橼酸抗凝监测：滤器后iCa 0.25-0.35 · 体循环iCa 1.0-1.2 · 总钙/iCa<2.5'],
-       ck:['effluent是"总量"概念——机器上各泵速之和（含UF）','净超滤率按血压滴定，勿为脱水目标蛮干','药物TDM：万古/氨基糖苷/NAC等按清除补量']};}}
+       ck:['effluent是「总量」概念——机器上各泵速之和（含UF）','净超滤率按血压滴定','药物TDM：万古/氨基糖苷/NAC等按清除补量']};}}
  ]});
 
 /* ================= 评分与参考（05；血压百分位与脓毒症详表见同目录追加） ================= */
@@ -2481,6 +2556,243 @@ SCORES.push(
    return '总分 '+s+'/33 · 第1天死亡概率 ≈ <b>'+(p*100).toFixed(1)+'%</b>（logit=−6.61+0.47×'+s+'）——病死率分级仅供研究/沟通参考，个体决策结合临床';
  },
  note:'每变量取24h内最差值；未测定按0分。'});
+
+/* ================= 基础知识模块（07）：教材口径参考 + 速算工具 ================= */
+const REFS=[
+{id:'labs',ico:'🧪',name:'常用化验正常值',grp:'检验参考',
+ tag:'血气 / 电解质 / 血常规（分年龄）/ 凝血 / 脑脊液 —— 以本院检验科参考区间为准',
+ srcs:['人卫《儿科学》第9版 / 《诸福棠实用儿科学》口径','WS/T 405血细胞分析参考区间（成人为主，儿童分段见下表）'],
+ secs:[
+  {t:'血气（动脉/毛细血管）',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>项目</th><th>正常值</th><th>备注</th></tr>
+    <tr><td>pH</td><td class="mono">7.35-7.45</td><td>新生儿生后短期可偏低（≤7.30渐升）</td></tr>
+    <tr><td>PaCO₂</td><td class="mono">35-45 mmHg</td><td>静脉血高5-7</td></tr>
+    <tr><td>PaO₂</td><td class="mono">80-100 mmHg</td><td>随年龄下降；新生儿60-90</td></tr>
+    <tr><td>HCO₃⁻</td><td class="mono">22-26 mmol/L</td><td>新生儿20-22</td></tr>
+    <tr><td>BE</td><td class="mono">-3 ~ +3 mmol/L</td><td></td></tr>
+    <tr><td>乳酸</td><td class="mono">&lt;2 mmol/L</td><td>危重灌注指标，&gt;4提示组织缺氧</td></tr>
+  </table></div>`},
+  {t:'电解质与代谢',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>项目</th><th>正常值</th><th>备注</th></tr>
+    <tr><td>血钠 Na</td><td class="mono">135-145 mmol/L</td><td>新生儿131-143偏低</td></tr>
+    <tr><td>血钾 K</td><td class="mono">3.5-5.5 mmol/L</td><td>新生儿偏高（3.7-5.9）；溶血假性↑</td></tr>
+    <tr><td>血氯 Cl</td><td class="mono">98-106 mmol/L</td><td></td></tr>
+    <tr><td>离子钙 iCa</td><td class="mono">1.1-1.3 mmol/L</td><td>新生儿生后48h最低点</td></tr>
+    <tr><td>血镁 Mg</td><td class="mono">0.75-1.0 mmol/L</td><td></td></tr>
+    <tr><td>血磷 P</td><td class="mono">儿童 1.3-2.1 mmol/L</td><td>婴幼儿更高（1.6-2.9），随龄下降</td></tr>
+    <tr><td>血糖</td><td class="mono">3.9-6.1 mmol/L（空腹）</td><td>新生儿&lt;2.8注意、&lt;2.2处理（各口径见低血糖页）</td></tr>
+    <tr><td>血氨</td><td class="mono">儿童 &lt;50 μmol/L</td><td>新生儿&lt;100；&gt;100异常（见高氨血症页）</td></tr>
+  </table></div>`},
+  {t:'血常规关键项（分年龄）',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>年龄</th><th>Hb g/L</th><th>WBC ×10⁹/L</th><th>PLT ×10⁹/L</th></tr>
+    <tr><td>脐血/出生</td><td class="mono">170-200（140-220）</td><td class="mono">15-20（可至30）</td><td class="mono">150-400</td></tr>
+    <tr><td>1-3月（生理性贫血谷）</td><td class="mono">90-110</td><td class="mono">6-18</td><td class="mono">150-400</td></tr>
+    <tr><td>6月-6岁</td><td class="mono">&gt;110</td><td class="mono">6-15</td><td class="mono">150-400</td></tr>
+    <tr><td>学龄期</td><td class="mono">&gt;120</td><td class="mono">4.5-13.5</td><td class="mono">150-400</td></tr>
+  </table></div>
+  <div class="emg-amber">贫血界值（教材）：新生儿&lt;145、1-4月&lt;90、4-6月&lt;100、6月-6岁&lt;110、6-14岁&lt;120 g/L。分类判读看MCV/MCHC。</div>`},
+  {t:'凝血与脑脊液',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>凝血</th><th>正常值</th></tr>
+    <tr><td>PT / INR</td><td class="mono">9-13 s / 0.8-1.2</td></tr>
+    <tr><td>APTT</td><td class="mono">25-37 s</td></tr>
+    <tr><td>纤维蛋白原 Fib</td><td class="mono">2-4 g/L（新生儿1.5-3）</td></tr>
+    <tr><td>D-二聚体</td><td class="mono">&lt;0.5 mg/L FEU</td></tr>
+  </table></div>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>脑脊液CSF</th><th>正常值</th></tr>
+    <tr><td>压力</td><td class="mono">儿童 60-180 mmH₂O（婴幼儿30-80）</td></tr>
+    <tr><td>白细胞</td><td class="mono">新生儿 0-20×10⁶/L（可至30）｜婴儿 0-10｜儿童 0-5（多核&lt;30%）</td></tr>
+    <tr><td>蛋白</td><td class="mono">0.15-0.45 g/L（新生儿0.2-1.2渐降）</td></tr>
+    <tr><td>糖</td><td class="mono">2.8-4.5 mmol/L（≈同时血糖2/3，低血糖患儿判读需对照）</td></tr>
+    <tr><td>氯化物</td><td class="mono">117-127 mmol/L</td></tr>
+  </table></div>`},
+  {t:'肝肾精要',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>项目</th><th>正常值</th><th>备注</th></tr>
+    <tr><td>ALT / AST</td><td class="mono">&lt;40 U/L左右（各实验室不同）</td><td>新生儿生理性偏高</td></tr>
+    <tr><td>总胆红素</td><td class="mono">&lt;17 μmol/L</td><td>新生儿黄疸按曲线日龄判读</td></tr>
+    <tr><td>白蛋白</td><td class="mono">35-50 g/L</td><td>新生儿偏低（25-35）</td></tr>
+    <tr><td>肌酐</td><td class="mono">随年龄/肌肉量（pSOFA表有分段阈值）</td><td>新生儿≈母体水平，数日回落</td></tr>
+    <tr><td>BUN</td><td class="mono">1.8-6.4 mmol/L</td><td>高蛋白/脱水/高分解↑</td></tr>
+  </table></div>
+  <div class="emg-amber">各医院试剂与方法不同——开单判读一律以本院检验科报告单参考区间为准；本表为教材口径速查。</div>`}]},
+{id:'fluid',ico:'💧',name:'液体疗法基础',grp:'治疗基础',
+ tag:'脱水分度 → 累积损失+维持量的经典三步法；张力怎么选；4-2-1法则',
+ srcs:['人卫《儿科学》液体疗法章节','《诸福棠实用儿科学》','本院配液课件口径'],
+ secs:[
+  {t:'① 脱水程度分度',html:`<div class="emg-lad">
+    <div class="lrow lgreen"><span class="lv">轻度 &lt;5%</span><span>精神稍差、口唇略干、尿量略少——体重 loss 5%</span></div>
+    <div class="lrow lamber"><span class="lv">中度 5-10%</span><span>精神萎靡/烦躁、皮肤弹性差（捏起回缩&lt;2s）、眼窝前囟凹陷、口干明显、尿明显减少、四肢偏凉</span></div>
+    <div class="lrow lred"><span class="lv">重度 &gt;10%</span><span>淡漠/昏迷、皮肤花纹/弹性极差、眼窝深陷、休克征（CRT&gt;3s、脉细速、血压低）、无尿</span></div>
+  </div>
+  <div class="emg-step">性质判断：血钠&lt;130=低渗（2/3张补）、130-150=等渗（1/2张）、&gt;150=高渗（1/3张，慢纠）。婴幼儿腹泻脱水多等渗。</div>`},
+  {t:'② 补液三步法（第一天）',html:`
+   <div class="emg-step"><span class="sno">第1步 扩容（仅重度/循环差）</span><br>等张液（2:1等张含钠液或NS）<b>20ml/kg，30-60min内</b>；休克按脓毒性休克流程，总量≤40ml/kg后评估。</div>
+   <div class="emg-step"><span class="sno">第2步 累积损失</span><br>（程度%×体重kg×1000ml）−已给扩容量；<b>前8h给1/2</b>，余16h给完；张力按脱水性质（上表）。</div>
+   <div class="emg-step"><span class="sno">第3步 维持（生理需要+继续丢失）</span><br>生理需要=4-2-1法则（第一个10kg×4、第二个10kg×2、余×1 ml/h）；继续丢失=吐泻/引流按量补（1/2-等张）；生理需要液张力≈1/4-1/5张（含糖+钾，见尿补钾）。</div>
+   <div class="emg-step"><span class="sno">纠酸与钾</span><br>轻中度酸中毒随补液自行纠正；重度（pH&lt;7.2）按代酸页半量纠酸。见尿补钾，浓度≤0.3%（外周）、速度≤0.5mmol/(kg·h)。</div>`},
+  {t:'③ 张力速查（常用液体的张力）',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>液体</th><th>张力</th><th>备注</th></tr>
+    <tr><td>0.9%NS / 平衡盐</td><td class="mono">等张（1张）</td><td>扩容首选</td></tr>
+    <tr><td>5%GS</td><td class="mono">0张（无张力糖水）</td><td>只供水与热卡</td></tr>
+    <tr><td>10%GS</td><td class="mono">0张</td><td></td></tr>
+    <tr><td>1/2张含钠液</td><td class="mono">NS:5%GS 1:1</td><td>等渗脱水常用</td></tr>
+    <tr><td>2/3张（3:2:1液）</td><td class="mono">3份5%GS+2份NS+1份1.4%SB</td><td>低渗脱水经典配方</td></tr>
+    <tr><td>1/3张（6:2:1）</td><td class="mono">6份5%GS+2份NS+1份1.4%SB</td><td>高渗脱水/生理维持</td></tr>
+    <tr><td>3%NaCl</td><td class="mono">≈3.3张</td><td>症状性低钠冲击（见低钠页）</td></tr>
+  </table></div>
+  <div class="emg-amber">危重/术后/心肝肾患儿液体方案需个体化（SIADH限水、心衰限液限钠、肾功能按出量）——本页为教科书通用框架。</div>`}],
+ cals:[
+  {id:'fluid_calc',title:'第一天补液方案速算（脱水三步法）',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:10,step:0.5},{k:'pct',lab:'脱水程度',kind:'sel',opts:[['3','轻度 3%'],['7.5','中度 7.5%'],['12','重度 12%']]},{k:'ton',lab:'脱水性质',kind:'sel',opts:[['1/2','等渗（1/2张）'],['2/3','低渗（2/3张）'],['1/3','高渗（1/3张）']]}],
+   out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
+     const loss=v.w*parseFloat(v.pct)*10;
+     const maint=v.w<=10?v.w*4:(v.w<=20?40+(v.w-10)*2:60+(v.w-20));
+     const bolus=parseFloat(v.pct)>=10?v.w*20:0;
+     const rest=Math.max(0,loss-bolus);
+     return {lines:['累积损失 ≈ '+f(loss)+'ml'+(bolus?('，扩容已给 '+f(bolus)+'ml，余 '+f(rest)+'ml'):''),
+       '→ 前8h给1/2：'+f(rest/2)+'ml（含维持）＝ 泵速约 '+f(rest/16+maint/2)+'ml/h','→ 后16h：'+f(rest/2)+'ml ＝ '+f(rest/32+maint/2)+'ml/h',
+       '维持量 '+f(maint)+'ml/h（4-2-1）｜张力：'+v.ton,
+       '第一天总量 ≈ '+f(loss+maint*24)+'ml（'+f((loss+maint*24)/v.w)+'ml/kg）'],
+       ck:['重度先扩容20ml/kg（30-60min）再算','见尿补钾≤0.3%（外周）；纠酸见代酸页','第二天起按出入量+体重重新评估']};}}
+ ]},
+{id:'acidbase',ico:'⚖️',name:'酸碱失衡速查',grp:'治疗基础',
+ tag:'四步判读法 + 三大代偿公式（Winter等）自动验算——混合性紊乱一眼看穿',
+ srcs:['人卫《儿科学》/病理生理教材','Emmett & Narins经典代偿公式口径'],
+ secs:[
+  {t:'① 四步判读法',html:`
+   <div class="emg-step"><span class="sno">Step1 看pH</span><br>&lt;7.35酸血症、&gt;7.45碱血症、正常≠正常（可能完全代偿或混合）。</div>
+   <div class="emg-step"><span class="sno">Step2 定原发</span><br>pH与谁一致谁就是原发：HCO₃⁻↓=代酸；HCO₃⁻↑=代碱；PaCO₂↑=呼酸；PaCO₂↓=呼碱。</div>
+   <div class="emg-step"><span class="sno">Step3 算代偿（是否在预期范围）</span><br>用下方计算器：不在预期范围=第二个原发紊乱（混合性）。</div>
+   <div class="emg-step"><span class="sno">Step4 算AG（代酸必算）</span><br>AG=Na−(Cl+HCO₃⁻)，正常8-12；↑=高AG代酸（乳酸/酮症/肾衰/毒物——算ΔAG/ΔHCO₃判是否合并代碱或NAG代酸）。</div>`},
+  {t:'② 代偿公式表',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>原发紊乱</th><th>预期代偿</th><th>时限</th></tr>
+    <tr><td>代谢性酸中毒</td><td class="mono">PaCO₂=1.5×HCO₃⁻+8±2（Winter式）</td><td>数小时</td></tr>
+    <tr><td>代谢性碱中毒</td><td class="mono">PaCO₂=0.7×HCO₃⁻+20±5</td><td>数小时</td></tr>
+    <tr><td>急性呼酸</td><td class="mono">HCO₃⁻↑1 mmol/L per PaCO₂↑10</td><td>数分钟（无肾代偿）</td></tr>
+    <tr><td>慢性呼酸</td><td class="mono">HCO₃⁻↑3.5-4 per 10</td><td>3-5天（肾代偿最大）</td></tr>
+    <tr><td>急性呼碱</td><td class="mono">HCO₃⁻↓2 per 10</td><td>数分钟</td></tr>
+    <tr><td>慢性呼碱</td><td class="mono">HCO₃⁻↓4-5 per 10</td><td>数天</td></tr>
+  </table></div>
+  <div class="emg-amber">儿童代偿幅度与成人基本一致；新生儿HCO₃⁻基线偏低（20-22），判读阈值相应下调。</div>`}],
+ cals:[
+  {id:'abg_calc',title:'血气判读器（输入pH/HCO₃⁻/PaCO₂自动判）',
+   inputs:[{k:'ph',lab:'pH',def:7.25,step:0.01,min:6.6,max:7.8},{k:'hc',lab:'HCO₃⁻',unit:'mmol/L',def:12,step:1},{k:'pc',lab:'PaCO₂',unit:'mmHg',def:28,step:1},{k:'na',lab:'Na（选填）',unit:'mmol/L',def:0,step:1},{k:'cl',lab:'Cl（选填）',unit:'mmol/L',def:0,step:1}],
+   out:(v)=>{if(!v.ph||!v.hc||!v.pc)return{lines:['填pH/HCO₃⁻/PaCO₂'],ck:[]};
+     const L=[],ck=[];
+     const acid=v.ph<7.35, alk=v.ph>7.45;
+     const metaAcid=v.hc<22, metaAlk=v.hc>26, respAcid=v.pc>45, respAlk=v.pc<35;
+     if(metaAcid){const exp=1.5*v.hc+8;
+       L.push('原发=代谢性酸中毒（HCO₃⁻ '+f(v.hc)+'↓）'+(acid?'，pH酸血症':''));
+       L.push('Winter预期PaCO₂ = 1.5×'+f(v.hc)+'+8 = <b>'+f(exp-2)+'-'+f(exp+2)+'</b>（实测 '+f(v.pc)+'）');
+       if(v.pc<exp-2){L.push('→ 实测PaCO₂低于预期 = <b>合并呼吸性碱中毒</b>');}
+       else if(v.pc>exp+2){L.push('→ 实测PaCO₂高于预期 = <b>合并呼吸性酸中毒</b>（⚠组织灌注不足/呼吸肌疲劳——危重信号）');}
+       else L.push('→ 代偿适当 ✓ 单纯代酸');}
+     else if(metaAlk){const exp=0.7*v.hc+20;
+       L.push('原发=代谢性碱中毒（HCO₃⁻ '+f(v.hc)+'↑）');
+       L.push('预期PaCO₂ = 0.7×'+f(v.hc)+'+20 = <b>'+f(exp-5)+'-'+f(exp+5)+'</b>（实测 '+f(v.pc)+'）');
+       if(v.pc>exp+5)L.push('→ <b>合并呼吸性酸中毒</b>'); else if(v.pc<exp-5)L.push('→ <b>合并呼吸性碱中毒</b>'); else L.push('→ 代偿适当 ✓');}
+     else if(respAcid){const d=v.pc-40;
+       L.push('原发=呼吸性酸中毒（PaCO₂ '+f(v.pc)+'↑）'+(acid?'，pH酸血症':''));
+       L.push('预期HCO₃⁻：急性 22+'+f(d/10)+' = <b>'+f(22+d/10)+'</b>｜慢性（3-5天肾代偿）'+f(22+d*0.38)+' 左右');
+       if(v.hc>22+d*0.38+2)L.push('→ HCO₃⁻明显高于慢性预期 = <b>合并代谢性碱中毒</b>');
+       else if(v.hc<22+d/10-2)L.push('→ HCO₃⁻低于急性预期 = <b>合并代谢性酸中毒</b>');
+       else L.push('→ 代偿适当 ✓（时限判断：贴近急性=急性，贴近慢性=慢性）');}
+     else if(respAlk){const d=40-v.pc;
+       L.push('原发=呼吸性碱中毒（PaCO₂ '+f(v.pc)+'↓）'+(alk?'，pH碱血症':''));
+       L.push('预期HCO₃⁻：急性 '+f(22-d/5)+'｜慢性 '+f(22-d*0.45));
+       if(v.hc<22-d*0.45-2)L.push('→ <b>合并代谢性酸中毒</b>'); else if(v.hc>22-d/5+2)L.push('→ <b>合并代谢性碱中毒</b>'); else L.push('→ 代偿适当 ✓');}
+     else L.push('三值均在正常/临界——可能完全代偿或混合轻度紊乱，看趋势与AG');
+     if(v.na>0&&v.cl>0){const ag=v.na-v.cl-v.hc;
+       L.push('AG = '+f(v.na)+'−('+f(v.cl)+'+'+f(v.hc)+') = <b>'+f(ag)+'</b>'+(ag>12?'（↑：乳酸/酮症/肾衰/毒物——查因）':ag<8?'（↓：低白蛋白常见——每降白蛋白10g/L约降AG 2.5）':'（正常8-12）'));}
+     ck.push('儿童危重特别提醒：PaCO₂升高常=呼吸肌疲劳（哮喘/肺炎恶化），不是「安静了」');
+     return {lines:L,ck:ck};}}
+ ]},
+{id:'airway',ico:'🫁',name:'气道与呼吸支持基础',grp:'治疗基础',
+ tag:'气管导管型号/深度、喉镜片号、氧疗阶梯、呼吸机初始参数——按年龄体重一键出',
+ srcs:['AHA PALS 2020气道章节','人卫《儿科学》/儿科急救教材','本院ICU呼吸治疗口径'],
+ secs:[
+  {t:'① 气管插管速查',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>年龄</th><th>导管ID无囊</th><th>导管ID有囊</th><th>口插深度</th><th>喉镜片</th></tr>
+    <tr><td>早产&lt;1500g</td><td class="mono">2.5</td><td class="mono">—</td><td class="mono">6+体重kg</td><td class="mono">Miller 0</td></tr>
+    <tr><td>足月新生儿</td><td class="mono">3.0-3.5</td><td class="mono">3.0</td><td class="mono">6+体重kg（9-10）</td><td class="mono">Miller 0-1</td></tr>
+    <tr><td>6月</td><td class="mono">3.5</td><td class="mono">3.0-3.5</td><td class="mono">10</td><td class="mono">Miller 1</td></tr>
+    <tr><td>1-2岁</td><td class="mono">4.0</td><td class="mono">3.5</td><td class="mono">12</td><td class="mono">Miller 1 / Mac 2</td></tr>
+    <tr><td>2-8岁</td><td class="mono">年龄/4+4</td><td class="mono">年龄/4+3.5</td><td class="mono">年龄/2+12</td><td class="mono">Mac 2</td></tr>
+    <tr><td>&gt;8-10岁</td><td class="mono">6.0-6.5</td><td class="mono">5.5-6.0</td><td class="mono">16-18</td><td class="mono">Mac 2-3</td></tr>
+  </table></div>
+  <div class="emg-amber">经公式算出后<b>常备上下各0.5号</b>（声门下狭窄/漏气试验再定）；深度以双侧呼吸音对称+呼末CO₂波形为准，插管后拍片尖端位于气管中段（T2-T3水平）。</div>`},
+  {t:'② 氧疗阶梯（由低到高）',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>方式</th><th>可给FiO₂/流量</th><th>适合</th></tr>
+    <tr><td>鼻导管</td><td class="mono">0.25-0.4（婴儿0.25-2L/min？按年龄0.5-4L/min）</td><td class="mono">轻度低氧</td></tr>
+    <tr><td>普通面罩</td><td class="mono">0.4-0.6（5-8L/min）</td><td class="mono">中度</td></tr>
+    <tr><td>储氧面罩</td><td class="mono">0.6-0.9（10-15L/min）</td><td class="mono">重度过渡</td></tr>
+    <tr><td><b>经鼻高流量HFNC</b></td><td class="mono">FiO₂ 0.21-1.0，流量1-2L/(kg·min)（max 8L/min幼儿、成人式40-60）</td><td class="mono">中度呼吸窘迫主力；失败信号=心率/氧需求持续↑</td></tr>
+    <tr><td>NIV（CPAP/BiPAP）</td><td class="mono">CPAP 5-8；BiPAP 8-12/4-6 起步按体重</td><td class="mono">不插管桥接；意识差/分泌物多/血流不稳者禁</td></tr>
+    <tr><td>机械通气</td><td class="mono">见下表</td><td class="mono">NIV失败/呼吸暂停/意识差/循环不稳</td></tr>
+  </table></div>`},
+  {t:'③ 呼吸机初始参数（常规保护性起点）',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>参数</th><th>起点</th><th>备注</th></tr>
+    <tr><td>潮气量Vt（容量模式）</td><td class="mono">6-8 ml/kg</td><td>ARDS 4-6；阻力高用压控</td></tr>
+    <tr><td>RR</td><td class="mono">&lt;1y 25-35｜1-3y 20-30｜3-6y 18-25｜&gt;6y 15-20 /min</td><td>按目标PaCO₂/pH调</td></tr>
+    <tr><td>PIP（压控）</td><td class="mono">15-20（顺应性好）｜20-25（一般）｜可至30（ARDS/肺水肿）</td><td>平台压目标&lt;28-30</td></tr>
+    <tr><td>PEEP</td><td class="mono">4-6 cmH₂O</td><td>ARDS按复张表格上调</td></tr>
+    <tr><td>Ti</td><td class="mono">婴儿0.4-0.6s｜儿童0.6-0.8s</td><td></td></tr>
+    <tr><td>FiO₂</td><td class="mono">0.6-1.0起始→尽快降至≤0.6（目标SpO₂ 92-97%）</td><td></td></tr>
+    <tr><td>触发/模式</td><td class="mono">自主呼吸好：SIMV-PS/PSV；无自主/深镇静：PCV/VCV</td><td></td></tr>
+  </table></div>
+  <div class="emg-amber">上机后30min内必查血气滴定；镇镇痛充分（药物见镇静卡）；「参数越调越差先想人机对抗/气胸/插管移位」三查。</div>`}],
+ cals:[
+  {id:'ett_calc',title:'气管插管速算（导管/深度/镜片/吸引管）',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:15,step:0.5},{k:'ay',lab:'年龄',unit:'岁',def:4,step:1}],
+   out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
+     const m=v.ay*12;
+     if(m<24){ // 按体重给新生儿/婴儿
+       let id=v.w<1.5?'2.5':(v.w<2.5?'3.0':(v.w<3.5?'3.5':'3.5-4.0'));
+       return {lines:['ID（无囊）≈ '+id+'｜有囊 '+f(Math.min(3.5,v.w<2.5?3.0:3.5)),'口插深度 ≈ 6+'+f(v.w)+' = '+f(6+v.w)+'cm（唇缘刻度）','喉镜片：Miller 0-1','吸痰管：约导管内径的1/2-2/3'],
+         ck:['备上下各0.5号；插入后看双侧呼吸音+CO₂波形+胸片','早产极低体重常2.5']};}
+     const idu=v.ay/4+4, idc=v.ay/4+3.5, dep=v.ay/2+12, depn=v.ay/2+15;
+     const scope=v.ay<2?'Miller 1':(v.ay<8?'Mac 2':'Mac 2-3');
+     return {lines:['ID：无囊 '+f(idu)+'｜有囊 '+f(idc)+'（备上下各0.5号）','口插深度 ≈ '+f(dep)+'cm｜鼻插 ≈ '+f(depn)+'cm','喉镜片：'+scope,'吸痰管：约ID的1/2-2/3'],
+       ck:['公式为起点，最终以漏气试验+CO₂波形+胸片为准','有囊导管常规用于2岁以上']};}},
+  {id:'vent_calc',title:'呼吸机初始参数速算',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:15,step:0.5},{k:'ay',lab:'年龄',unit:'岁',def:3,step:1},{k:'mode',lab:'模式',kind:'sel',opts:[['v','容量（Vt 6-8ml/kg）'],['p','压力（PIP按体重/顺应性）']]}],
+   out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
+     const rr=v.ay<1?30:(v.ay<3?25:(v.ay<6?22:(v.ay<10?18:16)));
+     const L=[];
+     if(v.mode==='v'){L.push('Vt '+f(v.w*6)+'-'+f(v.w*8)+'ml（6-8ml/kg）');}
+     else{L.push('PIP '+f(v.w<10?16:20)+'-'+f(v.w<10?22:25)+'cmH₂O（顺应性差可至30，盯平台压<28-30）');}
+     L.push('RR '+rr+'/min（目标PaCO₂/pH再调）');
+     L.push('PEEP 4-6 cmH₂O｜Ti '+(v.ay<2?'0.5':'0.6-0.8')+'s｜FiO₂ 0.6起');
+     return {lines:L,ck:['30min内血气滴定；SpO₂目标92-97%（紫绀型先心例外）','上机前：确认镇镇痛/插管深度/三查（人机对抗·气胸·移位）']};}}
+ ]},
+{id:'nutrition',ico:'🍼',name:'营养与热卡基础',grp:'治疗基础',
+ tag:'各年龄热卡/液体/蛋白需求表；危重应激系数；PN与肠内的衔接提示（详细PN见本科室PN处方台）',
+ srcs:['人卫《儿科学》营养章节','中国儿科肠外肠内营养支持临床应用指南（2013/新版）','SCCM儿科营养口径'],
+ secs:[
+  {t:'① 每日需求速查表',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>年龄</th><th>热卡 kcal/(kg·d)</th><th>液体 ml/(kg·d)</th><th>蛋白 g/(kg·d)</th></tr>
+    <tr><td>&lt;6月</td><td class="mono">110-120</td><td class="mono">140-160</td><td class="mono">2-3（母乳2人工更高口径）</td></tr>
+    <tr><td>6-12月</td><td class="mono">100-110</td><td class="mono">130-150</td><td class="mono">2-2.5</td></tr>
+    <tr><td>1-3岁</td><td class="mono">90-100</td><td class="mono">110-130</td><td class="mono">1.5-2</td></tr>
+    <tr><td>4-6岁</td><td class="mono">80-90</td><td class="mono">90-110</td><td class="mono">1.5</td></tr>
+    <tr><td>7-10岁</td><td class="mono">70-80</td><td class="mono">70-90</td><td class="mono">1-1.5</td></tr>
+    <tr><td>青春期</td><td class="mono">50-60</td><td class="mono">50-70</td><td class="mono">1</td></tr>
+  </table></div>`},
+  {t:'② 危重症营养要点',html:`
+   <div class="emg-step">①应激期热卡目标常低于平常（起始约为预测的1/3-2/3，48-72h内渐升）——按代谢车/儿科学指南，勿按"教科书全量"猛给；②<b>早期肠内优先</b>（24-48h内启动，滋养型喂养也行）；葡萄糖输注速度：婴儿4-6mg/(kg·min)、儿童2-5起（GIR换算见公式页）；③蛋白质：危重儿童1.5-2.5g/(kg·d)（婴幼儿更高）不严格限制；④PN指征：肠内达不到目标60%×7天？按科室口径——本院有专用<b>PN处方台</b>（计算与医嘱一站式），本页不重复。</div>
+   <div class="emg-step">监测：体重/出入量q24h；血糖q2-6h（PN中q4-6h）；电解质qd（再喂养风险者q12h：低磷低钾低镁——再喂养综合征起始热卡≤50%并按阶梯升）；甘油三酯（含脂肪乳时）每周；肝功能每1-2周。</div>`},
+  {t:'③ 常见坑',html:`<div class="emg-red">① 危重急性期按教科书全量热卡猛给（过度喂养→CO₂↑/高糖/脂肪肝）；② 长期禁食没启动肠内（肠绒毛萎缩+细菌移位）；③ 再喂养综合征没识别（营养不良患儿起始半量+补磷）；④ 液体热卡和药物载体液没合并计算（超负荷）；⑤ 只算热卡不算蛋白（儿童蛋白优先）。</div>`}],
+ cals:[
+  {id:'nutr_calc',title:'危重营养目标速算',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:15,step:0.5},{k:'ay',lab:'年龄',unit:'岁',def:2,step:1},{k:'s',lab:'应激系数',kind:'sel',opts:[['1','基础（恢复期）'],['0.7','急性应激期起始（约70%）'],['1.3','康复追赶期（130%）']]}],
+   out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
+     const base=v.ay<1?115:(v.ay<3?95:(v.ay<7?85:(v.ay<11?75:60)));
+     const kc=base*parseFloat(v.s);
+     const fluid=v.ay<1?150:(v.ay<4?120:(v.ay<11?85:65));
+     const pro=v.ay<1?2.5:(v.ay<4?2:1.5);
+     return {lines:['热卡目标 ≈ '+f(kc)+' kcal/(kg·d)（基础'+base+'×'+v.s+'）＝ '+f(kc*v.w)+' kcal/d','液体 ≈ '+f(fluid)+'ml/(kg·d)＝'+f(fluid*v.w)+'ml/d（与4-2-1核对）','蛋白 '+pro+'g/(kg·d)起 ＝ '+f(pro*v.w)+'g/d','GIR参考：婴儿4-6、儿童2-5 mg/(kg·min)'],
+       ck:['急性期起始保守、48-72h渐升；肠内优先','再喂养风险：起始≤50%热卡+补磷钾镁','PN深算用本科室PN处方台']};}}
+]}];
 
 /* ================= 基础 ================= */
 const $=id=>document.getElementById(id);
@@ -2952,18 +3264,48 @@ function showScen(id){
   window.scrollTo(0,0);
 }
 function go(n,keep){
-  if(n!==3&&n!==4&&!keep)document.querySelectorAll('.emgview').forEach(v=>v.style.display='none');
-  if(!keep){[$('emglist'),$('scorelist')].forEach(el=>{if(el)el.style.display='';});
-    const h3=document.querySelector('#p3 .emg-hero'), h4=document.querySelector('#p4 .emg-hero');
-    if(h3)h3.style.display=''; if(h4)h4.style.display='';}
-  [['p0',0],['p1',1],['p2',2],['p3',3],['p4',4]].forEach(([p,i])=>{$(p).className='page'+(n===i?' on':'');});
-  [['nv1',1],['nv3',3],['nv4',4],['nv2',2]].forEach(([id,pg])=>{$(id).className=$(id).className.replace(/\s*on/,'')+(pg===n?' on':'');});
+  if(n!==3&&n!==4&&n!==5&&!keep)document.querySelectorAll('.emgview').forEach(v=>v.style.display='none');
+  if(!keep){[$('emglist'),$('scorelist'),$('reflist')].forEach(el=>{if(el)el.style.display='';});
+    document.querySelectorAll('#p3 .emg-hero, #p4 .emg-hero, #p5 .emg-hero').forEach(h=>h.style.display='');}
+  [['p0',0],['p1',1],['p2',2],['p3',3],['p4',4],['p5',5]].forEach(([p,i])=>{$(p).className='page'+(n===i?' on':'');});
+  [['nv1',1],['nv3',3],['nv4',4],['nv5',5],['nv2',2]].forEach(([id,pg])=>{$(id).className=$(id).className.replace(/\s*on/,'')+(pg===n?' on':'');});
   $('cartbar').style.display=n===2?'none':'flex';
   if(n===2)renderBasket();
   if(n!==1)applySearch('');
   window.scrollTo(0,0);
 }
 
+/* ================= 基础知识模块 ================= */
+function renderRefList(){
+  const grps={};
+  REFS.forEach(s=>{(grps[s.grp]=grps[s.grp]||[]).push(s);});
+  $('reflist').innerHTML=Object.keys(grps).map(g=>`
+    <div class="emg-grp">${g}</div>
+    ${grps[g].map(s=>`<div class="gtile" data-act="refopen" data-sc="${s.id}">
+      <span class="gi">${s.ico}</span>
+      <div><div class="gn">${s.name}</div><div class="gd">${s.tag}</div></div>
+    </div>`).join('')}`).join('');
+  $('views').insertAdjacentHTML('beforeend',REFS.map(s=>`
+    <div class="emgview" id="v_${s.id}" style="display:none">
+      <div class="backrow" data-act="sback">‹ 基础知识</div>
+      <div class="emg-hero" style="background:linear-gradient(150deg,#4a148c,#6a1b9a 60%,#8e24aa);">
+        <div class="et">${s.ico} ${s.name}</div><div class="ed">${s.tag}</div></div>
+      ${s.secs.map(sec=>`<div class="emg-sec">${sec.t?`<div class="st">${sec.t}</div>`:''}${sec.html}</div>`).join('')}
+      ${(s.cals&&s.cals.length)?`<div class="emg-sec"><div class="st">🧮 速算工具（与顶部体重联动）</div>${s.cals.map(calcHtml).join('')}</div>`:''}
+      ${(s.srcs&&s.srcs.length)?`<div class="emg-sec"><details class="emg-det"><summary>依据来源</summary>${s.srcs.map(x=>'<div class="mrow">· '+esc(x)+'</div>').join('')}</details></div>`:''}
+    </div>`).join(''));
+  REFS.forEach(s=>(s.cals||[]).forEach(c=>{SCENCALC[c.id]=c; SCENCALC_KEYS.push(c.id);}));
+  REFS.forEach(s=>(s.cals||[]).forEach(c=>updScCalc(c.id)));
+}
+function showRef(id){
+  document.querySelectorAll('.emgview').forEach(x=>x.style.display='none');
+  const v=$('v_'+id); if(v)v.style.display='block';
+  curViewPg=5;
+  go(5,true);
+  [$('emglist'),$('scorelist'),$('reflist')].forEach(el=>{if(el)el.style.display='none';});
+  document.querySelectorAll('#p3 .emg-hero, #p4 .emg-hero, #p5 .emg-hero').forEach(h=>h.style.display='none');
+  window.scrollTo(0,0);
+}
 /* ================= 评分模块 ================= */
 const SCOREVALS={};
 function renderScoreList(){
@@ -3039,6 +3381,7 @@ document.addEventListener('click',e=>{
   else if(a==='oprint')window.print();
   else if(a==='oclear'){if(!Object.keys(basket).length||confirm('清空医嘱篮？')){Object.keys(basket).forEach(k=>delete basket[k]); try{localStorage.setItem('picuBK','{}');}catch(err){} renderBasket(); renderAdds();}}
   else if(a==='scen')showScen(t.dataset.sc);
+  else if(a==='refopen')showRef(t.dataset.sc);
   else if(a==='quickdrug')gotoDrugCard(t.dataset.d);
   else if(a==='sback')go(curViewPg);
   else if(a==='sopt'){
@@ -3060,6 +3403,7 @@ document.addEventListener('input',e=>{
   if(t.id==='q'){applySearch(t.value); return;}
   if(t.id==='q3'){filterTiles('emglist',t.value); return;}
   if(t.id==='q4'){filterTiles('scorelist',t.value); return;}
+  if(t.id==='q5'){filterTiles('reflist',t.value); return;}
   if(t.dataset.din){const p=t.dataset.din.split(':'); const id=p[0],li=+p[1];
     const st=laneSt(id); st.man[li]=true; st.dose[li]=t.value===''?null:parseFloat(t.value);
     updCard(id); return;}
@@ -3092,7 +3436,7 @@ document.addEventListener('pointerdown',e=>{
 
 /* ================= init ================= */
 function initAll(){
-  renderGroups(); renderQuick(); renderScenList(); renderScoreList();
+  renderGroups(); renderQuick(); renderScenList(); renderScoreList(); renderRefList();
   $('pw').value=PT.w;
   if(PT.ay!=null)$('pa').value=PT.ay;
   if(PT.am!=null)$('pm').value=PT.am;
