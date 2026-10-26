@@ -319,6 +319,7 @@ const GRPS=[
  {id:'heme',ico:'🩸',t:'血液 · 止血 · 血制品',sub:'止血 / 抗凝 / 血制品',drugs:['reptilase','carbaz','amicap_load','amicap_maint','vitk1','thromb_pow','pcc','fibrin','heparin','lmwh','lmwh_crrt','nadrop','warfarin','aspirin','dipy','urokin_ivig','ivig','charcoal','tat','tig','ppd','gcsf','il11','tpo']},
  {id:'endo',ico:'🧪',t:'内分泌 · 代谢',sub:'激素 / 血糖 / 代谢辅助',drugs:['hydrocor','mepred','dexam','desmop','carnit','carnitpo','coq10','cvs']},
  {id:'diure',ico:'💧',t:'利尿脱水',sub:'袢利尿 / 保钾 / 渗透性',drugs:['furos_push','furos_qd','furos_inf','spiron','hctz']},
+ {id:'detox',ico:'🛡️',t:'解毒剂（中毒急救）',sub:'⚠指南推荐口径·本院清单多数未列——需紧急调拨',drugs:['nac','mbiv','flumaz','palido','defox','fomep','hydroxo','acetamid','thiosul','glucagonOD']},
  {id:'misc',ico:'➕',t:'其他',sub:'退热 / 外用 / 局部 / 疫苗类',drugs:['ibuprofen','ibu_iv','acetam','lysaspin','prometh','chlorprom','naloxone','caffeine_load','caffeine_maint','fatvit','watvit','trace','lidocirc','ppd2','vitc','benzhexol']}
 ];
 
@@ -1199,6 +1200,49 @@ lamot:{n:'拉莫三嗪',b:'利必通',sub:'抗癫痫',tags:'利必通 拉莫三�
  ref:'BNFc：与丙戊酸合用起始0.15mg/kg/d（剂量减半、极缓慢加量）；单药0.3-0.5起',
  src:'通常联合用药（清单未给剂量）——与丙戊酸合用剂量减半、极缓慢加量',note:'Na通道抑制剂；⚠Stevens-Johnson综合征风险（加量过快）',
  c:{k:'info'}},
+
+nac:{n:'N-乙酰半胱氨酸（NAC）',sub:'对乙酰氨基酚解毒',tags:'NAC 解毒 乙酰半胱氨酸',rt:'静滴',
+ src:'本院清单未列——需紧急调拨（口服剂型可胃管应急）',head:'⚠疑诊对乙酰氨基酚中毒即启动，8h内最佳，不等浓度回报',
+ ref:'Heard NEJM 2008：21h方案 150mg/kg×1h→50×4h→100×16h（总量300mg/kg）；口服140→70 q4h×17次',
+ c:{k:'pk',lo:150,hi:150,def:150,fq:['st'],dfq:'st',dil:'5%GS/NS',conc:20,rate:'首袋1h（见临床情景-对乙酰氨基酚中毒三袋方案）'}},
+mbiv:{n:'亚甲蓝（静注）',sub:'高铁血红蛋白解毒',tags:'亚甲蓝 解毒 MetHb',rt:'静推',
+ src:'本院仅口服剂型（外科示踪）——静注剂型需调拨',head:'⚠G6PD缺乏无效且加重溶血',
+ ref:'中毒中心通用：1-2mg/kg IV缓注>5min（速度≤2mg/kg/min），1h后可重复',
+ c:{k:'pk',lo:1,hi:2,def:1,unit:'mg/kg',fq:['st'],dfq:'st',rate:'缓注>5min，1%制剂1-2ml/kg折算'}},
+flumaz:{n:'氟马西尼',sub:'苯二氮卓解毒',tags:'氟马西尼 解毒',rt:'静推',
+ src:'本院清单未列——需紧急调拨',head:'⚠TCA中毒/癫痫史/BZD依赖/颅高压禁用；不明昏迷不作诊断性使用',
+ ref:'Atlantic Canada Poison Centre：0.01mg/kg（max 0.2mg）15s，q1-2min重复，总量≤1mg',
+ c:{k:'pk',lo:0.01,hi:0.01,def:0.01,unit:'mg/kg',fq:['st'],dfq:'st',rate:'15s推完，q1-2min可重复',capU:0.2}},
+palido:{n:'碘/氯解磷定',sub:'有机磷复能剂',tags:'解磷定 有机磷 复能',rt:'静推',
+ src:'本院清单未列——需紧急调拨',head:'48-72h内使用（ChE老化后无效）；敌敌畏/敌百虫效果差',
+ ref:'国内共识：15-30mg/kg/次 IV缓注，q8-12h；与阿托品联用',
+ c:{k:'pk',lo:15,hi:30,def:25,unit:'mg/kg',fq:['q8h','q12h'],dfq:'q8h',rate:'稀释缓注'}},
+defox:{n:'去铁胺',sub:'铁剂中毒解毒',tags:'去铁胺 铁中毒',rt:'泵入',
+ src:'本院清单未列——需紧急调拨',head:'症状性或血铁>500μg/dL启用；>24-48h警惕ARDS',
+ ref:'WikEM/MSD：15mg/kg/h持续（可自5起滴定防低血压）',
+ c:{k:'inf',unit:'mg/kg/h',lo:5,hi:15,def:15,rec:[30,50],dil:'NS/5%GS'}},
+fomep:{n:'甲吡唑',sub:'甲醇/乙二醇解毒',tags:'甲吡唑 甲醇 乙二醇',rt:'静推',
+ src:'本院清单未列——需紧急调拨',head:'用至毒物浓度<20mg/dL且酸中毒纠正',
+ ref:'Brent 2010（儿童同成人有效）：15mg/kg负荷30min→10mg/kg q12h×4→15mg/kg q12h维持',
+ cs:[{l:'负荷',bn:'负荷',k:'pk',lo:15,hi:15,def:15,unit:'mg/kg',fq:['st'],dfq:'st',rate:'30min'},
+     {l:'维持',bn:'维持',k:'pk',lo:10,hi:15,def:10,unit:'mg/kg',fq:['q12h'],dfq:'q12h'}]},
+hydroxo:{n:'羟钴胺（氰化物解毒）',sub:'氰化物解毒',tags:'羟钴胺 氰化物',rt:'静滴',
+ src:'本院清单未列——需紧急调拨',head:'氰化物中毒首选；不影响氧输送（CO/MetHb共存更安全）',
+ ref:'Cyanokit：70mg/kg IV（max 5g），可重复1次；尿深红色为药物性',
+ c:{k:'pk',lo:70,hi:70,def:70,unit:'mg/kg',fq:['st'],dfq:'st',capU:5000,rate:'15min级'}},
+acetamid:{n:'乙酰胺（解氟灵）',sub:'氟乙酰胺解毒',tags:'解氟灵 氟乙酰胺 灭鼠',rt:'肌注',
+ src:'本院清单未列——需紧急调拨',head:'疑诊即用，不等毒检确认',
+ ref:'国内共识/文献：0.1-0.3g/(kg·d)分2-4次肌注×5-7天',
+ c:{k:'pkd',lo:0.1,hi:0.3,def:0.24,unit:'g/kg/d',fq:['q6h','q8h','q12h'],dfq:'q6h',rt:'肌注'}},
+thiosul:{n:'硫代硫酸钠',sub:'氰化物解毒（传统组合）',tags:'硫代硫酸钠 氰化物',rt:'静推',
+ src:'本院清单未列——需紧急调拨',head:'传统组合（亚硝酸钠+硫代硫酸钠）；CO暴露者亚硝酸钠禁用，首选羟钴胺',
+ ref:'中毒中心通用：400mg/kg IV',
+ c:{k:'pk',lo:400,hi:400,def:400,unit:'mg/kg',fq:['st'],dfq:'st',rate:'25%制剂1.6ml/kg折算'}},
+glucagonOD:{n:'胰高糖素（β阻滞剂中毒）',sub:'β阻滞剂解毒',tags:'胰高糖素 解毒 β阻滞剂',rt:'静推',
+ src:'本院在用（新生儿低血糖口径）；中毒剂量遵毒理',head:'呕吐常见——备止吐；对CCB无效（用HIET）',
+ ref:'MD/Ontario Poison Centre：首剂50-150μg/kg（≤1mg）可重复；维持2-10μg/kg/h',
+ cs:[{l:'首剂',bn:'首剂',k:'pk',lo:50,hi:150,def:100,unit:'μg/kg',fq:['st'],dfq:'st',capU:1,ckn:'单次≤1mg；只配含糖液'},
+     {l:'维持',bn:'维持',k:'inf',unit:'μg/kg/h',lo:2,hi:10,def:5,rec:[0.2,50],dil:'5%GS（勿配盐水）'}]},
 };
 
 /* ================= 临床情景（04）——儿科常见急症标准流程 ================= */
@@ -1852,35 +1896,68 @@ SCEN.push(
      return {lines:['悬浮红细胞 '+f(v.w*40)+'ml','单采血小板 '+f(v.w*15)+'-'+f(v.w*20)+'ml','冷沉淀 '+f(v.w*10)+'ml（或纤维蛋白原制品 '+f(v.w*0.1)+'g）'],
        ck:['输后1h/24h复查PLT/Fib/Hb','目标：Hb>80、Fib>1.5、PLT>75（活动出血）']};}}
  ]},
-{id:'poisoning',ico:'☠️',name:'急性中毒总论与解毒剂',grp:'血液肾脏中毒急症',
- tag:'稳定ABC优先于洗胃；活性炭1g/kg服毒1h内；解毒剂按毒物表格速查',
- srcs:['AACT/EAPCCT立场声明2013（洗胃/活性炭）','UpToDate各毒物专篇','中国急性中毒相关专家共识'],
+{id:'poisoning',ico:'☠️',name:'急性中毒总论',grp:'血液肾脏中毒急症',
+ tag:'昏迷三针（糖/纳洛酮/氧）先行；洗胃不常规、炭1g/kg、WBI按年龄速率；解毒剂大表+血液净化指征',
+ srcs:['AACT/EAPCCT立场文件（洗胃2013/活性炭2005/全肠灌洗2013-15）','《急性中毒诊断与治疗中国专家共识》','Heard KJ. NEJM 2008（NAC 21h）','Bartlett 2019（CCB-HIET）','Atlantic Canada Poison Centre儿科解毒剂方案'],
  secs:[
-  {t:'① 总则',html:`
-   <div class="emg-step"><span class="sno">Step1 ABC+监护</span><br>气道/呼吸/循环永远第一；意识差→插管保护；测血糖（低血糖 mimic 中毒）；留血尿标本（毒物筛查/血药浓度）；问清毒物/剂量/时间。</div>
-   <div class="emg-step"><span class="sno">Step2 去污染（有指征才做）</span><br>· <b>洗胃：仅1h内服入致命剂量</b>且无禁忌（意识不清先插管；烃类/腐蚀剂禁洗胃）· <b>活性炭 1g/kg（≤50g）</b>：服毒1h内最有效；肠肝循环毒物（茶碱/苯巴比妥/奎宁/卡马西平）可重复 · 导泻/全肠灌洗按毒物（缓释制剂/铁剂——PEG灌洗）· 皮肤/眼去污染。</div>
-   <div class="emg-step"><span class="sno">Step3 解毒剂速查表</span></div>`},
-  {t:'② 常见解毒剂',html:`<div class="tblwrap"><table class="tbl">
-   <tr><th>毒物</th><th>解毒剂与儿童剂量</th><th>本院清单</th></tr>
-   <tr><td>对乙酰氨基酚</td><td class="mono">NAC：口服140mg/kg负荷→70mg/kg q4h×17；静注150mg/kg→50（4h）→100（16h）21h方案</td><td>未列（需备）</td></tr>
-   <tr><td>阿片类</td><td class="mono">纳洛酮 0.01→0.1mg/kg递增至呼吸恢复；泵维持1/2-2/3有效量</td><td>纳洛酮✓</td></tr>
-   <tr><td>苯二氮卓</td><td class="mono">氟马西尼 0.01mg/kg（max 0.2mg/次）——仅诊手段不宜常规，癫痫依赖者诱发戒断</td><td>未列</td></tr>
-   <tr><td>高铁血红蛋白</td><td class="mono">亚甲蓝 1-2mg/kg 静注（G6PD禁忌）</td><td>仅口服剂型（外科示踪）；需备静注</td></tr>
-   <tr><td>有机磷</td><td class="mono">阿托品化（本院长托宁0.01-0.03mg/kg首剂并行）+碘解磷定 25-50mg/kg q6h？遵专科</td><td>长托宁✓ 阿托品✓</td></tr>
-   <tr><td>β阻滞剂/CCB过量</td><td class="mono">HIET：胰岛素 1U/kg+GS 0.5g/kg→0.5-1U/(kg·h)；钙剂/胰高糖素/脂乳</td><td>胰岛素✓ 胰高糖素？（需备）</td></tr>
-   <tr><td>铁剂</td><td class="mono">去铁胺 15mg/(kg·h)（首日≤6g）</td><td>未列（需备）</td></tr>
-   <tr><td>甲醇/乙二醇</td><td class="mono">甲吡唑 15mg/kg负荷→10mg/kg q12h×4；无药则乙醇（10% 0.6-0.8g/kg负荷）</td><td>未列（需备）</td></tr>
-   <tr><td>地高辛中毒</td><td class="mono">地高辛抗体片段（Fab）按摄入量/浓度</td><td>未列（需备）</td></tr>
-   <tr><td>抗胆碱/抗组胺</td><td class="mono">毒扁豆碱（诊断性）；苯海拉明型以支持为主</td><td>未列</td></tr>
+  {t:'① 初始处置（顺序=优先级）',html:`
+   <div class="emg-step"><span class="sno">Step1 复苏与「昏迷三针」</span><br>ABC；意识差先给三样：<b>葡萄糖（POCT后D10 2ml/kg）/ 纳洛酮 0.01mg/kg（滴定至0.1）/ 高流量氧</b>；气道保护（GCS≤8或气道反射受损→插管后再洗胃）；休克NS 10-20ml/kg。</div>
+   <div class="emg-step"><span class="sno">Step2 床旁快检（15分钟内）</span><br>血糖+血气（AG+<b>渗透压间隙</b>）+电解质+肝肾功能+<b>对乙酰氨基酚/水杨酸浓度（不明昏迷/肝损/代酸必查）</b>+心电图（QRS增宽=钠通道阻滞剂：TCA/苯海拉明等；QT延长）+床旁指尖酮体；留样：血/尿/呕吐物/药瓶送毒检。</div>
+   <div class="emg-step"><span class="sno">Step3 尽早用解毒剂（不用等毒检）</span><br>「先解毒后完善」的四种：阿片→纳洛酮；低血糖→葡萄糖；高铁血红蛋白（SpO₂顽固~85%+巧克力色血+正常pO₂）→亚甲蓝；对乙酰氨基酚疑诊→<b>8h内NAC</b>。CCB/β阻滞剂过量→钙+HIET（见解毒剂表）。</div>`},
+  {t:'② 胃肠道去污染三件套（有指征才做）',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>手段</th><th>儿童剂量/速率</th><th>指征</th><th>禁忌</th></tr>
+    <tr><td><b>洗胃</b></td><td class="mono">温盐水小量反复（按体重50-100ml/次，勿超生理量）</td><td>致命剂量且<b>≤1h</b>；国内共识：量大/抗胆碱能药延缓胃排空者>1h仍可个体化</td><td>腐蚀剂/烃类/未插管的意识障碍/出血穿孔风险</td></tr>
+    <tr><td><b>活性炭单剂</b></td><td class="mono">1g/kg（≤50g/次），服毒1h内最有效</td><td>多数药物中毒一线去污染；茶碱/卡马西平/苯巴比妥/奎宁/氨苯砜可q4h重复（MDAC）</td><td>肠梗阻、气道未保护、烃类、腐蚀剂、<b>铁/锂/醇类（无效）</b>、重金属</td></tr>
+    <tr><td><b>全肠灌洗WBI</b></td><td class="mono">PEG电解质液：1-6岁500ml/h、6-12岁1000ml/h、≥13岁1500-2000ml/h，至肛门排出清亮</td><td>缓释/肠溶制剂、铁剂、锂、体包装者</td><td>肠梗阻/穿孔/ileus/血流动力学不稳/气道未保护</td></tr>
+  </table></div>
+  <div class="emg-amber">本院药用碳片0.3g/片（3-10片tid≈0.9-3g/次）是轻症辅助口径——<b>与急救1g/kg差距巨大，急症中毒勿以此替代</b>。</div>`},
+  {t:'③ 解毒剂剂量大表（完整版）',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>中毒</th><th>解毒剂</th><th>儿童剂量</th><th>本院</th></tr>
+    <tr><td>对乙酰氨基酚</td><td><b>NAC静注21h</b></td><td class="mono">150mg/kg×1h → 50mg/kg×4h → 100mg/kg×16h（总量300）；口服：140→70 q4h×17次</td><td>未列·紧急调拨（专页+计算器）</td></tr>
+    <tr><td>阿片类</td><td>纳洛酮</td><td class="mono">0.01起滴定至0.1mg/kg（单次max 2mg）；维持=有效剂量2/3 每小时</td><td>✓在列</td></tr>
+    <tr><td>苯二氮卓</td><td>氟马西尼</td><td class="mono">0.01mg/kg（max 0.2mg）15s，q1-2min重复，总量≤1mg</td><td>未列；<b>不明昏迷不作诊断性使用</b>（TCA/癫痫/依赖者诱发抽搐）</td></tr>
+    <tr><td>高铁血红蛋白</td><td>亚甲蓝</td><td class="mono">1-2mg/kg IV缓注>5min，1h后可重复</td><td>仅口服剂型，静注需调拨；G6PD慎用</td></tr>
+    <tr><td>有机磷/氨基甲酸酯</td><td>阿托品+肟类复能剂</td><td class="mono">阿托品0.02-0.1mg/kg q10-30min至阿托品化；氯/碘解磷定15-30mg/kg q8-12h（48-72h内）</td><td>阿托品✓；长托宁✓（0.01-0.03首剂）</td></tr>
+    <tr><td>CCB中毒</td><td>钙剂+<b>HIET</b></td><td class="mono">葡萄酸钙30-60mg/kg；胰岛素1U/kg负荷+0.5-1（可至2-10）U/kg/h+葡萄糖维持正常血糖</td><td>钙✓胰岛素✓；CCB缓释剂观察≥24h</td></tr>
+    <tr><td>β阻滞剂中毒</td><td>胰高糖素</td><td class="mono">首剂50-150μg/kg（≤1mg）可重复；维持2-10μg/kg/h</td><td>本院在用（新生儿口径）；中毒剂量遵毒理</td></tr>
+    <tr><td>铁剂</td><td>去铁胺</td><td class="mono">15mg/kg/h IV（可自5起滴定防低血压）；症状性或血铁>500μg/dL启用；>24-48h警惕ARDS</td><td>未列·紧急调拨</td></tr>
+    <tr><td>甲醇/乙二醇</td><td>甲吡唑（或乙醇10%）</td><td class="mono">15mg/kg负荷30min→10mg/kg q12h×4→15 q12h维持至浓度<20mg/dL；乙醇10%：10ml/kg负荷→1-2.5ml/kg/h（目标100-150mg/dL）</td><td>均未列；HD指征见下表</td></tr>
+    <tr><td>氰化物</td><td>羟钴胺（首选）</td><td class="mono">70mg/kg IV（max 5g）；备选：3%亚硝酸钠0.33ml/kg+硫代硫酸钠400mg/kg</td><td>未列·紧急调拨</td></tr>
+    <tr><td>磺脲类降糖药</td><td>葡萄糖+奥曲肽</td><td class="mono">D10 2-5ml/kg；奥曲肽1-2μg/kg q6-12h SC/IV</td><td>均✓在列</td></tr>
+    <tr><td>杀鼠剂（抗凝型）</td><td>VitK1</td><td class="mono">出血者5-10mg IV缓注；长效型（大隆等）按INR大剂量长期口服——专页</td><td>✓在列</td></tr>
+    <tr><td>氟乙酰胺（灭鼠）</td><td>乙酰胺（解氟灵）</td><td class="mono">0.1-0.3g/(kg·d)分2-4次肌注×5-7天</td><td>未列·紧急调拨——专页</td></tr>
   </table></div>`},
-  {t:'③ 常见坑',html:`<div class="emg-red">① 意识不清没插管就洗胃/给炭（误吸）；② 腐蚀剂洗胃（穿孔）；③ 活性炭包埋了解毒剂（错开1-2h给）；④ 对乙酰氨基酚过量 4h血药浓度没按Rumack-Matthew线判（<4h不判）；⑤ 忘了炭反复给（茶碱等）；⑥ 家长带来的「药瓶」没留样送检。</div>`}],
+  {t:'④ 血液净化指征（按毒物理化性质选模式）',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>模式</th><th>适合毒物（水溶性/小分子/低蛋白结合→HD）</th></tr>
+    <tr><td><b>血液透析HD</b></td><td class="mono">甲醇、乙二醇、锂、水杨酸、二甲双胍乳酸酸中毒、可透析高氨血症</td></tr>
+    <tr><td><b>血液灌流HP</b></td><td class="mono">脂溶性/大分布容积：有机磷、氨基甲酸酯、巴比妥、茶碱、毒蕈、百草枯（早期）</td></tr>
+    <tr><td><b>CRRT</b></td><td class="mono">血流动力学不稳、HD不可及、缓释制剂持续释放</td></tr>
+    <tr><td><b>血浆置换PE</b></td><td class="mono">高蛋白结合率毒物（毒伞肽等）</td></tr>
+  </table></div>
+  <div class="emg-step">指征通用原则：①进行性恶化 ②昏迷/呼吸抑制 ③低血压对输液升压无反应 ④严重酸碱电解质紊乱 ⑤正常代谢途径超负荷（肝肾衰）⑥可测浓度超过致死线。难治性休克：脂乳剂（局麻药/脂溶性CCB）±ECMO。</div>`},
+  {t:'⑤ 监测',html:`<div class="emg-step">持续心电/血压/SpO₂；血糖q1-4h（降糖药/醇/胰岛素类）；血气+电解质q4-6h（AG/渗透压间隙跟踪）；肝肾功能q12-24h（对乙酰氨基酚按R-M线q4h绘浓度）；毒物浓度按半衰期复查；洗胃/炭后：腹部体征、误吸征象、炭便。</div>`},
+  {t:'⑥ 常见坑（十条）',html:`<div class="emg-red">① 昏迷三针没给就去做CT；② 腐蚀剂/烃类洗胃（穿孔/误吸加重）；③ 活性炭包了解毒剂（错开1-2h）；④ NAC等浓度回报才给（<b>8h内最佳，疑诊即启</b>）；⑤ 纳洛酮不维持（半衰期短于芬太尼类）；⑥ 氟马西尼当诊断工具（诱发抽搐）；⑦ 有机磷阿托品化后骤减量（反跳肺水肿）；⑧ CCB缓释剂无症状就放走（延迟恶化，观察≥24h）；⑨ MetHb只调呼吸机不问氧化剂暴露史；⑩ 蓄意中毒漏精神科/社工介入。</div>`}],
  cals:[
   {id:'poison_calc',title:'活性炭剂量（1g/kg）',
    inputs:[{k:'w',lab:'体重',unit:'kg',def:20,step:0.5}],
    out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
      let g=v.w*1;if(g>50){g=50;}
-     return {lines:['活性炭 '+f(g)+'g（1g/kg，≤50g）＝药用碳片（0.3g/片）'+f(g/0.3)+'片','口服或胃管（插管保护后）；50ml水/g调成浆'],
-       ck:['服毒1h内最有效；肠肝循环毒物可q4h重复0.5g/kg','⚠意识不清先插管；腐蚀剂/烃类禁用','与解毒剂错开1-2h']};}}
+     return {lines:['活性炭 '+f(g)+'g（1g/kg，≤50g）＝药用碳片（0.3g/片）'+f(g/0.3)+'片（仅当急救量折算）','口服或胃管（插管保护后）；50ml水/g调成浆'],
+       ck:['服毒1h内最有效；肠肝循环毒物（茶碱/卡马西平/苯巴比妥/奎宁/氨苯砜）q4h重复0.5g/kg','⚠意识不清先插管；腐蚀剂/烃类/铁锂醇禁用/无效','与解毒剂错开1-2h']};}},
+  {id:'wbi_calc',title:'全肠灌洗 WBI 速率（按年龄）',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:20,step:0.5},{k:'ay',lab:'年龄',unit:'岁',def:8,step:1}],
+   out:(v)=>{if(!v.ay&&v.ay!==0)return{lines:['填年龄'],ck:[]};
+     let r=v.ay<6?500:(v.ay<13?1000:1500);
+     return {lines:['PEG电解质液 '+f(r)+'ml/h 经鼻胃管泵入','预计总时长：至肛门排出清亮液（常4-6h）'],
+       ck:['①龄档：1-6岁500／6-12岁1000／≥13岁1500-2000ml/h','用于缓释制剂/铁/锂/体包装；肠梗阻/穿孔/不稳者禁','首次排便前可先给活性炭（错开）']};}},
+  {id:'nalox_inf',title:'纳洛酮维持泵（有效量2/3 per h）',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:20,step:0.5},{k:'eff',lab:'刚才起效的单次量',unit:'mg',def:0.8,step:0.1},{k:'v',lab:'配至',unit:'ml',def:50,step:10}],
+   out:(v)=>{if(!v.w||!v.eff)return{lines:['填体重+起效剂量'],ck:[]};
+     const perh=v.eff*2/3, rate=perh*v.v/(v.w*0.4*10);   /* 配4mg? 浓度=v.w? 按mg/ml=c: 4mg/50ml? 通用：配 X mg=10×eff 至50ml */
+     const amt=Math.max(1,v.eff*5);
+     const r2=perh*v.v/amt;
+     return {lines:['纳洛酮 '+f(amt)+'mg','NS/5%GS 至 '+v.v+'ml','泵速 '+f(r2)+'ml/h（='+f(perh)+'mg/h=起效量的2/3）'],
+       ck:['症状复发即再给单次量+上调泵速；q1-2h评估','海洛因/芬太尼类作用时长>纳洛酮——至少维持至毒物清除窗']};}}
  ]},
 {id:'gibleed',ico:'🩸',name:'急性上消化道大出血',grp:'血液肾脏中毒急症',
  tag:'复苏+抑酸双线；生长抑素/奥曲肽泵疑静脉曲张；本院凝血酶+去甲肾胃管局部（严禁iv）',
@@ -1933,6 +2010,107 @@ SCEN.push(
      const maint=v.w<=10?v.w*4:(v.w<=20?40+(v.w-10)*2:60+(v.w-20));
      return {lines:['维持量 '+f(maint)+'ml/h（4-2-1）','尿量性丢失：5%GS按 '+f(v.u)+'ml/h 同步补充（清醒可饮水者口服）','总泵速 ≈ '+f(maint+v.u)+'ml/h（q4h按血钠/尿量调整）'],
        ck:['血钠>145→增加低渗比例；<135→警惕SIADH三相转换','去氨加压素口服0.05-0.1mg q12h起，用后q6h血钠','尿电解质送检指导张力']};}}
+ ]});
+
+/* ================= 临床情景批次E：中毒专题（Heard NEJM2008 / 国内有机磷共识 / CDC杀鼠剂口径 / Cyanokit） ================= */
+SCEN.push(
+{id:'apap',ico:'💊',name:'对乙酰氨基酚中毒',grp:'血液肾脏中毒急症',
+ tag:'⚠8小时内NAC是金标准——疑诊即启动，不等浓度回报；Rumack-Matthew列线图判读；21h静脉方案',
+ srcs:['Heard KJ. Acetylcysteine for acetaminophen poisoning. NEJM 2008;359:285-92（21h方案）','AACT/EAPCCT立场文件','Rumack BH, Matthew H. Pediatrics 1975（列线图）'],
+ secs:[
+  {t:'① 判读路径',html:`<div class="emg-lad">
+    <div class="lrow lamber"><span class="lv">何时查浓度</span><span>单次急性摄入：<b>≥4h</b>（摄入后）测血药浓度对 Rumack-Matthew 列线图判读；<4h的浓度不可判（仍在吸收）</span></div>
+    <div class="lrow lred"><span class="lv">处理线</span><span>浓度在R-M线上方（原版150μg/ml@4h对应的对数线，即"治疗线"）→启动NAC；<b>浓度未回报但疑诊/摄入>4h未知量/超大量——直接启动NAC</b></span></div>
+    <div class="lrow lred"><span class="lv">四阶段</span><span>0.5-24h（恶心呕吐，可无症状）→24-72h（右上腹痛/ALT↑/肌酐↑）→72-96h（肝衰峰值：INR↑/脑病/乳酸↑）→4d-2周（恢复或死亡）——<b>阶段2-3可以完全没症状，别被"没事"骗</b></span></div>
+    <div class="lrow lgray"><span class="lv">高危背景</span><span>反复超量喂药（退热）、营养不良/禁食（谷耗竭）、肝酶诱导剂同用、缓释制剂——阈值放宽，不必严格等R-M线</span></div>
+  </div>`},
+  {t:'② 处置',html:`
+   <div class="emg-step"><span class="sno">Step1 NAC 静注21h方案（金标准）</span><br><b>150mg/kg 静滴1h → 50mg/kg ×4h → 100mg/kg ×16h</b>（总量300mg/kg）；三袋连泵，中断重配（NAC现配，4h内用）。口服备选：140mg/kg负荷→70mg/kg q4h×17次（72h方案，呕吐/神志差者不适用）。⚠本院清单未列NAC——<b>紧急联系药房调拨（静脉剂型）</b>；口服剂型（痰溶解药）可胃管替代应急。</div>
+   <div class="emg-step"><span class="sno">Step2 辅助</span><br>活性炭（1h内1g/kg，缓释制剂配合WBI）；止吐（昂丹司琼）保证口服方案可执行；<b>勿用肝酶诱导剂</b>。</div>
+   <div class="emg-step"><span class="sno">Step3 监测</span><br>启动NAC时查：ALT/AST/INR/肌酐/血糖/血气/pH+浓度（若≥4h可判）；<b>ALT/INR q12-24h复查直至明显回落</b>；NAC输注中过敏样反应（皮疹/支气管痉挛——减慢速度即可，非停药指征）。</div>
+   <div class="emg-step"><span class="sno">Step4 肝衰升级（阶段3）</span><br>INR>2且上升、脑病、乳酸↑、pH<7.3：联系肝移植中心；足量NAC即使肝衰也继续（改善血流动力学）；颅内高压按流程；CRRT按AKI页。King's College标准（成人主要）：pH<7.3+INR>6.5+肌酐>3.4+脑病——儿科参照专科。</div>`},
+  {t:'③ 常见坑',html:`<div class="emg-red">① 等4h浓度回报才给NAC（摄入时间不明/超量直接给）；② 重复喂退热药的婴幼儿不疑诊（家长常不记得给了多少）；③ R-M线下方但摄入>24h来院（列线图只适用于<24h单次摄入——按ALT/INR+延长NAC处理）；④ NAC过敏样反应就停药（应减慢）；⑤ 口服方案用在呕吐/意识差患儿（误吸）；⑥ 没复查INR就放走（阶段2-4沉默期）。</div>`}],
+ cals:[
+  {id:'apap_nac',title:'NAC 21h 静脉方案三袋计算器',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:20,step:0.5},{k:'c',lab:'稀释浓度上限',kind:'sel',opts:[['20','20mg/ml（外周安全）'],['40','40mg/ml（中心静脉）']]}],
+   out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
+     const c=parseFloat(v.c);
+     const b1=v.w*150/c, b2=v.w*50/c, b3=v.w*100/c;
+     const nice=x=>{const S=[10,20,30,40,50,60,80,100,150,200,250,500];for(const s of S)if(x<=s+1e-9)return s;return Math.ceil(x/50)*50;};
+     const V1=nice(b1),V2=nice(b2),V3=nice(b3);
+     return {lines:['袋1：NAC '+f(v.w*150)+'mg +5%GS/NS 至 '+V1+'ml → 泵速 '+f(V1)+'ml/h ×1h（150mg/kg）',
+       '袋2：NAC '+f(v.w*50)+'mg 至 '+V2+'ml → 泵速 '+f(V2/4)+'ml/h ×4h（50mg/kg）',
+       '袋3：NAC '+f(v.w*100)+'mg 至 '+V3+'ml → 泵速 '+f(V3/16)+'ml/h ×16h（100mg/kg）'],
+       ck:['总量300mg/kg；现配4h内用，换袋无缝衔接','浓度≤'+c+'mg/ml（外周≤20）','过敏样反应（皮疹/喘）→减半速，不停药','口服备选：140mg/kg负荷→70mg/kg q4h×17次']};}}
+ ]},
+{id:'organophos',ico:'🐛',name:'有机磷 / 氨基甲酸酯农药中毒',grp:'血液肾脏中毒急症',
+ tag:'去污染+阿托品化（剂量不足是第一死因）+复能剂48-72h窗；防反跳、防中间综合征',
+ srcs:['《急性中毒诊断与治疗中国专家共识》','《儿科急诊医学》第5版有机磷章节','长托宁治疗小儿有机磷中毒临床观察（内科急危重症杂志2015）+说明书'],
+ secs:[
+  {t:'① 识别（毒蕈碱/烟碱征）',html:`<div class="emg-lad">
+    <div class="lrow lred"><span class="lv">毒蕈碱征（DUMBELS）</span><span>流涎/流泪/大小便失禁/支气管分泌↑+喘鸣、呕吐腹泻、瞳孔缩、心动过缓、<b>肺水肿（主要死因）</b></span></div>
+    <div class="lrow lamber"><span class="lv">烟碱征</span><span>肌颤/肌无力/抽搐；氨基甲酸酯类症状同但轻且短</span></div>
+    <div class="lrow lgray"><span class="lv">确诊</span><span>血胆碱酯酶(ChE)活性↓（q12-24h复查）；病史（喷洒/皮肤接触/服毒）+呼气蒜臭</span></div>
+  </div>`},
+  {t:'② 处置',html:`
+   <div class="emg-step"><span class="sno">Step1 去污染（先于给药并行）</span><br>脱衣、<b>大量肥皂水洗皮肤/毛发/指甲</b>（医护防护手套）；口服者洗胃（1h内，>1h个体化）+活性炭。</div>
+   <div class="emg-step"><span class="sno">Step2 阿托品化（救命第一步）</span><br><b>首剂：轻0.02-0.03 / 中0.03-0.05 / 重0.05-0.1mg/kg IV</b>，q10-30min重复直至「阿托品化」：<b>皮肤干燥、肺啰音消失、心率增快、口干、瞳孔散大</b>——然后减量延长间隔（勿骤停！反跳肺水肿）。阿托品化≠阿托品过量（谵妄/高热/肠麻痹=过量，减量）。</div>
+   <div class="emg-step"><span class="sno">Step2′ 长托宁替代（本院在用）</span><br><b>首剂0.01-0.03mg/kg肌注（轻0.01/中0.02/重0.03）</b>，维持首剂半量 q8-12h——选择性抗胆碱，心率增快/躁动较阿托品少；两者勿同用。</div>
+   <div class="emg-step"><span class="sno">Step3 复能剂（肟类）</span><br><b>氯/碘解磷定 15-30mg/kg/次 IV缓注，q8-12h</b>——<b>48-72h内用</b>（ChE"老化"后无效）；敌敌畏/敌百虫效果差；与阿托品协同，勿只给一个。</div>
+   <div class="emg-step"><span class="sno">Step4 监测与并发症</span><br>ChE q12-24h；<b>反跳窗：24-96h</b>（毒物再分布，肺水肿再现=追加阿托品）；<b>中间综合征：24-96h</b>颈屈肌/呼吸肌无力→呼吸衰竭（按需插管，无解毒剂）；迟发周围神经病（2-3周）。血液灌流（HP）指征见总论表。</div>`},
+  {t:'③ 常见坑',html:`<div class="emg-red">① 阿托品剂量不足/不敢重复（第一死因是肺水肿不是"阿托品中毒"）；② 阿托品化后突然停药；③ 只用阿托品不给复能剂；④ >72h还在大量用解磷定（无效）；⑤ 医护徒手接触污染衣物（自身中毒）；⑥ 忘了氨基甲酸酯中毒阿托品有效但<b>肟类争议</b>（一般不需要）；⑦ 琥珀胆碱插管加重病情（ChE抑制——改非去极化）。</div>`}],
+ cals:[
+  {id:'op_atro',title:'有机磷 阿托品化+解磷定 计算器',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:20,step:0.5},{k:'sev',lab:'严重度',kind:'sel',opts:[['0.025','轻度'],['0.04','中度'],['0.08','重度']]}],
+   out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
+     const d=parseFloat(v.sev);
+     return {lines:['阿托品 首剂 '+f(v.w*d)+'mg（'+f(d)+'mg/kg）IV，q10-30min重复至阿托品化',
+       '阿托品化后：减量延长间隔维持（如半量q1h起渐拉长），勿骤停',
+       '长托宁替代（本院）：首剂 '+f(v.w*0.02)+'-'+f(v.w*0.03)+'mg 肌注，维持半量 q8-12h',
+       '氯/碘解磷定 '+f(v.w*15)+'-'+f(v.w*30)+'mg（15-30mg/kg）IV缓注，q8-12h（48-72h内）'],
+       ck:['阿托品化判据：皮肤干+肺啰音消失+心率↑+口干','过量信号：谵妄/高热/肠麻痹/尿潴留→减量','中间综合征（24-96h）：呼吸肌无力随时插管','⚠禁琥珀胆碱']};}}
+ ]},
+{id:'rodenticide',ico:'🐁',name:'灭鼠剂中毒（抗凝型/毒鼠强/氟乙酰胺）',grp:'血液肾脏中毒急症',
+ tag:'先分清三类：抗凝血型（VitK1可救）/毒鼠强（无解，对症+灌流）/氟乙酰胺（乙酰胺）',
+ srcs:['《急性中毒诊断与治疗中国专家共识》','CDC/中毒控制中心杀鼠剂口径','文献（儿童氟乙酰胺/毒鼠强救治系列报道）——部分儿童剂量证据级别有限，已标注'],
+ secs:[
+  {t:'① 三类判读（问清商品名/带包装）',html:`<div class="emg-lad">
+    <div class="lrow lamber"><span class="lv">抗凝血型（最常见）</span><span>敌鼠钠、溴敌隆、大隆（溴鼠灵）——<b>延迟出血</b>：PT/INR↑、血尿/鼻衄/颅内出血，接触后24-72h才显（长效型半衰期可达数周）</span></div>
+    <div class="lrow lred"><span class="lv">毒鼠强（四亚甲基二砜四胺）</span><span>服后数分钟-1h<b>抽搐/惊厥持续状态</b>，无解毒剂——对症+血液灌流</span></div>
+    <div class="lrow lred"><span class="lv">氟乙酰胺/氟乙酸钠</span><span>抽搐+心律失常+代酸；解毒剂=乙酰胺（解氟灵）</span></div>
+  </div>`},
+  {t:'② 处置',html:`
+   <div class="emg-step"><span class="sno">抗凝血型</span><br>无症状：洗胃/炭（1h内）+<b>PT/INR基线与48-72h复查</b>（单次小暴露且INR正常→回家观察口径遵毒理中心）；INR↑或出血：<b>VitK1 5-10mg IV缓注</b>，重症持续泵/多次；长效型（大隆）需<b>大剂量长程VitK1口服（数周-数月，按INR滴定）+监测</b>；出血重者按DIC大出血流程（PCC/FFP止血更快）。</div>
+   <div class="emg-step"><span class="sno">毒鼠强</span><br>无解毒剂：<b>地西泮/咪达唑仑+苯巴比妥镇静止抽</b>（按SE流程，常需多药联合）；<b>血液灌流（HP）早期介入</b>（毒鼠强脂溶性，HP可降浓度、多轮）；二巯基丙磺酸钠有文献报道辅助（证据有限，遵专科）；防误吸/横纹肌溶解（水化+碱化尿）。</div>
+   <div class="emg-step"><span class="sno">氟乙酰胺</span><br><b>乙酰胺（解氟灵）0.1-0.3g/(kg·d)分2-4次肌注×5-7天</b>（疑诊即用，不等确认）；止抽+纠代酸+监测心电（心律失常）+肝肾功能。</div>`},
+  {t:'③ 常见坑',html:`<div class="emg-red">① 抗凝型24h内"一切正常"放走（延迟出血窗没交代复诊查INR）；② 出血期只输血不推VitK1/PCC；③ 毒鼠强当普通"癫痫"治不灌流；④ 氟乙酰胺等毒检确认才用乙酰胺（疑诊即用）；⑤ 家长丢掉包装（分型全靠它）；⑥ 同住儿童未筛查（投毒/误食群体）。</div>`}],
+ cals:[
+  {id:'rod_vk',title:'抗凝型杀鼠剂 VitK1 方案',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:20,step:0.5},{k:'m',lab:'情境',kind:'sel',opts:[['bleed','出血/INR显著↑'],['mono','无症状监测中']]}],
+   out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
+     if(v.m==='bleed')return {lines:['VitK1 '+f(v.w*0.6)+'mg（0.6mg/kg？儿童常规5-10mg/次）IV缓注（≥1mg/min）','重症：VitK1持续泵或q6h重复 + PCC 25-50IU/kg + FFP 10-15ml/kg（立即止血）','长效型（大隆）：止血后改口服VitK1按INR滴定，持续数周-数月'],
+       ck:['每6-12h复查PT/INR指导剂量；VitK1 IV有类过敏——缓注','大出血走DIC/大出血流程页']};
+     return {lines:['活性炭（1h内）1g/kg','PT/INR基线 + 48h、72h复查（长效型建议1-2周内复检）','INR正常且为单次小剂量暴露→按毒理中心口径随访；INR↑→按出血方案'],
+       ck:['大隆/溴敌隆半衰期极长（数周）——一次暴露也要拉长监测','同住/同批暴露儿童一并筛查']};}}
+ ]},
+{id:'asphyx',ico:'🌫️',name:'窒息性 / 氧化性毒物（CO·亚硝酸盐·氰化物）',grp:'血液肾脏中毒急症',
+ tag:'三种"组织缺氧"走三条路：CO→纯氧/高压氧；MetHb→亚甲蓝；氰化物→羟钴胺',
+ srcs:['AHA/中毒中心通用口径','Cyanokit（羟钴胺）说明书','中国急性中毒共识'],
+ secs:[
+  {t:'① 一氧化碳（CO）',html:`<div class="emg-step">机制：HbCO≈1000倍亲和力→携氧瘫痪+线粒体抑制。判读：<b>SpO₂测不出真实缺氧（读数虚高）</b>——必须测血气HbCO；樱桃红面色不可靠。处置：<b>100%氧（常压）即刻</b>，直至HbCO<10%（<5%症状者）；<b>高压氧（HBO）指征：昏迷/抽搐/神经缺损/代酸/HbCO>25%妊娠</b>——尽早会诊； Carbon monoxide暴露者同住全员检测；迟发神经综合征（2-40天）宣教随访。</div>`},
+  {t:'② 高铁血红蛋白血症（亚硝酸盐/苯胺/氨苯砜/局麻药）',html:`<div class="emg-step">识别：<b>发绀与呼吸 effort 不匹配、SpO₂卡在~85%、巧克力棕色静脉血、pO₂正常</b>——查血气Hb-Met。处置：无症状MetHb<20-30%→观察+维生素C口服；有症状或>30%：<b>亚甲蓝 1-2mg/kg IV缓注（>5min，速度≤2mg/kg/min），1h后可重复</b>；⚠G6PD缺乏者亚甲蓝无效且可加重溶血（换用抗坏血酸+支持）；快速推注加重MetHb。</div>`},
+  {t:'③ 氰化物（火灾烟雾/苦杏仁/氰化物盐）',html:`<div class="emg-step">识别：燃烟环境昏迷+代酸+乳酸>10+<b>静脉血氧↑（组织不摄氧）</b>。处置：<b>羟钴胺 70mg/kg IV（max 5g）——首选</b>（不影响氧输送，与CO/MetHb共存时更安全）；不可得时：3%亚硝酸钠 0.33ml/kg IV+硫代硫酸钠 400mg/kg（12.5g/1.25ml/kg 25%液）——亚硝酸钠本身造MetHb，CO共存时禁/慎。同时100%氧+标准复苏；烧伤烟雾患者先按气道热损伤评估。</div>`},
+  {t:'④ 常见坑',html:`<div class="emg-red">① CO患儿盯着SpO₂ 98%以为没事（须测HbCO）；② MetHb按"低氧"越调越高FiO₂（测MetHb+问氧化剂史）；③ 亚甲蓝快速推（反而升MetHb）；④ 烟雾吸入者用亚硝酸钠（CO+MetHb叠加）；⑤ 氰化物等浓度才给羟钴胺（临床疑诊即给）；⑥ 高压氧指征犹豫错过窗口。</div>`}],
+ cals:[
+  {id:'asph_calc',title:'三条路剂量计算器（亚甲蓝 / 羟钴胺 / 硫代硫酸钠）',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:20,step:0.5},{k:'d',lab:'解毒剂',kind:'sel',opts:[['mb','亚甲蓝 1-2mg/kg'],['hb','羟钴胺 70mg/kg'],['st','硫代硫酸钠 400mg/kg']]}],
+   out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
+     if(v.d==='mb')return {lines:['亚甲蓝（1%制剂10mg/ml）'+f(v.w*1)+'-'+f(v.w*2)+'mg = '+f(v.w*0.1)+'-'+f(v.w*0.2)+'ml','+5%GS稀释后 IV缓注 >5min（速度≤2mg/kg/min）','1h后无改善可重复1次'],
+       ck:['G6PD缺乏无效且加重溶血','疗效判据：发绀减轻/MetHb 1-2h复查']};
+     if(v.d==='hb')return {lines:['羟钴胺 '+f(Math.min(v.w*70,5000))+'mg（70mg/kg，max 5g）','5%GS/NS稀释至适当体积 IV（15min级）','可重复1次（难治性）'],
+       ck:['尿呈深红色为药物性，1-2天消退','与亚硝酸钠勿叠加（叠加造MetHb）']};
+     return {lines:['硫代硫酸钠 '+f(v.w*400)+'mg（400mg/kg）IV（25%制剂='+f(v.w*400/250)+'ml）','配3%亚硝酸钠 0.33ml/kg（如选用传统组合）','100%氧同步'],
+       ck:['传统组合在CO暴露者禁用亚硝酸钠','首选羟钴胺']};}}
  ]});
 
 /* ================= 评分与参考（05；血压百分位与脓毒症详表见同目录追加） ================= */
