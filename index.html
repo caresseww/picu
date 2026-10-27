@@ -540,7 +540,7 @@ fentanyl:{n:'芬太尼',sub:'阿片类',tags:'芬太尼 镇痛',rt:'静推',
  ref:'UpToDate：推注1-2μg/kg；维持0.5-5μg/kg/h（与本院一致）',
  src:'单次1-2μg/kg（纤支镜5μg/kg分次；小婴儿1μg/kg）；泵入1-4μg/kg/h',note:'效价≈吗啡100倍，1min起效；快速推注可致胸壁僵硬——缓推≥3min',
  cs:[{l:'单次静推',bn:'静推',k:'pk',lo:1,hi:2,def:1,unit:'μg/kg',fq:['st'],dfq:'st',rt:'静推',rate:'缓推≥3min',ckn:'小婴儿从1μg/kg起；纤支镜5μg/kg分次给'},
-     {l:'持续泵入',bn:'泵入',k:'inf',unit:'μg/kg/h',lo:1,hi:4,def:2,rec:[0.1,50],dil:'5%GS/NS',ckn:'长时间>5天需计划性减停'}]},
+     {l:'持续泵入',bn:'泵入',k:'inf',unit:'μg/kg/h',lo:1,hi:4,def:2,rec:[0.1,50],dil:'5%GS/NS',ckn:'连续>7天需计划性减停（每日递减20-30%，中国镇痛镇静2024口径）'}]},
 sufen:{n:'舒芬太尼',sub:'阿片类',tags:'舒芬',rt:'静推',
  ref:'说明书：推注0.1-0.3μg/kg；维持0.03-0.1μg/kg/h（本院口径在区间内）',
  src:'单次0.1-0.3μg/kg（纤支镜0.2）；泵入0.04-0.12μg/kg/h',note:'效价≈芬太尼5-10倍，血流动力学影响较芬太尼大',
@@ -1289,13 +1289,13 @@ SCEN.push(
    <div class="emg-step"><span class="sno">Step4 补钾</span><br>有尿且K<5.5即补，输注液起始钾浓度<b>40mmol/L（≈0.3%KCl，外周上限）</b>；K 2.5-3.5：胰岛素启动前先补；<b>K<2.5：暂停胰岛素</b>先纠钾；K≥5.5：暂无钾液q1h复查。最大补钾速率0.5mmol/(kg·h)。⚠本院「稀释至6‰-10‰」=80-134mmol/L超外周上限——仅限中心静脉并专门医嘱。</div>
    <div class="emg-step"><span class="sno">Step5 磷与镁</span><br>不常规补磷；重度DKA或IV治疗>24h建议补磷（K₂HPO₄与KCl各半）；血磷<0.32mmol/L必须处理。低镁补镁：MgSO₄ 25-50mg/kg q4-6h×3-4剂（输注≤150mg/min=2g/h）。</div>
    <div class="emg-step"><span class="sno">Step6 加糖</span><br>血糖降至<b>14-17mmol/L</b>加5%葡萄糖（下降过速>5mmol/L/h提前加），必要时10%-12.5%（外周上限12.5%）；目标血糖8-12mmol/L。本院50%GS 25ml+NS 25ml=12.5%。</div>
-   <div class="emg-step"><span class="sno">Step7 碳酸氢钠（不常规）</span><br>仅限①危及生命的高钾 ②pH<6.9影响心肌收缩。ISPAD/中国2024均未给剂量；本院5%SB 1-3-5ml/kg偏大——仅极重度+上级确认。</div>
+   <div class="emg-step"><span class="sno">Step7 碳酸氢钠（不常规）</span><br>仅限①危及生命的高钾 ②pH<6.9影响心肌收缩。中国2024口径：pH<6.9时 5%SB 1-2ml/kg 稀释缓滴；本院5%SB 1-3-5ml/kg偏大——仅极重度+上级确认。</div>
    <div class="emg-step"><span class="sno">Step8 停静脉·转皮下</span><br>满足：血糖<11.1 + pH>7.3 + HCO₃⁻≥15 + BOHB<1 且能进食。皮下速效首剂<b>餐前15-30min</b>给完再停静脉；基础胰岛素可与静脉重叠一夜。</div>
    <div class="emg-step"><span class="sno">Step9 HHS要点</span><br>0.45%NS更早、更足量（缺失量按10-12%估）；血糖降至16.7mmol/L以下才换含糖液；尿量大的计入丢失补液；抗凝考虑（高渗高栓风险）。</div>`},
   {t:'③ 脑水肿（DKA最致命并发症）',html:`<div class="emg-red">
    <b>高危因素</b>：初诊重症（BUN高/pH低/PCO₂低）、首小时补液过快过大量、血钠不升反而下降、纠正过快。<br>
    <b>识别</b>（出现任一立即处理）：意识改变/烦躁→嗜睡→昏迷；心率减慢+血压升高（Cushing）；瞳孔异常；呼吸节律改变。<br>
-   <b>处置</b>：甘露醇 20% <b>2.5-5ml/kg（0.5-1g/kg）</b>20-30min 或 3%NaCl <b>2.5-5ml/kg</b>；抬高床头30°、气管插管者PaCO₂维持正常、限液；CT除外其他病因。<b>不要等CT再用药</b>。</div>`},
+   <b>处置</b>：甘露醇 20% <b>2.5-5ml/kg（0.5-1g/kg）</b>30min（【中国2024】2h可重复，总量≤100g）；无效换 3%NaCl <b>2.5-5ml/kg</b>（总量≤250ml）；抬高床头30°、气管插管者PaCO₂维持正常、限液；CT除外其他病因。<b>不要等CT再用药</b>。</div>`},
   {t:'④ 监测',html:`<div class="emg-step">心电监护全程（T波看血钾）；<b>血糖q1h</b>（POCT）、血气+电解质<b>q2-4h</b>（稳定后q4-6h）、BOHB q4-6h；精确出入量+q1h神经系统评估（ICU级别护理）。记录每小时胰岛素泵入量与配液核对（双签名）。</div>`},
   {t:'⑤ 常见坑',html:`<div class="emg-red">① 扩容前就推胰岛素（禁！）；② 胰岛素静推负荷（禁！）；③ 血糖降太快没加糖→渗透压骤变促脑水肿；④ 血钾<2.5没停胰岛素；⑤ 首小时bolus>40ml/kg；⑥ 用乳酸林格+到处方误解钠；⑦ 意识改变当成「疲乏」漏诊脑水肿；⑧ 缓解判据只看血糖不看pH/HCO₃⁻/BOHB。</div>`}],
  cals:[
@@ -1329,6 +1329,7 @@ SCEN.push(
     <div class="lrow lamber"><span class="lv">处置线</span><span><b><2.7 mmol/L（<50 mg/dL）伴症状/不能喂养 → 立即处理</b>；能喂养且稳：喂养后30min复测</span></div>
     <div class="lrow lgray"><span class="lv">新生儿</span><span>生后0-4h<50、4-24h<55 mg/dL（JHACH 2025）；>48h后持续<50需系统评估（PES 2015），治疗目标>70（3.9）</span></div>
     <div class="lrow lgray"><span class="lv">本院口径</span><span>诊断<2.7 mmol/L；目标3.5-6；<3.5立即喂养/治疗</span></div>
+    <div class="lrow lgray"><span class="lv">新生儿2021共识</span><span>处理阈值<2.6（严重<1.5）；D10 2ml/kg（1ml/min）+GIR 5-8起步；GIR>10-12需药物：胰高糖素0.2mg/kg静注后1-20μg/(kg·h)、氢考1-2mg/kg q6-8h、二氮嗪5-20mg/(kg·d)口服</span></div>
     <div class="lrow lred"><span class="lv">症状</span><span>抖动/激惹/高尖哭/呼吸暂停/发绀/肌张力低/抽搐/低体温/拒奶——有症状不等阈值</span></div>
   </div>`},
   {t:'② 急救四步',html:`
@@ -1391,7 +1392,7 @@ SCEN.push(
   </div>`},
   {t:'② 急性三步（诊断未明也立即做）',html:`
    <div class="emg-step"><span class="sno">Step1 停蛋白</span><br>停止一切蛋白/氨基酸摄入≤24-48h；热卡改由高糖提供。</div>
-   <div class="emg-step"><span class="sno">Step2 促合成代谢（生糖）</span><br><b>10%葡萄糖 GIR 10mg/(kg·min)</b>起（必要时加胰岛素0.05U/kg/h控糖促合成）；足热卡=降分解代谢=停止产氨。</div>
+   <div class="emg-step"><span class="sno">Step2 促合成代谢（生糖）</span><br><b>10%葡萄糖 GIR 10mg/(kg·min)</b>起（必要时加胰岛素0.05U/kg/h控糖促合成）；足热卡=降分解代谢=停止产氨；【中国2023】血氨>200启动药物：精氨酸200mg/(kg·d)、瓜氨酸150-200、肉碱100-300mg/(kg·d)。</div>
    <div class="emg-step"><span class="sno">Step3 排氨（氮清除剂）</span><br>负荷（90-120min入）：<b>苯甲酸钠 250mg/kg + 苯乙酸钠 250mg/kg + 精氨酸 250(-400)mg/kg</b>；维持 250-500mg/(kg·d)（各≤12g/d）。⚠本院无苯甲/苯乙酸钠时用精氨酸0.1-0.3g/kg（低于指南负荷，为并行口径）+精氨酸灌肠/白醋灌肠（本院经验，无权威口径）。</div>
    <div class="emg-step"><span class="sno">Step4 CRRT指征</span><br>>500；或持续>400/数h>300药物无效；CVVHD/CVVHDF首选，尽早联系——血氨q1h监测，目标<100（<100且稳定后再引蛋白0.5-1g/(kg·d)渐加）。</div>
    <div class="emg-step"><span class="sno">Step5 支持与病因</span><br>抽搐按SE流程（避免丙戊酸⚠产氨+肝毒性）；醒后即代谢会诊+基因；左卡尼汀（有机酸血症100-300mg/kg/d？遵代谢科——本院10-50mg/kg并行）。昏迷>3天或血氨峰值>1000=预后红线。</div>`},
@@ -1887,7 +1888,7 @@ SCEN.push(
    <div class="emg-step"><span class="sno">Step3 尽早用解毒剂（不用等毒检）</span><br>「先解毒后完善」的四种：阿片→纳洛酮；低血糖→葡萄糖；高铁血红蛋白（SpO₂顽固~85%+巧克力色血+正常pO₂）→亚甲蓝；对乙酰氨基酚疑诊→<b>8h内NAC</b>。CCB/β阻滞剂过量→钙+HIET（见解毒剂表）。</div>`},
   {t:'② 胃肠道去污染三件套（有指征才做）',html:`<div class="tblwrap"><table class="tbl">
     <tr><th>手段</th><th>儿童剂量/速率</th><th>指征</th><th>禁忌</th></tr>
-    <tr><td><b>洗胃</b></td><td class="mono">温盐水小量反复（按体重50-100ml/次，勿超生理量）</td><td>致命剂量且<b>≤1h</b>；国内共识：量大/抗胆碱能药延缓胃排空者>1h仍可个体化</td><td>腐蚀剂/烃类/未插管的意识障碍/出血穿孔风险</td></tr>
+    <tr><td><b>洗胃</b></td><td class="mono">温盐水小量反复（按体重50-100ml/次，勿超生理量）</td><td>致命剂量且<b>≤1h</b>（35℃温水、每次300-500ml小量反复）；国内共识：量大/抗胆碱能药延缓胃排空者>1h仍可个体化</td><td>腐蚀剂/烃类/未插管的意识障碍/出血穿孔风险</td></tr>
     <tr><td><b>活性炭单剂</b></td><td class="mono">1g/kg（≤50g/次），服毒1h内最有效</td><td>多数药物中毒一线去污染；茶碱/卡马西平/苯巴比妥/奎宁/氨苯砜可q4h重复（MDAC）</td><td>肠梗阻、气道未保护、烃类、腐蚀剂、<b>铁/锂/醇类（无效）</b>、重金属</td></tr>
     <tr><td><b>全肠灌洗WBI</b></td><td class="mono">PEG电解质液：1-6岁500ml/h、6-12岁1000ml/h、≥13岁1500-2000ml/h，至肛门排出清亮</td><td>缓释/肠溶制剂、铁剂、锂、体包装者</td><td>肠梗阻/穿孔/ileus/血流动力学不稳/气道未保护</td></tr>
   </table></div>
@@ -2545,7 +2546,11 @@ const REFS=[
   {t:'💊 代谢内分泌 · 中毒',html:`<div class="tblwrap"><table class="tbl">
     <tr><th>指南/文献</th><th>出处</th><th>全文</th></tr>
     <tr><td>ISPAD糖尿病酮症酸中毒（DKA）指南</td><td class="mono">ISPAD 2022（免费章节）</td><td class="mono"><a href="https://www.ispad.org/page/ISPADGuidelines2022" target="_blank" rel="noopener">ISPAD官方</a></td></tr>
-    <tr><td>中国儿童DKA诊疗指南</td><td class="mono">中华儿科杂志 2024</td><td class="mono">医脉通/万方检索「儿童DKA 2024」</td></tr>
+    <tr><td>中国儿童DKA诊疗指南</td><td class="mono">中华儿科杂志 2024（全文转载）</td><td class="mono"><a href="https://www.sohu.com/a/835974408_121119113" target="_blank" rel="noopener">全文</a></td></tr>
+    <tr><td>新生儿低血糖临床规范管理专家共识</td><td class="mono">2021（PMC免费全文）</td><td class="mono"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8802387/" target="_blank" rel="noopener">PMC</a></td></tr>
+    <tr><td>新生儿高氨血症诊断与治疗专家共识</td><td class="mono">2023（PMC免费全文）</td><td class="mono"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10247199/" target="_blank" rel="noopener">PMC</a></td></tr>
+    <tr><td>急性中毒中国专家共识 + 血液灌流应用共识</td><td class="mono">2016 / 2025（中华急诊网免费）</td><td class="mono"><a href="http://www.cem.org.cn/rhtml/20161104/index.htm" target="_blank" rel="noopener">中毒2016</a> · <a href="http://www.cem.org.cn/public/html/202511/20251105/index.htm" target="_blank" rel="noopener">灌流2025</a></td></tr>
+    <tr><td>中国儿童T1DM标准化诊治共识</td><td class="mono">2020（公开HTML）</td><td class="mono"><a href="https://studite.yiigle.com/uploads/guide_html/%E4%B8%AD%E5%9B%BD%E5%84%BF%E7%AB%A51%E5%9E%8B%E7%B3%96%E5%B0%BF%E7%97%85%E6%A0%87%E5%87%86%E5%8C%96%E8%AF%8A%E6%96%AD%E4%B8%8E%E6%B2%BB%E7%96%97%E4%B8%93%E5%AE%B6%E5%85%B1%E8%AF%86%EF%BC%882020%E7%89%88%EF%BC%89.html" target="_blank" rel="noopener">全文HTML</a></td></tr>
     <tr><td>儿童低血糖评估建议</td><td class="mono">PES 2015（Pediatr J）</td><td class="mono">PubMed检索「Thornton 2015 hypoglycemia evaluation」</td></tr>
     <tr><td>尿素循环障碍/高氨血症指南</td><td class="mono">Häberle 2012/2019（免费全文）</td><td class="mono"><a href="https://ojrd.biomedcentral.com/articles/10.1186/1750-1172-7-32" target="_blank" rel="noopener">Orphanet J</a></td> <a href="pdfs/%E9%AB%98%E6%B0%A8%E8%A1%80%E7%97%87%E5%B0%BF%E7%B4%A0%E5%BE%AA%E7%8E%AF%E9%9A%9C%E7%A2%8D%E6%8C%87%E5%8D%972012_Orphanet.html" target="_blank" rel="noopener">⬇本站</a></td></tr>
     <tr><td>对乙酰氨基酚中毒NAC方案</td><td class="mono">NEJM 2008（Heard）</td><td class="mono"><a href="https://www.nejm.org/doi/full/10.1056/NEJMct0708278" target="_blank" rel="noopener">NEJM</a>（需权限）</td></tr>
@@ -2592,8 +2597,19 @@ const REFS=[
     <tr><td>pSOFA儿童序贯器官衰竭评分</td><td class="mono">Matics 2017（免费全文）</td><td class="mono"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6583375" target="_blank" rel="noopener">PMC</a></td></tr>
     <tr><td>PELOD-2评分</td><td class="mono">Leteurtre 2013</td><td class="mono">PubMed检索「PELOD-2 Leteurtre 2013」</td></tr>
     <tr><td>中国儿童血压参照标准（2017更新）</td><td class="mono">范晖等·中华高血压杂志</td><td class="mono"><a href="https://doi.org/10.16439/j.cnki.1673-7245.2017.05.009" target="_blank" rel="noopener">DOI全文</a></td></tr>
-  </table></div>`}]}
-,{id:'labs',ico:'🧪',name:'常用化验正常值',grp:'检验参考',
+  </table></div>`},
+ {t:'🤝 基础支持 · 营养 · 复苏衔接',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>指南/文献</th><th>出处</th><th>全文</th></tr>
+    <tr><td>中国新生儿复苏指南（NRP）</td><td class="mono">2021修订（免费全文）</td><td class="mono"><a href="http://www.cogonline.com/info/132896444036466101" target="_blank" rel="noopener">全文</a></td></tr>
+    <tr><td>新生儿肠外营养管理专家共识</td><td class="mono">2025（PMC免费全文）</td><td class="mono"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11928041/" target="_blank" rel="noopener">PMC</a></td></tr>
+    <tr><td>早产儿肠内营养管理专家共识</td><td class="mono">2024（OA）</td><td class="mono"><a href="https://www.zgddek.com/CN/10.7499/j.issn.1008-8830.2402039" target="_blank" rel="noopener">文章页</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11562063/" target="_blank" rel="noopener">PMC</a></td></tr>
+    <tr><td>儿童CAP诊疗规范（呼吸支持指征）</td><td class="mono">2019 卫健委官方</td><td class="mono"><a href="http://www.natcm.gov.cn/bangongshi/zhengcewenjian/2019-02-13/9022.html" target="_blank" rel="noopener">官方全文</a></td></tr>
+    <tr><td>儿科镇痛镇静管理（含撤药）</td><td class="mono">2018全文转载 · 2024版</td><td class="mono"><a href="https://www.sohu.com/a/312672126_387855" target="_blank" rel="noopener">2018全文</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11704472/" target="_blank" rel="noopener">2024剂量表PMC</a></td></tr>
+    <tr><td>SSC 2020儿童解读（OA PDF）</td><td class="mono">中国当代儿科</td><td class="mono"><a href="https://www.zgddek.com/fileup/1008-8830/PDF/2020-4-305.pdf" target="_blank" rel="noopener">PDF</a></td></tr>
+    <tr><td>新生儿转运共识</td><td class="mono">2025（OA）</td><td class="mono"><a href="https://www.zgddek.com/CN/10.7499/j.issn.1008-8830.2412152" target="_blank" rel="noopener">文章页</a></td></tr>
+  </table></div>
+  <div class="emg-amber">⚠「中国儿科肠外肠内营养支持临床应用指南(2024)」经核查并不存在（通用版仍为2010版），勿引用；新生儿PN按2025共识、早产儿EN按2024共识口径。</div>`},
+ ]},{id:'labs',ico:'🧪',name:'常用化验正常值',grp:'检验参考',
  tag:'血气 / 电解质 / 血常规（分年龄）/ 凝血 / 脑脊液 —— 以本院检验科参考区间为准',
  srcs:['人卫《儿科学》第9版 / 《诸福棠实用儿科学》口径','WS/T 405血细胞分析参考区间（成人为主，儿童分段见下表）'],
  secs:[
@@ -2762,6 +2778,7 @@ const REFS=[
     <tr><td>储氧面罩</td><td class="mono">0.6-0.9（10-15L/min）</td><td class="mono">重度过渡</td></tr>
     <tr><td><b>经鼻高流量HFNC</b></td><td class="mono">FiO₂ 0.21-1.0，流量1-2L/(kg·min)（max 8L/min幼儿、成人式40-60）</td><td class="mono">中度呼吸窘迫主力；失败信号=心率/氧需求持续↑</td></tr>
     <tr><td>NIV（CPAP/BiPAP）</td><td class="mono">CPAP 5-8；BiPAP 8-12/4-6 起步按体重</td><td class="mono">不插管桥接；意识差/分泌物多/血流不稳者禁</td></tr>
+    <tr><td><b>CAP呼吸支持阈值（2019规范）</b></td><td class="mono" colspan="2">NIV指征：pH&lt;7.35 / PaCO₂&gt;45 / P-F&lt;300；插管指征：FiO₂&gt;0.5时PaO₂&lt;50 或 PaCO₂&gt;70 mmHg；ECMO指征：P/F&lt;60-80</td></tr>
     <tr><td>机械通气</td><td class="mono">见下表</td><td class="mono">NIV失败/呼吸暂停/意识差/循环不稳</td></tr>
   </table></div>`},
   {t:'③ 呼吸机初始参数（常规保护性起点）',html:`<div class="tblwrap"><table class="tbl">
@@ -2824,8 +2841,9 @@ const REFS=[
      const kc=base*parseFloat(v.s);
      const fluid=v.ay<1?150:(v.ay<4?120:(v.ay<11?85:65));
      const pro=v.ay<1?2.5:(v.ay<4?2:1.5);
-     return {lines:['热卡目标 ≈ '+f(kc)+' kcal/(kg·d)（基础'+base+'×'+v.s+'）＝ '+f(kc*v.w)+' kcal/d','液体 ≈ '+f(fluid)+'ml/(kg·d)＝'+f(fluid*v.w)+'ml/d（与4-2-1核对）','蛋白 '+pro+'g/(kg·d)起 ＝ '+f(pro*v.w)+'g/d','GIR参考：婴儿4-6、儿童2-5 mg/(kg·min)'],
-       ck:['急性期起始保守、48-72h渐升；肠内优先','再喂养风险：起始≤50%热卡+补磷钾镁','PN深算用本科室PN处方台']};}}
+     const pre=v.ay<1?'｜早产儿GIR 4-8起、目标8-10（max12）':'';
+     return {lines:['热卡目标 ≈ '+f(kc)+' kcal/(kg·d)（基础'+base+'×'+v.s+'）＝ '+f(kc*v.w)+' kcal/d','液体 ≈ '+f(fluid)+'ml/(kg·d)＝'+f(fluid*v.w)+'ml/d（与4-2-1核对）','蛋白 '+pro+'g/(kg·d)起 ＝ '+f(pro*v.w)+'g/d（早产儿EN 2024：3.5-4.0）','GIR参考：足月儿2-5起→目标5-10（max12）'+pre],
+       ck:['急性期起始保守、48-72h渐升；肠内优先；早产儿开奶≤24h、加奶20-30ml/(kg·d)','再喂养风险：起始≤50%热卡+补磷钾镁','血糖避免<2.6或>8.3，持续>10才加胰岛素（新生儿PN 2025）；PN深算用本科室PN处方台']};}}
 ]}];
 
 /* ================= 基础 ================= */
