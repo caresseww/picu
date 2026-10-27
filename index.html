@@ -690,7 +690,7 @@ protamine:{n:'鱼精蛋白',sub:'肝素拮抗',tags:'鱼精蛋白',rt:'静推',
  src:'0.5-1mg/kg，5G:4ml。单次<25mg。肝素CRRT后：按最后2h肝素量1mg鱼精对抗100U肝素；肝素停用超半小时减半',note:'先心术后出血或肝素抗凝后拮抗；⚠过敏/肺高压反应，缓推',
  c:{k:'pk',lo:0.5,hi:1,def:0.5,fq:['st'],dfq:'st',rt:'静推',capU:25,rate:'缓推10min以上',ckn:'1mg中和约100U肝素（末次给药10-15min内）；超时肝素半衰期减量；鱼精蛋白本身也有抗凝作用勿过量'}},
 pge_kaishi:{n:'前列地尔',sub:'PGE1',tags:'前列地尔 凯时 PGE1',rt:'静滴',
- ref:'UpToDate：PGE1导管依赖起始5-20ng/kg/min；凯时制剂为微球缓释（5μg/次与本院一致）',
+ ref:'2025中国基层先心共识：起始5-10ng/kg/min（低于传统0.05-0.1μg/kg/min口径——双口径并置）；凯时微球缓释5μg/次（本院口径）',
  src:'5μg，5G:5-25ml，走2h（凯时10μg只能走2h）；0.6μg/kg，5G:5-25ml，走2h',note:'扩管、抑制血小板聚集；输血外渗肿胀、可疑血栓时改善循环',
  cs:[
    {l:'凯时',bn:'凯时',k:'abs',def:5,unit:'μg',lo:5,hi:10,fq:['qd','q12h'],dfq:'qd',dil:'5%GS 5-25ml',rate:'2h匀速'},
@@ -750,11 +750,11 @@ atropine:{n:'阿托品',sub:'抗胆碱',tags:'阿托品',rt:'静推',
  ]},
 
 salb_ipo:{n:'沙丁胺醇+异丙托溴铵（雾化）',b:'万托林/爱全乐',sub:'β2激动+抗胆碱',tags:'沙丁胺醇 万托林 异丙托 喘',rt:'雾化',
- ref:'GINA/中国儿童哮喘2025：沙丁胺醇0.15mg/kg（≥2.5mg/次）q20min×3；异丙托<20kg 250μg、≥20kg 500μg',
+ ref:'中国儿童哮喘2025：≤20kg 2.5mg/次、>20kg 5mg/次 q20min×3；GINA 0.15mg/kg；异丙托<20kg 250μg、≥20kg 500μg',
  src:'沙丁胺醇2.5mg（半支）/异丙托溴铵1ml（半支）',note:'高峰压、气道痉挛；喘息发作一线',
  c:{k:'abs',def:2.5,unit:'ml',lo:1,hi:4,fq:['q20min','q2h','q4h','q6h'],dfq:'q4h',rt:'雾化',head:'联合液：沙丁胺醇2.5mg+异丙托溴铵250μg/次（可q20min×3首小时）',ckn:'急性喘息首小时可q20min×3；心率增快/震颤为常见反应；持续泵雾化0.5-1.5ml/h'}},
 bud:{n:'布地奈德（雾化）',b:'普米克令舒',sub:'ICS',tags:'布地奈德 普米克',rt:'雾化',
- ref:'说明书：0.5-1mg/次 bid（喉炎可2mg单剂）',
+ ref:'说明书：0.5-1mg/次 bid；急性喉炎2019雾化共识：2.0-4.0mg/次每0.5h可重复（2-3次不缓解再评估气道）',
  src:'1mg（1支）',note:'气道炎症；喉炎/喘息辅助',
  c:{k:'abs',def:1,unit:'mg',lo:0.5,hi:2,fq:['bid','qd','q12h'],dfq:'bid',rt:'雾化'}},
 ambroxol:{n:'氨溴索',b:'沐舒坦',sub:'黏液溶解',tags:'氨溴索 沐舒坦 祛痰',rt:'静滴',
@@ -846,7 +846,7 @@ mgso4:{n:'硫酸镁',sub:'补镁',tags:'硫酸镁 补镁 低镁',rt:'静滴',
  src:'0.1-0.3ml/kg，5%GS稀释20倍，走速>1小时，不能和钙同时输；0.2ml/kg（50mg/kg），走20min；1mg/kg*h泵入，抑制尖端扭转室速',note:'低镁血症；重度哮喘辅助；监测血压；TdP一线（无论血镁水平）；负荷可50mg/kg',
  cs:[
    {l:'补镁',bn:'补镁',k:'mlkg',lo:0.1,hi:0.3,def:0.25,fq:['q12h','qd'],dfq:'q12h',dil:'5%GS稀释20倍',rate:'>1h',ckn:'25%MgSO4 0.2ml/kg=50mg/kg=2mmol/kg元素镁约；与钙不同管；监测膝反射/呼吸/血压'},
-   {l:'哮喘',bn:'哮喘',k:'mlkg',lo:0.15,hi:0.25,def:0.2,fq:['st'],dfq:'st',dil:'5%GS稀释',rate:'20min',ckn:'50-75mg/kg（上限2g）；低血压/面红常见；肾功能不全慎用'},
+   {l:'哮喘',bn:'哮喘',k:'mlkg',lo:0.15,hi:0.25,def:0.2,fq:['st'],dfq:'st',dil:'5%GS稀释',rate:'20min',ckn:'中国2025：25-40mg/kg（≤2g/d）；国际50-75——本院0.2ml/kg=50取中上；低血压/面红常见；肾功能不全慎用'},
    {l:'尖端扭转TdP泵',bn:'尖端扭转TdP泵',k:'inf',unit:'mg/kg/h',lo:0.5,hi:2,def:1,rec:[10,50],dil:'5%GS/NS',ckn:'负荷25-50mg/kg缓推（TdP发作时）；监测膝反射与呼吸'},
  ]},
 
@@ -1419,7 +1419,7 @@ SCEN.push(
   </div>`},
   {t:'② 时间线处置',html:`
    <div class="emg-step"><span class="sno">0-5min</span><br>ABC：摆体位、吸氧、<b>不要往嘴里塞东西</b>；测血糖（低血糖按低血糖流程推糖）；建立静脉通路+采血（血糖/电解质/钙镁/血气±抗癫痫药浓度）；心电监护。</div>
-   <div class="emg-step"><span class="sno">5min 一线 BZD（首选一种，足量）</span><br>· 地西泮 IV <b>0.3mg/kg（≤10mg）缓推≤1-2mg/min</b>（中国首选；本院0.1-0.3并行）· 或咪达唑仑 IM/颊/鼻 <b>0.2mg/kg</b>（颊按年龄带3-11月2.5/1-4岁5/5-9岁7.5/≥10岁10mg；RAMPART 13-40kg 5mg、>40kg 10mg）· 或劳拉西泮 0.1mg/kg（≤4mg，国内无剂型）。<b>5-10min无效重复一次</b>；两次BZD仍发作→二线。</div>
+   <div class="emg-step"><span class="sno">5min 一线 BZD（首选一种，足量）</span><br>· 地西泮 IV <b>0.3mg/kg（≤10mg）缓推≤1-2mg/min</b>（中国首选；本院0.1-0.3并行）· 或咪达唑仑 IM/颊/鼻 <b>0.2mg/kg</b>（颊按年龄带3-11月2.5/1-4岁5/5-9岁7.5/≥10岁10mg；RAMPART 13-40kg 5mg、>40kg 10mg）；【CAAE院前共识2025】颊黏膜0.25mg/kg（2-12岁）、直肠地西泮0.5mg/kg（≤5岁）/0.3mg/kg（≥6岁）· 或劳拉西泮 0.1mg/kg（≤4mg，国内无剂型）。<b>5-10min无效重复一次</b>；两次BZD仍发作→二线。</div>
    <div class="emg-step"><span class="sno">20min 二线（ESETT：三药疗效等效，任选其一）</span><br>· 左乙拉西坦 IV <b>40mg/kg（≤3000mg；ESETT 60mg/kg≤4500mg）</b>输速≤5mg/kg/min——镇静最轻，本院首选倾向 · 丙戊酸 IV <b>40mg/kg（≤3000mg？本院15+1mg/kg/h泵）</b>⚠肝病/线粒体病/代谢病禁用，<b>禁与碳青霉烯同用</b> · 磷苯妥英 20mg/kg PE（≤1500）苯妥英≤1mg/kg/min心电监护 · 苯巴比妥 20mg/kg（呼吸抑制高，<2y或已用BZD者备插管）。用药后仍发作→RSE。</div>
    <div class="emg-step"><span class="sno">40min+ 难治性SE（PICU）</span><br>插管+cEEG（非惊厥性SE占15-20%+，临床不抽≠电控制）。阶梯：①<b>咪达唑仑泵</b>负荷0.15-0.2mg/kg→1-2μg/kg/min起、每5-15min滴定（治疗窗2-5μg/kg/min；本院上限30为高剂量口径）②丙泊酚 负荷1-2mg/kg→20μg/kg/min起渐加（<b>>65μg/kg/min≈4mg/kg/h或>48h警惕PRIS</b>）③戊巴比妥 负荷5-15mg/kg→0.5-5mg/kg/h至EEG爆发抑制（需动脉压监测+升压支持）。super-RSE：+氯胺酮1-3mg/kg负荷。</div>
    <div class="emg-step"><span class="sno">终止后</span><br>查病因（发热→按脑膜炎流程；外伤/卒中/代谢/中毒）；长期口服衔接：原药恢复原量，未用药者按病因启动（丙戊酸po 20-40mg/kg/d分2；LEV 10mg/kg bid起渐加）；本院「保护性止惊」：苯巴比妥首剂10→2.5mg/kg q12。</div>`},
@@ -1501,7 +1501,7 @@ SCEN.push(
  secs:[
   {t:'① 处置时间线',html:`
    <div class="emg-step"><span class="sno">0-60min（黄金1小时）</span><br>①识别（发热+脑膜刺激征/意识改变/抽搐；婴儿可不典型：拒奶/前囟膨隆/双眼凝视）②抽血：血培养+血常规+CRP+血糖+电解质③<b>经验抗菌+地塞米松立即给——不得因等待CT/腰穿延误</b>（腰穿前若有颅高压征/抽搐/意识差/局灶征→先CT；地塞米松须与首剂抗菌同时或之前给）。</div>
-   <div class="emg-step"><span class="sno">经验抗菌方案</span><br>· <b>>2月龄：头孢曲松 50mg/kg q12h（或头孢噻肟50 q6h）＋万古霉素 15mg/kg q6h</b>（覆盖肺炎链球菌耐药株；本院头孢曲松20-80并行）· <b><3月龄：氨苄西林 75mg/kg q6h（覆盖李斯特菌）＋头孢噻肟 50 q6h</b> · 三代头孢高耐地区/CNS术后：美罗培南 40mg/kg q8h ± 万古。</div>
+   <div class="emg-step"><span class="sno">经验抗菌方案</span><br>· <b>>2月龄：头孢曲松 50mg/kg q12h（或头孢噻肟50 q6h）＋万古霉素 15mg/kg q6h</b>（覆盖肺炎链球菌耐药株；本院头孢曲松20-80并行）· <b><3月龄：氨苄西林 75mg/kg q6h（覆盖李斯特菌）＋头孢噻肟 50 q6h</b> · 三代头孢高耐地区/CNS术后：美罗培南 40mg/kg q8h ± 万古；【2025指南】CRE肠杆菌：美罗培南40mg/kg q8h延长输注3h±阿米卡星；脑室内注射（脑室引流相关感染）：阿米卡星5-30mg/d、庆大霉素1-2mg/d、多粘菌素B 2万U/d。</div>
    <div class="emg-step"><span class="sno">地塞米松</span><br><b>0.15mg/kg q6h×2-4天</b>，首剂与抗菌同步或提前15min（降听力损害——肺炎链球菌证据最足；<3月龄/免疫缺陷不做常规）。</div>
    <div class="emg-step"><span class="sno">降颅压与支持</span><br>颅高压征：3%NaCl 2.5-5ml/kg 或甘露醇0.25-1g/kg（见颅内高压流程）；抽搐按SE流程；限液维持正常容量（SIADH常见——q12h电解质）；隔离（脑膜炎球菌飞沫预防48h）。</div>
    <div class="emg-step"><span class="sno">腰穿</span><br>循环稳定、无颅高压禁忌后做：常规+生化+培养±病原宏基因；细胞数/糖/蛋白判读；已用抗菌后培养阴性但PCR仍可阳。</div>`},
@@ -1566,7 +1566,7 @@ SCEN.push(
    out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
      let emg=v.w*0.1;if(emg>10)emg=10;
      return {lines:['肾上腺素 '+f(v.w*0.01)+'mg（1:10000 '+f(emg)+'ml）IV/IO q3-5min（max 1mg）','胺碘酮 '+f(v.w*5)+'mg（5mg/kg）IV/IO（顽固VF/pVT，可重复至15mg/kg/d）','除颤：首击 '+f(v.w*2)+'J → '+f(v.w*4)+'J（max 10J/kg）','生理盐水扩容 '+f(v.w*20)+'ml（低血容量病因）'],
-       ck:['1:10000=0.01mg/ml——0.1ml/kg；原液1:1000严禁静推','气管内给药（无通路时）剂量×2.5-3','2025更新：VF/pVT首剂肾上腺素在首击除颤失败后给']};}}
+       ck:['1:10000=0.01mg/ml——0.1ml/kg；原液1:1000严禁静推','气管内给药（无通路时）：中国儿童CPR指南口径 0.1mg/kg=1:1000原液0.1ml/kg（为IV剂量10倍）','2025更新：VF/pVT首剂肾上腺素在首击除颤失败后给']};}}
  ]},
 {id:'asthma',ico:'🫁',name:'哮喘持续状态',grp:'循环呼吸急症',
  tag:'首小时沙丁胺醇q20min×3+激素；SABA持续泵雾化；MgSO₄/氨茶碱三线；PCO₂回升=恶化信号',links:['salb_ipo','mepred'],
@@ -1579,9 +1579,9 @@ SCEN.push(
     <div class="lrow lgray"><span class="lv">⚠血气陷阱</span><span>早期PCO₂低（过度通气）；<b>PCO₂「正常化/回升」+低氧=恶化</b>，不是好转</span></div>
   </div>`},
   {t:'② 处置阶梯',html:`
-   <div class="emg-step"><span class="sno">Step1 氧疗+β2激动（立即）</span><br>面罩/高流量氧（目标SpO₂≥94%）。<b>沙丁胺醇 0.15mg/kg（≥2.5mg/次）q20min×3次</b>雾化（氧驱动）；重度/濒危改<b>持续泵雾化 0.5mg/(kg·h)（max 15-20mg/h？文献10-15mg/h口径，本院按体重表）</b>；每剂联合<b>异丙托溴铵 <20kg 250μg、≥20kg 500μg q20min×3</b>。本院：沙丁胺醇2.5mg+异丙托半支 并行。</div>
+   <div class="emg-step"><span class="sno">Step1 氧疗+β2激动（立即）</span><br>面罩/高流量氧（目标SpO₂≥94%）。<b>沙丁胺醇 0.15mg/kg（≥2.5mg/次）q20min×3次</b>雾化（氧驱动）；【中国2025口径】≤20kg 2.5mg/次、>20kg 5mg/次；重度/濒危改<b>持续泵雾化 0.5mg/(kg·h)（max 15-20mg/h？文献10-15mg/h口径，本院按体重表）</b>；每剂联合<b>异丙托溴铵 <20kg 250μg、≥20kg 500μg q20min×3</b>。本院：沙丁胺醇2.5mg+异丙托半支 并行。</div>
    <div class="emg-step"><span class="sno">Step2 全身激素（1h内）</span><br><b>甲泼尼龙 1-2mg/kg（max 40-60mg/次）q6-12h</b> 静脉；或泼尼松1-2mg/kg/d口服（能口服则口服，疗效同静脉）。本院甲强龙1-3mg/kg q8为外科口径、哮喘取1-2。</div>
-   <div class="emg-step"><span class="sno">Step3 反应不佳加药</span><br>· <b>MgSO₄ 25-75mg/kg（max 2g）20min静滴</b>（本院0.2ml/kg=50mg/kg在区间内；监测血压/膝反射）· 氨茶碱 负荷4-6mg/kg（30min）→维持0.5-1mg/(kg·h)（⚠本院未列氨茶碱、用多索茶碱3-5mg/kg qd并行——茶碱类需血药浓度）· 大剂量吸入激素（布地奈德1-2mg q20min×3辅助证据）。</div>
+   <div class="emg-step"><span class="sno">Step3 反应不佳加药</span><br>· <b>MgSO₄ 中国2025口径 25-40mg/kg（≤2g/d）；国际25-75</b>（本院0.2ml/kg=50mg/kg取中上；监测血压/膝反射）· 氨茶碱【中国2025】负荷4-6mg/kg（≤250mg，30min）→维持0.7-1.0mg/(kg·h)（⚠本院未列氨茶碱、用多索茶碱3-5mg/kg qd并行——茶碱类需血药浓度）· 大剂量吸入激素（布地奈德1-2mg q20min×3辅助证据）。</div>
    <div class="emg-step"><span class="sno">Step4 PICU升级</span><br>氦氧混合气（重度喘鸣）；<b>插管指征：意识恶化/呼吸暂停/衰竭/持续恶化</b>——⚠插管风险高（小气道+气压伤）：清醒插管、低潮气量6-8ml/kg、长呼气时间、备手动呼吸；NIV作为桥接（不延误插管决策）；极重度：ECMO报告案例。</div>`},
   {t:'③ 常见坑',html:`<div class="emg-red">① 沉默肺当成好转；② PCO₂「正常」误判改善；③ 激素给晚了（4-6h才起效）；④ 只雾化不氧驱动（缺氧加重）；⑤ MgSO₄过快（低血压）；⑥ 插管用长吸气平台（气压伤+气胸）；⑦ 忘了查诱因（异物/肺炎/心源性喘息鉴别）。</div>`}],
  cals:[
@@ -1628,7 +1628,7 @@ SCEN.push(
     <div class="lrow lgray"><span class="lv">先辨因</span><span>导管依赖型先心（PGE1！见药物卡）、暴发性心肌炎（心律失常/肝损↑）、心律失常性（按SVT流程）、术后低心排、瓣膜/心包（超声立即）</span></div>
   </div>`},
   {t:'② 处置',html:`
-   <div class="emg-step"><span class="sno">Step1 体位+氧+限液</span><br>半卧位；SpO₂低给氧（大动脉转位/导管依赖先心⚠勿高氧）；严格出入量，补液控制在维持量以下（除非脱水）。</div>
+   <div class="emg-step"><span class="sno">Step1 体位+氧+限液</span><br>半卧位；SpO₂低给氧（大动脉转位/导管依赖先心⚠勿高氧）；严格出入量，补液控制在维持量以下（除非脱水）。【诊断线·中国2020修订版】EF<55%或FS<25%，结合临床表现。</div>
    <div class="emg-step"><span class="sno">Step2 利尿（容量负荷者）</span><br>呋塞米 <b>0.5-1mg/kg IV</b> q8-12h（本院0.2-1并行）；长期用+螺内酯1mg/kg q12保钾。</div>
    <div class="emg-step"><span class="sno">Step3 正性肌力（按型选）</span><br>· 急性心源性休克：<b>米力农 负荷25-50μg/kg（10min，血压可）→0.25-0.75μg/(kg·min)</b>（兼扩血管）· 或多巴酚丁胺2-20μg/(kg·min)（本院未列需补录）· 洋地黄化指征（慢性/心律失常性）：<b>西地兰 10μg/kg q8×3次</b>（本院；指南化量0.02-0.04mg/kg分次——本院剂量为化量的1/3偏保守，已并置）；⚠低钾/高钙增加洋地黄中毒，6h后查地高辛浓度。</div>
    <div class="emg-step"><span class="sno">Step4 扩血管（后负荷高者）</span><br>硝普钠 <b>0.5-3μg/(kg·min)</b>起（本院0.5-8）或硝酸甘油0.25-0.5起；血压低者先升压（肾上腺素/多巴胺）。</div>
@@ -1653,7 +1653,7 @@ SCEN.push(
   </div>`},
   {t:'② 处置阶梯（稳定者）',html:`
    <div class="emg-step"><span class="sno">Step1 迷走动作</span><br>冰水敷面（婴儿有效，15-20s）；大儿童屏气/瓦氏动作；<b>勿压眼球</b>。</div>
-   <div class="emg-step"><span class="sno">Step2 ATP/腺苷（快推！）</span><br><b>0.1mg/kg（首剂≤6mg）大静脉快速推+NS冲管</b>→2min无效<b>0.2mg/kg（≤12mg）</b>→必要时第三剂0.2mg/kg。⚠半衰期6秒：推注越快越有效；可诱发短暂心脏停搏/哮喘——床旁备除颤。</div>
+   <div class="emg-step"><span class="sno">Step2 ATP/腺苷（快推！）</span><br>PALS口径：<b>0.1mg/kg（首剂≤6mg）大静脉快速推+NS冲管</b>→2min无效<b>0.2mg/kg（≤12mg）</b>→必要时第三剂0.2mg/kg；【中国2023抗心律失常共识口径】0.2-0.4mg/kg/次——两口径并置从低档起。⚠半衰期6秒：推注越快越有效；可诱发短暂心脏停搏/哮喘——床旁备除颤。</div>
    <div class="emg-step"><span class="sno">Step3 药物备选</span><br>· <b>维拉帕米 0.1-0.2mg/kg缓推</b>——⚠<b><1岁禁用</b>、心衰禁用（本院配5mg+NS至5ml按ml推）· 普罗帕酮 1-2mg/kg/30min（本院）· 胺碘酮 5mg/kg/30min（本院）· 西地兰 10μg/kg q8（起效慢，本院常用）。</div>
    <div class="emg-step"><span class="sno">Step4 不稳定/药物无效：同步电复律</span><br><b>0.5-1J/kg</b>（同步！）→无效加倍至2J/kg；镇静（丙泊酚1mg/kg或咪达唑仑）不延误。</div>
    <div class="emg-step"><span class="sno">Step5 终止后</span><br>心电监护+12导联（预激WPW线索）；口服维持（普罗帕酮5-7mg/kg q8/地高辛）；预激+房扑者地高辛/维拉帕米慎用（加速旁路传导）→电生理会诊。</div>`},
@@ -1864,7 +1864,7 @@ SCEN.push(
     <div class="lrow lgray"><span class="lv">病生两期</span><span>高凝期（早期，血栓）→消耗性低凝期（出血为主）→纤溶亢进期——分期决定抗凝/止血方向，上级+血液科共同决策</span></div>
   </div>`},
   {t:'② 急性大出血/大量输血（WS/T 795）',html:`
-   <div class="emg-step"><span class="sno">复苏与目标</span><br>目标：<b>Hb>80g/L（活动性出血期）、Fib>1.5g/L、PLT>75×10⁹/L</b>；维持体温/钙/酸碱（大量输血三联：低体温/低钙/酸中毒）。</div>
+   <div class="emg-step"><span class="sno">复苏与目标</span><br>目标：<b>Hb>80g/L（活动性出血期）、Fib>1.5g/L、PLT>75×10⁹/L</b>；【WS/T 795-2022】稳定患儿Hb<70输红细胞、危重症<50应输、脑创伤维持70-100；ECMO期间Hct 30-40%、PLT>80；维持体温/钙/酸碱（大量输血三联：低体温/低钙/酸中毒）。</div>
    <div class="emg-step"><span class="sno">成分输注剂量</span><br>· 悬浮红细胞 <b>10-15ml/kg</b>（≈Hb升20-30g/L）· 失血性休克比例：<b>RBC:FFP=2:1（非创伤）/1:1（创伤或持续大出血）</b>· 单采血小板 <b>5-10ml/kg</b>（↑30-50×10⁹/L）· 经验配比：每输RBC 40ml/kg→PLT 15-20ml/kg＋冷沉淀10ml/kg· 冷沉淀 1U/5-10kg（Fib+VWF）· 纤维蛋白原制品 0.1-0.15g/kg（Fib<1.5时）。</div>
    <div class="emg-step"><span class="sno">大量输血并发症</span><br>· <b>枸橼酸中毒/低钙</b>：输血速度>1ml/(kg·min)或>总血容量时，每100ml血补10%葡萄糖酸钙1-2ml（本院5%氯化钙泵5-15mg/(kg·h)并行）· 低体温（加温输注）· 高钾（库存血）· 稀释性凝血病（按目标补成分）· TRALI（输后6h低氧）。</div>`},
   {t:'③ 常见坑',html:`<div class="emg-red">① 只输红细胞不按比例补血浆/血小板（稀释性凝血病）；② 不查钙（枸橼酸螯合）；③ 纤溶期还用大剂量抗纤溶药；④ 冷沉淀与纤维蛋白原混着堆（按Fib目标选）；⑤ 血制品时限（血小板/冷沉淀限时输完）忽略。</div>`}],
@@ -2223,7 +2223,7 @@ SCEN.push(
   {t:'④ 用药在ECMO上怎么变',html:`
    <div class="emg-step">①<b>肝素</b>：维持5-30U/kg/h滴定ACT 180-220s；置管时负荷50-100U/kg（团队给）；②<b>抗生素</b>：分布容积变大+管路吸附——剂量上调+TDM（万古/氨基糖苷必测）；③<b>镇静镇痛</b>：咪达唑仑/芬太尼常用，但管路也吸附一部分——躁动先想镇静不足再想别的；④<b>输血阈值</b>：团队口径（常Hb&lt;80-100维持携氧，PLT&gt;80-100、Fib&gt;1.5防出血）；⑤<b>水溶性药会被管路「吃掉」</b>（如NAC等解毒剂需追加）；⑥血制品按低中心静脉...按团队规程，输血后流量可能波动（容量动）。</div>`},
   {t:'⑤ 时机与撤离（谁该上/什么时候拔）',html:`
-   <div class="emg-step"><b>呼吸（VV）</b>：最优治疗（肺保护通气±NO/高频）仍P/F&lt;80或OI&gt;40、进行性恶化、不可逆气漏/肺出血→会诊。<b>循环（VA）</b>：足量容量+2种升压+正性肌力仍乳酸↑/尿少/灌注差；暴发心肌炎宜早；E-CPR=复苏15-20min无ROSC且病因可逆。<br><b>撤离</b>：VV=降气流量试停气30-60min看原肺；VA=降流量至30-50%+clamp试验+心超；<b>每天早交班问一句「今天能试减吗」</b>。</div>
+   <div class="emg-step"><b>呼吸（VV）</b>：最优治疗（肺保护通气±NO/高频）仍P/F&lt;80或OI&gt;40、进行性恶化、不可逆气漏/肺出血→会诊。<b>循环（VA）</b>：足量容量+2种升压+正性肌力仍乳酸↑/尿少/灌注差；<b>暴发性心肌炎上机指征（中国2020共识）</b>：CI<2L/(min·m²)、乳酸>4进行性↑、VIS≥20、CPR 15min——任一持续3h即上机；E-CPR=复苏15-20min无ROSC且病因可逆。<br><b>撤离</b>：VV=降气流量试停气30-60min看原肺；VA=降流量至30-50%+clamp试验+心超；<b>每天早交班问一句「今天能试减吗」</b>。</div>
    <div class="emg-red"><b>常见坑</b>：①等心跳停才叫ECMO；②只盯流量数字不看乳酸/尿量等灌注终点；③溶血当「尿色深」忽略；④不查ATⅢ就怪「肝素耐药」狂加肝素；⑤抗生素常规剂量（管路吸附+分布变大）；⑥躁动不作处理（撕管+流量崩）；⑦忘了每天评估撤离。</div>`}],
  cals:[
   {id:'ecmo_calc',title:'ECMO 目标流量速算（ELSO儿科口径，团队处方为准）',
@@ -2429,7 +2429,7 @@ SCORES.push(
      ck.push('需间隔≥3次测量（不同日/时点）取均值判定；身高段已按2017标准含身高校正；确诊与随访见儿科心血管专科');
      return {lines:L,ck:ck};
    }}],
- intro:'<div class="emg-sec"><div class="st">分期口径（中国）</div><div class="emg-lad"><div class="lrow lgreen"><span class="lv">正常</span><span><P90</span></div><div class="lrow lamber"><span class="lv">正常高值</span><span>P90~P95</span></div><div class="lrow lred"><span class="lv">1级高血压</span><span>≥P95且<P99+5</span></div><div class="lrow lred"><span class="lv">2级高血压</span><span>≥P99+5mmHg</span></div><div class="lrow lgray"><span class="lv">急症</span><span>重度升高+靶器官急性损害（脑病/心衰/肾损/眼底）</span></div></div></div>'},
+ intro:'<div class="emg-sec"><div class="st">分期口径（中国）</div><div class="emg-lad"><div class="lrow lgreen"><span class="lv">正常</span><span><P90</span></div><div class="lrow lamber"><span class="lv">正常高值</span><span>P90~P95</span></div><div class="lrow lred"><span class="lv">1级高血压</span><span>≥P95且<P99+5</span></div><div class="lrow lred"><span class="lv">2级高血压</span><span>≥P99+5mmHg</span></div><div class="lrow lgray"><span class="lv">急症</span><span>重度升高+靶器官急性损害（脑病/心衰/肾损/眼底）</span></div></div><div class="emg-amber">【中国高血压防治指南2024修订版】简化筛查公式：SBP=100+2×年龄（男）/100+1.5×年龄（女）、DBP=65+年龄（3-15岁速算）；16-17岁≥140/90为高血压；控制目标<P95，合并肾病/糖尿病/靶器官损害<P90。完整98页PDF见本页依据来源。</div></div>'},
 {id:'phoenix',ico:'🔥',name:'Phoenix脓毒症评分（2024国际共识）',type:'form',
  tag:'疑似感染+总分≥2=脓毒症；心血管域≥1=脓毒性休克；总分0-13（呼3+循6+凝2+神2）',
  srcs:['Schlapbach LJ等. JAMA 2024;331(3):215-224（国际共识）','Sanchez-Pinto LN等. JAMA 2024;331(8):675-687（开发验证）','官方开源实现 cu-dbmi-peds.github.io/phoenix（四源数值互核）'],
@@ -2518,38 +2518,40 @@ SCORES.push(
 /* ================= 基础知识模块（07）：教材口径参考 + 速算工具 ================= */
 const REFS=[
 {id:'guides',ico:'📚',name:'最新指南全文库（持续更新）',grp:'指南全文库',
- tag:'氢离子App入口 + 本工具全部引用指南的可点全文链接，按系统分组；部分需机构权限已标注',
- srcs:['各指南原文（链接见表内）','收录截至2026-10，新指南以氢离子/医脉通/各学会官网为准'],
+ tag:'优先收录中国儿童指南/共识全文（已验证链接）+ 国际指南原文，按系统分组；部分需权限已标注',
+ srcs:['各指南原文（链接见表内）','收录截至2026-10，新指南以医脉通/各学会官网为准'],
  secs:[
-  {t:'📲 氢离子 App（阿里健康·AI医学助手）',html:`<div class="emg-step"><b>氢离子</b>＝阿里健康推出的AI医学助手：直连国内外顶级医学期刊证据源，可AI问答+检索最新指南与文献（含儿科）。<br>
-   <b>下载</b>：华为应用市场 / 腾讯应用宝 / 各安卓商店搜「<b>氢离子</b>」（开发者：阿里健康）；iOS在App Store搜索。<br>
-   <b>用法建议</b>：①检索最新指南原文与更新 ②AI循证问答（答案仍需对照原文）③文献速递。<br>
-   <span style="color:#8a97ab">注：App内容无法从网页直接跳转，本页下方收录的是网页可直链的权威指南全文。</span></div>
+  {t:'📌 收录与更新说明',html:`<div class="emg-step">本库收录本工具全部引用的指南/共识，按系统分组；<b>优先收录中国儿童指南/共识</b>（含全文验证链接），国际指南（ISPAD/ILAE/AHA/SSC-P等）保持英文原文链接。中文指南无公开全文的标注「医脉通/万方检索词」。收录截至2026-10，持续补充中。「⬇本站」=公开全文的存档副本（pdfs/目录），仅供学习交流，版权归原作者与期刊所有。</div>
    <div class="tblwrap"><table class="tbl">
     <tr><th>平台</th><th>入口</th><th>说明</th></tr>
-    <tr><td>氢离子 App</td><td class="mono"><a href="https://appgallery.huawei.com/" target="_blank" rel="noopener">华为应用市场</a> · <a href="https://sj.qq.com/" target="_blank" rel="noopener">应用宝</a> · App Store 搜「氢离子」</td><td>阿里健康·AI医学证据+指南检索</td></tr>
     <tr><td>医脉通指南库</td><td class="mono"><a href="https://guide.medlive.cn/" target="_blank" rel="noopener">guide.medlive.cn</a></td><td>中文指南最全（需登录）</td></tr>
     <tr><td>UpToDate</td><td class="mono"><a href="https://www.uptodate.com/" target="_blank" rel="noopener">uptodate.com</a></td><td>需机构权限</td></tr>
     <tr><td>万方医学</td><td class="mono"><a href="https://med.wanfangdata.com.cn/" target="_blank" rel="noopener">med.wanfangdata.com.cn</a></td><td>文献/指南检索</td></tr>
+    <tr><td>NICE / WHO</td><td class="mono"><a href="https://www.nice.org.uk/" target="_blank" rel="noopener">nice.org.uk</a> · <a href="https://www.who.int/" target="_blank" rel="noopener">who.int</a></td><td>国际免费</td></tr>
    </table></div>`},
   {t:'🔥 脓毒症 · 复苏 · 休克',html:`<div class="tblwrap"><table class="tbl">
     <tr><th>指南/文献</th><th>出处</th><th>全文</th></tr>
-    <tr><td>SSC儿童脓毒症与脓毒性休克指南</td><td class="mono">SSC-P 2020（免费）</td><td class="mono"><a href="https://www.sccm.org/clinical-resources/guidelines/guidelines/surviving-sepsis-guidelines-children" target="_blank" rel="noopener">SCCM官方页</a></td></tr>
+    <tr><td>SSC儿童脓毒症与脓毒性休克指南 + 中文解读</td><td class="mono">SSC-P 2020（免费）</td><td class="mono"><a href="https://www.sccm.org/clinical-resources/guidelines/guidelines/surviving-sepsis-guidelines-children" target="_blank" rel="noopener">SCCM官方页</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7389700/" target="_blank" rel="noopener">中文解读</a> <a href="pdfs/SSC%E5%84%BF%E7%AB%A5%E8%84%93%E6%AF%92%E7%97%87%E6%8C%87%E5%8D%972020_%E4%B8%AD%E6%96%87%E8%A7%A3%E8%AF%BB_PMC.html" target="_blank" rel="noopener">⬇本站</a></td></tr>
+    <tr><td>儿童脓毒性休克管理专家共识</td><td class="mono">中华儿科杂志 2025（22条推荐）</td><td class="mono"><a href="https://pubmed.ncbi.nlm.nih.gov/39979095/" target="_blank" rel="noopener">PubMed题录</a> · <a href="https://www.sohu.com/a/872198500_121119113" target="_blank" rel="noopener">全文转载</a></td></tr>
+    <tr><td>Phoenix标准中国解读</td><td class="mono">中国实用儿科杂志 2024</td><td class="mono"><a href="https://www.zgsyz.com/zgsyek/CN/10.19538/j.ek2024060602" target="_blank" rel="noopener">官网文章页</a></td></tr>
+    <tr><td>儿童心肺复苏指南</td><td class="mono">中国小儿急救医学 2012（免费PDF）</td><td class="mono"><a href="https://cps.cma.org.cn/attachment/201465/1401956480162.pdf" target="_blank" rel="noopener">原文PDF</a> <a href="pdfs/%E5%84%BF%E7%AB%A5%E5%BF%83%E8%82%BA%E5%A4%8D%E8%8B%8F%E6%8C%87%E5%8D%97_%E4%B8%AD%E5%9B%BD%E5%B0%8F%E5%84%BF%E6%80%A5%E6%95%91%E5%8C%BB%E5%AD%A62012.pdf" target="_blank" rel="noopener">⬇本站</a></td></tr>
+    <tr><td>AHA 2025 CPR更新中文解读</td><td class="mono">中国急救医学（免费）</td><td class="mono"><a href="http://www.cem.org.cn/public/html/202601/20260104/index.htm" target="_blank" rel="noopener">解读页</a></td></tr>
+    <tr><td>儿童严重过敏反应（我如何治疗）</td><td class="mono">中国当代儿科 2026（OA）</td><td class="mono"><a href="https://www.zgddek.com/CN/10.7499/j.issn.1008-8830.2603145" target="_blank" rel="noopener">文章页</a> <a href="pdfs/%E4%B8%A5%E9%87%8D%E8%BF%87%E6%95%8F%E5%8F%8D%E5%BA%94_%E6%88%91%E5%A6%82%E4%BD%95%E6%B2%BB%E7%96%97_%E4%B8%AD%E5%9B%BD%E5%BD%93%E4%BB%A3%E5%84%BF%E7%A7%912026.pdf" target="_blank" rel="noopener">⬇本站</a></td></tr>
     <tr><td>Phoenix脓毒症国际共识（脓毒症新定义）</td><td class="mono">JAMA 2024（免费摘要）</td><td class="mono"><a href="https://jamanetwork.com/journals/jama/fullarticle/2814297" target="_blank" rel="noopener">JAMA</a></td></tr>
-    <tr><td>AHA PALS</td><td class="mono">2020 · Part8更新2025（免费）</td><td class="mono"><a href="https://www.ahajournals.org/doi/10.1161/CIR.0000000000001368" target="_blank" rel="noopener">2025更新</a> · <a href="https://www.ahajournals.org/doi/10.1161/CIR.0000000000000901" target="_blank" rel="noopener">2020全文</a></td></tr>
+    <tr><td>AHA PALS</td><td class="mono">2020 · Part8更新2025（免费）</td><td class="mono"><a href="https://www.ahajournals.org/doi/10.1161/CIR.0000000000001368" target="_blank" rel="noopener">2025更新</a> · <a href="https://www.ahajournals.org/doi/10.1161/CIR.0000000000000901" target="_blank" rel="noopener">2020全文</a></td> <a href="pdfs/%E5%84%BF%E7%AB%A5%E5%BF%83%E8%82%BA%E5%A4%8D%E8%8B%8F%E6%8C%87%E5%8D%97_%E4%B8%AD%E5%9B%BD%E5%B0%8F%E5%84%BF%E6%80%A5%E6%95%91%E5%8C%BB%E5%AD%A62012.pdf" target="_blank" rel="noopener">⬇本站</a></td></tr>
     <tr><td>过敏性休克（儿童难治性）</td><td class="mono">PMC 2024（免费全文）</td><td class="mono"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11439156" target="_blank" rel="noopener">PMC</a></td></tr>
-    <tr><td>儿童脓毒性休克管理专家共识（中国）</td><td class="mono">2025（氢离子/医脉通检索）</td><td class="mono">App内检索「儿童脓毒性休克 2025」</td></tr>
+    <tr><td>儿童脓毒性休克管理专家共识（中国）</td><td class="mono">2025（医脉通/万方检索）</td><td class="mono">检索「儿童脓毒性休克管理专家共识2025」（本页上方已收录全文链接）</td></tr>
   </table></div>`},
   {t:'💊 代谢内分泌 · 中毒',html:`<div class="tblwrap"><table class="tbl">
     <tr><th>指南/文献</th><th>出处</th><th>全文</th></tr>
     <tr><td>ISPAD糖尿病酮症酸中毒（DKA）指南</td><td class="mono">ISPAD 2022（免费章节）</td><td class="mono"><a href="https://www.ispad.org/page/ISPADGuidelines2022" target="_blank" rel="noopener">ISPAD官方</a></td></tr>
-    <tr><td>中国儿童DKA诊疗指南</td><td class="mono">中华儿科杂志 2024</td><td class="mono">氢离子/医脉通检索「儿童DKA 2024」</td></tr>
-    <tr><td>儿童低血糖评估建议</td><td class="mono">PES 2015（Pediatr J）</td><td class="mono">氢离子检索「Thornton 2015 hypoglycemia」</td></tr>
-    <tr><td>尿素循环障碍/高氨血症指南</td><td class="mono">Häberle 2012/2019（免费全文）</td><td class="mono"><a href="https://ojrd.biomedcentral.com/articles/10.1186/1750-1172-7-32" target="_blank" rel="noopener">Orphanet J</a></td></tr>
+    <tr><td>中国儿童DKA诊疗指南</td><td class="mono">中华儿科杂志 2024</td><td class="mono">医脉通/万方检索「儿童DKA 2024」</td></tr>
+    <tr><td>儿童低血糖评估建议</td><td class="mono">PES 2015（Pediatr J）</td><td class="mono">PubMed检索「Thornton 2015 hypoglycemia evaluation」</td></tr>
+    <tr><td>尿素循环障碍/高氨血症指南</td><td class="mono">Häberle 2012/2019（免费全文）</td><td class="mono"><a href="https://ojrd.biomedcentral.com/articles/10.1186/1750-1172-7-32" target="_blank" rel="noopener">Orphanet J</a></td> <a href="pdfs/%E9%AB%98%E6%B0%A8%E8%A1%80%E7%97%87%E5%B0%BF%E7%B4%A0%E5%BE%AA%E7%8E%AF%E9%9A%9C%E7%A2%8D%E6%8C%87%E5%8D%972012_Orphanet.html" target="_blank" rel="noopener">⬇本站</a></td></tr>
     <tr><td>对乙酰氨基酚中毒NAC方案</td><td class="mono">NEJM 2008（Heard）</td><td class="mono"><a href="https://www.nejm.org/doi/full/10.1056/NEJMct0708278" target="_blank" rel="noopener">NEJM</a>（需权限）</td></tr>
-    <tr><td>CCB中毒管理（HIET）</td><td class="mono">Bartlett 2019（免费全文）</td><td class="mono">氢离子检索「calcium channel blocker toxicity 2019」</td></tr>
+    <tr><td>CCB中毒管理（HIET）</td><td class="mono">Bartlett 2019（免费全文）</td><td class="mono">PubMed检索「calcium channel blocker toxicity management 2019」</td></tr>
     <tr><td>非新生儿破伤风诊疗规范</td><td class="mono">国家卫健委 2024（公开）</td><td class="mono"><a href="http://www.nhc.gov.cn/" target="_blank" rel="noopener">卫健委官网检索「破伤风诊疗规范」</a></td></tr>
-    <tr><td>洗胃/活性炭/全肠灌洗立场文件</td><td class="mono">AACT/EAPCCT（Clin Toxicol）</td><td class="mono">氢离子检索「AACT EAPCCT position paper」</td></tr>
+    <tr><td>洗胃/活性炭/全肠灌洗立场文件</td><td class="mono">AACT/EAPCCT（Clin Toxicol）</td><td class="mono">PubMed检索「AACT EAPCCT position paper」</td></tr>
   </table></div>`},
   {t:'🧠 神经',html:`<div class="tblwrap"><table class="tbl">
     <tr><th>指南/文献</th><th>出处</th><th>全文</th></tr>
@@ -2558,23 +2560,37 @@ const REFS=[
     <tr><td>NICE癫痫指南 / 儿糖尿病</td><td class="mono">NG217 · NG18（免费）</td><td class="mono"><a href="https://www.nice.org.uk/guidance/ng217" target="_blank" rel="noopener">NG217</a> · <a href="https://www.nice.org.uk/guidance/ng18" target="_blank" rel="noopener">NG18</a></td></tr>
     <tr><td>重度TBI脑外伤指南（儿童ICP/CPP）</td><td class="mono">BTF第4版/Kochanek 2019</td><td class="mono"><a href="https://braintrauma.org/guidelines" target="_blank" rel="noopener">BTF官方（免费PDF）</a></td></tr>
     <tr><td>儿童高血压筛查管理临床实践指南</td><td class="mono">AAP 2017（免费PDF）</td><td class="mono"><a href="https://publications.aap.org/pediatrics/article/140/3/e20171904/383046" target="_blank" rel="noopener">Pediatrics</a></td></tr>
-    <tr><td>儿童CAAP细菌性脑膜炎指南</td><td class="mono">2025（氢离子/医脉通检索）</td><td class="mono">App内检索「儿童细菌性脑膜炎 2025」</td></tr>
+    <tr><td>儿童CAAP细菌性脑膜炎指南</td><td class="mono">2025（23条推荐全文转载）</td><td class="mono"><a href="https://news.qq.com/rain/a/20250202A05H2T00" target="_blank" rel="noopener">全文</a></td></tr>
+    <tr><td>终止癫痫持续状态专家共识（CAAE）</td><td class="mono">2022（全文）</td><td class="mono"><a href="https://news.sohu.com/a/619310115_121123713" target="_blank" rel="noopener">全文</a> · <a href="https://news.qq.com/rain/a/20241028A07D9H00" target="_blank" rel="noopener">SE共识2022</a></td></tr>
+    <tr><td>院前紧急终止癫痫发作共识</td><td class="mono">CAAE 2025（官方PDF）</td><td class="mono"><a href="https://www.brainmed.com/info/54595.jspx" target="_blank" rel="noopener">文章页</a> <a href="pdfs/%E9%99%A2%E5%89%8D%E7%B4%A7%E6%80%A5%E7%BB%88%E6%AD%A2%E7%99%AB%E7%97%AB%E5%8F%91%E4%BD%9C%E4%B8%93%E5%AE%B6%E5%85%B1%E8%AF%862025_CAAE.pdf" target="_blank" rel="noopener">⬇本站</a></td></tr>
+    <tr><td>甘露醇治疗颅内压增高共识 / 高渗盐水治疗脑水肿共识</td><td class="mono">2019 / 2022（全文）</td><td class="mono"><a href="https://www.163.com/dy/article/ERARMPUL0514TE1K.html" target="_blank" rel="noopener">甘露醇2019</a> · <a href="https://www.163.com/dy/article/H6TU4FNR05349OMX.html" target="_blank" rel="noopener">高渗盐2022</a></td></tr>
+    <tr><td>中国高血压防治指南（2024年修订版）</td><td class="mono">98页完整PDF（含儿童章节）</td><td class="mono"><a href="https://www.yantai.gov.cn/cms_files/jcms1/web1/site/attach/0/026946c3e45b43b8a20788d4d63d3e2d.pdf" target="_blank" rel="noopener">原文PDF</a> <a href="pdfs/%E4%B8%AD%E5%9B%BD%E9%AB%98%E8%A1%80%E5%8E%8B%E9%98%B2%E6%B2%BB%E6%8C%87%E5%8D%972024%E4%BF%AE%E8%AE%A2%E7%89%88_%E5%AE%8C%E6%95%B498%E9%A1%B5.pdf" target="_blank" rel="noopener">⬇本站</a></td></tr>
   </table></div>`},
   {t:'🫁 呼吸 · 心血管',html:`<div class="tblwrap"><table class="tbl">
     <tr><th>指南/文献</th><th>出处</th><th>全文</th></tr>
-    <tr><td>GINA全球哮喘管理与预防策略</td><td class="mono">年度更新（免费PDF）</td><td class="mono"><a href="https://ginasthma.org/reports/" target="_blank" rel="noopener">ginasthma.org/reports</a></td></tr>
-    <tr><td>中国儿童支气管哮喘诊断与防治指南</td><td class="mono">2025（免费PDF）</td><td class="mono"><a href="https://www.jsma.net.cn/UploadFile/kindeditor/file/20250919/20250919141934_7096.pdf" target="_blank" rel="noopener">全文PDF</a></td></tr>
+    <tr><td>GINA全球哮喘管理与预防策略</td><td class="mono">年度更新（免费PDF）</td><td class="mono"><a href="https://ginasthma.org/reports/" target="_blank" rel="noopener">ginasthma.org/reports</a></td> <a href="pdfs/%E5%84%BF%E7%AB%A5%E5%93%AE%E5%96%98%E9%98%B2%E6%B2%BB%E6%8C%87%E5%8D%972025_%E4%B8%AD%E5%8D%8E%E5%84%BF%E7%A7%91%E6%9D%82%E5%BF%97.pdf" target="_blank" rel="noopener">⬇本站</a></td></tr>
+    <tr><td>中国儿童支气管哮喘诊断与防治指南</td><td class="mono">2025（免费PDF）</td><td class="mono"><a href="https://www.jsma.net.cn/UploadFile/kindeditor/file/20250919/20250919141934_7096.pdf" target="_blank" rel="noopener">全文PDF</a></td> <a href="pdfs/%E5%84%BF%E7%AB%A5%E5%93%AE%E5%96%98%E9%98%B2%E6%B2%BB%E6%8C%87%E5%8D%972025_%E4%B8%AD%E5%8D%8E%E5%84%BF%E7%A7%91%E6%9D%82%E5%BF%97.pdf" target="_blank" rel="noopener">⬇本站</a></td></tr>
     <tr><td>喉炎急诊管理立场声明</td><td class="mono">CPS（免费）</td><td class="mono"><a href="https://cps.ca/en/documents/position/acute-management-of-croup" target="_blank" rel="noopener">CPS官方</a> · <a href="https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis" target="_blank" rel="noopener">RCH</a></td></tr>
-    <tr><td>儿童心力衰竭诊断和治疗建议</td><td class="mono">2020修订版（免费全文）</td><td class="mono"><a href="https://cmab.yiigle.com/uploads/guide_html/%E5%84%BF%E7%AB%A5%E5%BF%83%E5%8A%9B%E8%A1%B0%E7%AB%AD%E8%AF%8A%E6%96%AD%E5%92%8C%E6%B2%BB%E7%96%97%E5%BB%BA%E8%AE%AE%EF%BC%882020%E5%B9%B4%E4%BF%AE%E8%AE%A2%E7%89%88%EF%BC%89.html" target="_blank" rel="noopener">全文HTML</a></td></tr>
+    <tr><td>儿童心力衰竭诊断和治疗建议</td><td class="mono">2020修订版（免费全文）</td><td class="mono"><a href="https://cmab.yiigle.com/uploads/guide_html/%E5%84%BF%E7%AB%A5%E5%BF%83%E5%8A%9B%E8%A1%B0%E7%AB%AD%E8%AF%8A%E6%96%AD%E5%92%8C%E6%B2%BB%E7%96%97%E5%BB%BA%E8%AE%AE%EF%BC%882020%E5%B9%B4%E4%BF%AE%E8%AE%A2%E7%89%88%EF%BC%89.html" target="_blank" rel="noopener">全文HTML</a></td> <a href="pdfs/%E5%84%BF%E7%AB%A5%E5%BF%83%E8%A1%B0%E8%AF%8A%E6%96%AD%E6%B2%BB%E7%96%97%E5%BB%BA%E8%AE%AE2020%E4%BF%AE%E8%AE%A2_%E5%85%A8%E6%96%87.html" target="_blank" rel="noopener">⬇本站</a></td></tr>
+    <tr><td>儿童CAP管理指南（2024修订）</td><td class="mono">中华儿科杂志（免费PDF）</td><td class="mono"><a href="https://www.x-abt.com/upload/portal/20250219/1f3016007c2768d6505d9112c130d3d1.pdf" target="_blank" rel="noopener">全文PDF</a></td> <a href="pdfs/%E5%84%BF%E7%AB%A5CAP%E7%AE%A1%E7%90%86%E6%8C%87%E5%8D%972024%E4%BF%AE%E8%AE%A2_%E4%B8%AD%E5%8D%8E%E5%84%BF%E7%A7%91%E6%9D%82%E5%BF%97.pdf" target="_blank" rel="noopener">⬇本站</a></td></tr>
+    <tr><td>抗心律失常药物临床应用中国专家共识（含儿童）</td><td class="mono">2023（免费PDF）</td><td class="mono"><a href="https://bjrmyylib.yuntsg.com/ueditor/jsp/upload/file/20230919/1695130592369034942.pdf" target="_blank" rel="noopener">全文PDF</a></td> <a href="pdfs/%E6%8A%97%E5%BF%83%E5%BE%8B%E5%A4%B1%E5%B8%B8%E8%8D%AF%E7%89%A9%E5%85%B1%E8%AF%862023_%E5%90%AB%E5%84%BF%E7%AB%A5.pdf" target="_blank" rel="noopener">⬇本站</a></td></tr>
+    <tr><td>雾化吸入疗法合理用药专家共识</td><td class="mono">2024版/2019版（免费PDF）</td><td class="mono"><a href="https://bookcafe.yuntsg.com/ueditor/jsp/upload/file/20240905/1725504160646025142.pdf" target="_blank" rel="noopener">2024</a> · <a href="https://www.yydbzz.com/article/2019/1004-0781/1004-0781-38-2-135.shtml" target="_blank" rel="noopener">2019HTML</a></td> <a href="pdfs/%E9%9B%BE%E5%8C%96%E5%90%B8%E5%85%A5%E7%96%97%E6%B3%95%E5%90%88%E7%90%86%E7%94%A8%E8%8D%AF%E5%85%B1%E8%AF%862024.pdf" target="_blank" rel="noopener">⬇本站</a></td></tr>
+    <tr><td>基层新生儿先心共识（PGE1口径）</td><td class="mono">中国当代儿科 2025（PMC免费）</td><td class="mono"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12548645" target="_blank" rel="noopener">PMC</a></td> <a href="pdfs/%E5%9F%BA%E5%B1%82%E6%96%B0%E7%94%9F%E5%84%BF%E5%85%88%E5%BF%83%E5%85%B1%E8%AF%862025_PGE1_PMC.html" target="_blank" rel="noopener">⬇本站</a></td></tr>
+    <tr><td>新生儿机械通气常规</td><td class="mono">中华儿科杂志（学会转载）</td><td class="mono"><a href="https://cspm.cma.org.cn/index/news?id=2883" target="_blank" rel="noopener">cspm.cma.org.cn</a></td></tr>
     <tr><td>哮喘持续状态PICU管理综述</td><td class="mono">PMC 2024（免费全文）</td><td class="mono"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11348376" target="_blank" rel="noopener">PMC</a></td></tr>
   </table></div>`},
   {t:'🫘 肾脏 · 血液 · 体外支持',html:`<div class="tblwrap"><table class="tbl">
     <tr><th>指南/文献</th><th>出处</th><th>全文</th></tr>
     <tr><td>KDIGO急性肾损伤（AKI）指南</td><td class="mono">KDIGO 2012+更新（免费PDF）</td><td class="mono"><a href="https://kdigo.org/guidelines/aki/" target="_blank" rel="noopener">kdigo.org</a></td></tr>
-    <tr><td>儿科输血指南</td><td class="mono">WS/T 795—2022（行业标准）</td><td class="mono"><a href="http://www.nhc.gov.cn/" target="_blank" rel="noopener">卫健委标准库检索</a></td></tr>
+    <tr><td>儿科输血指南</td><td class="mono">WS/T 795—2022（官方全文PDF）</td><td class="mono"><a href="https://hbba.sacinfo.org.cn/snDetail/a3904cd096f37fb053c7abe2a4e4d9a7dbc8f9e011e32ee0e00c6d2e02ade63a" target="_blank" rel="noopener">标准平台</a> <a href="pdfs/%E5%84%BF%E7%A7%91%E8%BE%93%E8%A1%80%E6%8C%87%E5%8D%97WS_T795-2022_%E5%AE%98%E6%96%B9%E5%85%A8%E6%96%87.pdf" target="_blank" rel="noopener">⬇本站</a></td></tr>
+    <tr><td>持续血液净化治疗儿童严重脓毒症专家共识</td><td class="mono">中华儿科 2014（免费全文）</td><td class="mono"><a href="https://cps.cma.org.cn/art/2014/2/11/art_751_13595.html" target="_blank" rel="noopener">全文</a></td></tr>
+    <tr><td>CRRT抗菌药物剂量调整专家共识</td><td class="mono">2024版（免费全文）</td><td class="mono"><a href="http://www.cjn.org.cn/CN/10.3760/cma.j.cn441217-20230906-00906" target="_blank" rel="noopener">全文</a></td></tr>
+    <tr><td>DIC诊断中国专家共识</td><td class="mono">2017（中文全文+PMC）</td><td class="mono"><a href="https://www.vastec.com.cn/xsjlshow/55.html" target="_blank" rel="noopener">中文</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7354191" target="_blank" rel="noopener">PMC</a></td></tr>
+    <tr><td>ECMO支持儿科暴发性心肌炎专家共识</td><td class="mono">2020（免费全文）</td><td class="mono"><a href="http://cem.org.cn/rhtml/20200105/index.htm" target="_blank" rel="noopener">全文HTML</a></td></tr>
+    <tr><td>新生儿呼吸衰竭ECMO支持专家共识</td><td class="mono">2018（免费PDF）</td><td class="mono"><a href="http://www.fyyxzz.com/CN/article/downloadArticleFile.do?attachType=PDF&amp;id=183" target="_blank" rel="noopener">原文PDF</a> <a href="pdfs/%E6%96%B0%E7%94%9F%E5%84%BF%E5%91%BC%E5%90%B8%E8%A1%B0%E7%AB%ADECMO%E6%94%AF%E6%8C%81%E4%B8%93%E5%AE%B6%E5%85%B1%E8%AF%862018.pdf" target="_blank" rel="noopener">⬇本站</a></td></tr>
     <tr><td>ELSO体外生命支持指南</td><td class="mono">ELSO（会员/部分免费）</td><td class="mono"><a href="https://www.elso.org/Resources/Guidelines.aspx" target="_blank" rel="noopener">elso.org</a></td></tr>
     <tr><td>pSOFA儿童序贯器官衰竭评分</td><td class="mono">Matics 2017（免费全文）</td><td class="mono"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6583375" target="_blank" rel="noopener">PMC</a></td></tr>
-    <tr><td>PELOD-2评分</td><td class="mono">Leteurtre 2013</td><td class="mono">氢离子检索「PELOD-2 2013」</td></tr>
+    <tr><td>PELOD-2评分</td><td class="mono">Leteurtre 2013</td><td class="mono">PubMed检索「PELOD-2 Leteurtre 2013」</td></tr>
     <tr><td>中国儿童血压参照标准（2017更新）</td><td class="mono">范晖等·中华高血压杂志</td><td class="mono"><a href="https://doi.org/10.16439/j.cnki.1673-7245.2017.05.009" target="_blank" rel="noopener">DOI全文</a></td></tr>
   </table></div>`}]}
 ,{id:'labs',ico:'🧪',name:'常用化验正常值',grp:'检验参考',
