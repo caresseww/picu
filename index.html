@@ -2517,7 +2517,67 @@ SCORES.push(
 
 /* ================= 基础知识模块（07）：教材口径参考 + 速算工具 ================= */
 const REFS=[
-{id:'labs',ico:'🧪',name:'常用化验正常值',grp:'检验参考',
+{id:'guides',ico:'📚',name:'最新指南全文库（持续更新）',grp:'指南全文库',
+ tag:'氢离子App入口 + 本工具全部引用指南的可点全文链接，按系统分组；部分需机构权限已标注',
+ srcs:['各指南原文（链接见表内）','收录截至2026-10，新指南以氢离子/医脉通/各学会官网为准'],
+ secs:[
+  {t:'📲 氢离子 App（阿里健康·AI医学助手）',html:`<div class="emg-step"><b>氢离子</b>＝阿里健康推出的AI医学助手：直连国内外顶级医学期刊证据源，可AI问答+检索最新指南与文献（含儿科）。<br>
+   <b>下载</b>：华为应用市场 / 腾讯应用宝 / 各安卓商店搜「<b>氢离子</b>」（开发者：阿里健康）；iOS在App Store搜索。<br>
+   <b>用法建议</b>：①检索最新指南原文与更新 ②AI循证问答（答案仍需对照原文）③文献速递。<br>
+   <span style="color:#8a97ab">注：App内容无法从网页直接跳转，本页下方收录的是网页可直链的权威指南全文。</span></div>
+   <div class="tblwrap"><table class="tbl">
+    <tr><th>平台</th><th>入口</th><th>说明</th></tr>
+    <tr><td>氢离子 App</td><td class="mono"><a href="https://appgallery.huawei.com/" target="_blank" rel="noopener">华为应用市场</a> · <a href="https://sj.qq.com/" target="_blank" rel="noopener">应用宝</a> · App Store 搜「氢离子」</td><td>阿里健康·AI医学证据+指南检索</td></tr>
+    <tr><td>医脉通指南库</td><td class="mono"><a href="https://guide.medlive.cn/" target="_blank" rel="noopener">guide.medlive.cn</a></td><td>中文指南最全（需登录）</td></tr>
+    <tr><td>UpToDate</td><td class="mono"><a href="https://www.uptodate.com/" target="_blank" rel="noopener">uptodate.com</a></td><td>需机构权限</td></tr>
+    <tr><td>万方医学</td><td class="mono"><a href="https://med.wanfangdata.com.cn/" target="_blank" rel="noopener">med.wanfangdata.com.cn</a></td><td>文献/指南检索</td></tr>
+   </table></div>`},
+  {t:'🔥 脓毒症 · 复苏 · 休克',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>指南/文献</th><th>出处</th><th>全文</th></tr>
+    <tr><td>SSC儿童脓毒症与脓毒性休克指南</td><td class="mono">SSC-P 2020（免费）</td><td class="mono"><a href="https://www.sccm.org/clinical-resources/guidelines/guidelines/surviving-sepsis-guidelines-children" target="_blank" rel="noopener">SCCM官方页</a></td></tr>
+    <tr><td>Phoenix脓毒症国际共识（脓毒症新定义）</td><td class="mono">JAMA 2024（免费摘要）</td><td class="mono"><a href="https://jamanetwork.com/journals/jama/fullarticle/2814297" target="_blank" rel="noopener">JAMA</a></td></tr>
+    <tr><td>AHA PALS</td><td class="mono">2020 · Part8更新2025（免费）</td><td class="mono"><a href="https://www.ahajournals.org/doi/10.1161/CIR.0000000000001368" target="_blank" rel="noopener">2025更新</a> · <a href="https://www.ahajournals.org/doi/10.1161/CIR.0000000000000901" target="_blank" rel="noopener">2020全文</a></td></tr>
+    <tr><td>过敏性休克（儿童难治性）</td><td class="mono">PMC 2024（免费全文）</td><td class="mono"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11439156" target="_blank" rel="noopener">PMC</a></td></tr>
+    <tr><td>儿童脓毒性休克管理专家共识（中国）</td><td class="mono">2025（氢离子/医脉通检索）</td><td class="mono">App内检索「儿童脓毒性休克 2025」</td></tr>
+  </table></div>`},
+  {t:'💊 代谢内分泌 · 中毒',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>指南/文献</th><th>出处</th><th>全文</th></tr>
+    <tr><td>ISPAD糖尿病酮症酸中毒（DKA）指南</td><td class="mono">ISPAD 2022（免费章节）</td><td class="mono"><a href="https://www.ispad.org/page/ISPADGuidelines2022" target="_blank" rel="noopener">ISPAD官方</a></td></tr>
+    <tr><td>中国儿童DKA诊疗指南</td><td class="mono">中华儿科杂志 2024</td><td class="mono">氢离子/医脉通检索「儿童DKA 2024」</td></tr>
+    <tr><td>儿童低血糖评估建议</td><td class="mono">PES 2015（Pediatr J）</td><td class="mono">氢离子检索「Thornton 2015 hypoglycemia」</td></tr>
+    <tr><td>尿素循环障碍/高氨血症指南</td><td class="mono">Häberle 2012/2019（免费全文）</td><td class="mono"><a href="https://ojrd.biomedcentral.com/articles/10.1186/1750-1172-7-32" target="_blank" rel="noopener">Orphanet J</a></td></tr>
+    <tr><td>对乙酰氨基酚中毒NAC方案</td><td class="mono">NEJM 2008（Heard）</td><td class="mono"><a href="https://www.nejm.org/doi/full/10.1056/NEJMct0708278" target="_blank" rel="noopener">NEJM</a>（需权限）</td></tr>
+    <tr><td>CCB中毒管理（HIET）</td><td class="mono">Bartlett 2019（免费全文）</td><td class="mono">氢离子检索「calcium channel blocker toxicity 2019」</td></tr>
+    <tr><td>非新生儿破伤风诊疗规范</td><td class="mono">国家卫健委 2024（公开）</td><td class="mono"><a href="http://www.nhc.gov.cn/" target="_blank" rel="noopener">卫健委官网检索「破伤风诊疗规范」</a></td></tr>
+    <tr><td>洗胃/活性炭/全肠灌洗立场文件</td><td class="mono">AACT/EAPCCT（Clin Toxicol）</td><td class="mono">氢离子检索「AACT EAPCCT position paper」</td></tr>
+  </table></div>`},
+  {t:'🧠 神经',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>指南/文献</th><th>出处</th><th>全文</th></tr>
+    <tr><td>ILAE癫痫持续状态框架</td><td class="mono">Trinka 2015（免费全文）</td><td class="mono"><a href="https://www.epilepsydiagnosis.org/" target="_blank" rel="noopener">ILAE诊断手册</a> · PMC检索</td></tr>
+    <tr><td>ESETT三药等效试验</td><td class="mono">NEJM 2019（Kapur）</td><td class="mono"><a href="https://www.nejm.org/doi/full/10.1056/NEJMoa1905795" target="_blank" rel="noopener">NEJM</a>（需权限）</td></tr>
+    <tr><td>NICE癫痫指南 / 儿糖尿病</td><td class="mono">NG217 · NG18（免费）</td><td class="mono"><a href="https://www.nice.org.uk/guidance/ng217" target="_blank" rel="noopener">NG217</a> · <a href="https://www.nice.org.uk/guidance/ng18" target="_blank" rel="noopener">NG18</a></td></tr>
+    <tr><td>重度TBI脑外伤指南（儿童ICP/CPP）</td><td class="mono">BTF第4版/Kochanek 2019</td><td class="mono"><a href="https://braintrauma.org/guidelines" target="_blank" rel="noopener">BTF官方（免费PDF）</a></td></tr>
+    <tr><td>儿童高血压筛查管理临床实践指南</td><td class="mono">AAP 2017（免费PDF）</td><td class="mono"><a href="https://publications.aap.org/pediatrics/article/140/3/e20171904/383046" target="_blank" rel="noopener">Pediatrics</a></td></tr>
+    <tr><td>儿童CAAP细菌性脑膜炎指南</td><td class="mono">2025（氢离子/医脉通检索）</td><td class="mono">App内检索「儿童细菌性脑膜炎 2025」</td></tr>
+  </table></div>`},
+  {t:'🫁 呼吸 · 心血管',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>指南/文献</th><th>出处</th><th>全文</th></tr>
+    <tr><td>GINA全球哮喘管理与预防策略</td><td class="mono">年度更新（免费PDF）</td><td class="mono"><a href="https://ginasthma.org/reports/" target="_blank" rel="noopener">ginasthma.org/reports</a></td></tr>
+    <tr><td>中国儿童支气管哮喘诊断与防治指南</td><td class="mono">2025（免费PDF）</td><td class="mono"><a href="https://www.jsma.net.cn/UploadFile/kindeditor/file/20250919/20250919141934_7096.pdf" target="_blank" rel="noopener">全文PDF</a></td></tr>
+    <tr><td>喉炎急诊管理立场声明</td><td class="mono">CPS（免费）</td><td class="mono"><a href="https://cps.ca/en/documents/position/acute-management-of-croup" target="_blank" rel="noopener">CPS官方</a> · <a href="https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis" target="_blank" rel="noopener">RCH</a></td></tr>
+    <tr><td>儿童心力衰竭诊断和治疗建议</td><td class="mono">2020修订版（免费全文）</td><td class="mono"><a href="https://cmab.yiigle.com/uploads/guide_html/%E5%84%BF%E7%AB%A5%E5%BF%83%E5%8A%9B%E8%A1%B0%E7%AB%AD%E8%AF%8A%E6%96%AD%E5%92%8C%E6%B2%BB%E7%96%97%E5%BB%BA%E8%AE%AE%EF%BC%882020%E5%B9%B4%E4%BF%AE%E8%AE%A2%E7%89%88%EF%BC%89.html" target="_blank" rel="noopener">全文HTML</a></td></tr>
+    <tr><td>哮喘持续状态PICU管理综述</td><td class="mono">PMC 2024（免费全文）</td><td class="mono"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11348376" target="_blank" rel="noopener">PMC</a></td></tr>
+  </table></div>`},
+  {t:'🫘 肾脏 · 血液 · 体外支持',html:`<div class="tblwrap"><table class="tbl">
+    <tr><th>指南/文献</th><th>出处</th><th>全文</th></tr>
+    <tr><td>KDIGO急性肾损伤（AKI）指南</td><td class="mono">KDIGO 2012+更新（免费PDF）</td><td class="mono"><a href="https://kdigo.org/guidelines/aki/" target="_blank" rel="noopener">kdigo.org</a></td></tr>
+    <tr><td>儿科输血指南</td><td class="mono">WS/T 795—2022（行业标准）</td><td class="mono"><a href="http://www.nhc.gov.cn/" target="_blank" rel="noopener">卫健委标准库检索</a></td></tr>
+    <tr><td>ELSO体外生命支持指南</td><td class="mono">ELSO（会员/部分免费）</td><td class="mono"><a href="https://www.elso.org/Resources/Guidelines.aspx" target="_blank" rel="noopener">elso.org</a></td></tr>
+    <tr><td>pSOFA儿童序贯器官衰竭评分</td><td class="mono">Matics 2017（免费全文）</td><td class="mono"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6583375" target="_blank" rel="noopener">PMC</a></td></tr>
+    <tr><td>PELOD-2评分</td><td class="mono">Leteurtre 2013</td><td class="mono">氢离子检索「PELOD-2 2013」</td></tr>
+    <tr><td>中国儿童血压参照标准（2017更新）</td><td class="mono">范晖等·中华高血压杂志</td><td class="mono"><a href="https://doi.org/10.16439/j.cnki.1673-7245.2017.05.009" target="_blank" rel="noopener">DOI全文</a></td></tr>
+  </table></div>`}]}
+,{id:'labs',ico:'🧪',name:'常用化验正常值',grp:'检验参考',
  tag:'血气 / 电解质 / 血常规（分年龄）/ 凝血 / 脑脊液 —— 以本院检验科参考区间为准',
  srcs:['人卫《儿科学》第9版 / 《诸福棠实用儿科学》口径','WS/T 405血细胞分析参考区间（成人为主，儿童分段见下表）'],
  secs:[
