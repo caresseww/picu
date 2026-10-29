@@ -14,14 +14,14 @@
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
 body{margin:0; background:var(--paper); color:var(--ink);
   font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif; font-size:14px; line-height:1.5;}
-.wrap{max-width:660px; margin:0 auto; padding:0 12px 110px;}
+.wrap{max-width:640px; margin:0 auto; padding:0 14px 110px;}
 button{font-family:inherit;}
 /* ===== 顶栏：患者面板 ===== */
 header{position:sticky; top:0; z-index:50; background:linear-gradient(165deg,#0a1e3c 0%,#163b70 55%,#2a62a8 100%); color:#fff;
-  padding:9px 14px 8px; box-shadow:0 2px 12px rgba(4,16,34,.35); transform:translateZ(0);}
+  padding:7px 14px 6px; box-shadow:0 2px 12px rgba(4,16,34,.35); transform:translateZ(0); transition:padding .2s;}
 header.compact .t0,.pmeta{display:none;}
 header.compact .prow{margin-top:0; padding-top:0; border-top:none;}
-.t0{font-size:16px; font-weight:800; letter-spacing:1px;
+.t0{font-size:15px; font-weight:800; letter-spacing:1px;
   background:linear-gradient(180deg,#fff 30%,#bcd4f5); -webkit-background-clip:text; background-clip:text; color:transparent;
   filter:drop-shadow(0 1px 4px rgba(4,16,34,.45));}
 .t0::before{content:''; display:block; width:28px; height:2px; border-radius:2px; margin-bottom:4px;
@@ -41,7 +41,7 @@ header.compact .prow{margin-top:0; padding-top:0; border-top:none;}
 .pmeta.show{display:flex;}
 nav{display:flex; gap:7px; padding:10px 0 0; position:relative; z-index:1;}
 nav button{flex:1; border:1px solid rgba(255,255,255,.30); background:rgba(255,255,255,.10); color:#d9e6f8;
-  border-radius:11px; padding:7px 4px; font-size:13.5px; font-weight:700; cursor:pointer;}
+  border-radius:10px; padding:7px 2px; font-size:12.5px; font-weight:700; cursor:pointer; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;}
 nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:0 1px 5px rgba(4,16,34,.3);}
 .page{display:none;} .page.on{display:block;}
 .searchrow{padding:9px 0 2px;}
@@ -63,7 +63,9 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
   background:#fff; border:1px solid var(--line); border-radius:14px; padding:10px 12px;}
 /* ===== 分组与药卡 ===== */
 .group{background:var(--card); border:none; border-radius:18px; margin:10px 0;
-  box-shadow:0 4px 16px rgba(15,35,70,.07); overflow:hidden;}
+  box-shadow:0 1px 3px rgba(15,35,70,.04),0 4px 16px rgba(15,35,70,.06); overflow:hidden;
+  transition:box-shadow .2s,transform .2s;}
+.group.open{box-shadow:0 2px 8px rgba(15,35,70,.08),0 8px 24px rgba(15,35,70,.08);}
 .group.open .ghead{border-bottom:1px dashed var(--line);}
 .ghead{display:flex; align-items:center; gap:10px; padding:11px 14px; min-height:42px; cursor:pointer; user-select:none;}
 .ghead:active{background:#eef3fb;}
@@ -75,8 +77,10 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
 .gcnt{margin-left:auto; font-family:var(--mono); font-size:12px; color:#fff; background:var(--navy2);
   border-radius:12px; padding:2px 9px; font-weight:600; flex:0 0 auto;}
 .gbody{padding:2px 10px 10px; display:none;} .group.open .gbody{display:block;}
-.card{background:var(--card); border:1px solid var(--line); border-radius:16px; margin:10px 0;
-  box-shadow:0 1px 4px rgba(20,30,50,.05); overflow:hidden; scroll-margin-top:150px;}
+.card{background:var(--card); border:1px solid #eef0f4; border-radius:14px; margin:8px 0;
+  box-shadow:0 1px 2px rgba(20,30,50,.03); overflow:hidden; scroll-margin-top:150px;
+  transition:border-color .2s,box-shadow .2s;}
+.card.open{border-color:#c9d4e8; box-shadow:0 2px 8px rgba(20,40,80,.06);}
 .chead{display:flex; align-items:baseline; gap:7px; padding:8px 12px; min-height:33px; cursor:pointer; user-select:none;}
 .chead:active{background:#eef3fb;}
 .card.open .chead{border-bottom:1px dashed var(--line);}
@@ -113,8 +117,9 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
 .ckbox .warn{color:var(--amber); font-weight:700;}
 .ckbox .bad{color:var(--red); font-weight:700;}
 .btnrow{display:flex; align-items:center; gap:10px; margin-top:9px;}
-.btn{border:1px solid #c9d4e8; background:#fff; color:var(--navy); border-radius:11px; padding:8px 16px;
-  font-size:13.5px; font-weight:700; cursor:pointer;}
+.btn{border:1px solid #c9d4e8; background:#fff; color:var(--navy); border-radius:10px; padding:8px 16px;
+  font-size:13.5px; font-weight:700; cursor:pointer; transition:all .15s;}
+.btn:hover{border-color:var(--navy2); box-shadow:0 1px 4px rgba(20,40,80,.1);}
 .btn.pri{background:var(--navy); border-color:var(--navy); color:#fff;}
 .btn.pri.added{background:var(--green); border-color:var(--green);}
 .btn:active{opacity:.85;}
@@ -213,6 +218,46 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
 .quickrow .qchip{flex:0 0 auto; border:1px solid #d3e2f5; background:#f4f8fd; color:var(--navy);
   border-radius:14px; padding:6px 12px; font-size:12.5px; font-weight:700; cursor:pointer; white-space:nowrap;}
 .quickrow .qchip:active{background:#dfe9f7;}
+
+/* ===== v10 药卡排版层级 ===== */
+.ordbox{border-left:3px solid var(--navy2); background:linear-gradient(180deg,#f0f5fc,#f5f8fd);
+  border-radius:0 10px 10px 0; box-shadow:inset 0 1px 3px rgba(20,40,80,.04);}
+.ordbox .o1{font-size:15px !important; font-weight:800 !important; line-height:1.8; letter-spacing:.3px;}
+.ordbox .o2{font-size:13px; color:var(--navy); opacity:.95; font-family:var(--mono); margin-top:2px;}
+.labeq{font-size:14px;}
+.din{width:88px !important; font-size:17px !important; font-weight:700;}
+.lanet{font-size:12.5px; background:#e8f0fa; display:inline-block; padding:2px 9px; border-radius:8px; margin-bottom:4px;}
+.dosebox .r{font-size:12.5px; line-height:1.75;}
+.srcTag{display:inline-block; font-size:10.5px; font-weight:800; border-radius:6px; padding:1px 7px; margin-right:6px; vertical-align:1px;}
+.srcTag.g{background:#e8f0fa; color:var(--navy2); border:1px solid #c9d9ef;}
+.srcTag.h{background:#e9f7ec; color:var(--green); border:1px solid #bfe3c8;}
+.more .mrow{display:flex; gap:6px; align-items:flex-start;}
+.more .mrow::before{content:'·'; font-weight:800; color:var(--navy2);}
+.more .mrow b{flex:0 0 auto;}
+
+/* ===== 组内药理小节 ===== */
+.subrow{font-size:10.5px; font-weight:800; color:var(--navy2); letter-spacing:2px;
+  margin:14px 2px 5px; padding:4px 10px; background:linear-gradient(90deg,#edf2fa,transparent);
+  border-left:2.5px solid var(--navy2); border-radius:0 6px 6px 0; text-transform:uppercase;}
+.subrow:first-child{margin-top:4px;}
+
+/* ===== v10.1 卡片视觉精修 ===== */
+.card{border-radius:18px; box-shadow:0 2px 8px rgba(20,30,50,.08);}
+.chead{transition:background .15s;}
+.chead:hover{background:#f2f6fc;}
+.ordbox{border-radius:12px; box-shadow:inset 0 1px 3px rgba(20,40,80,.06);}
+.ckbox{background:#fbfbf7;}
+.more{background:#fafbfc; border-radius:12px; padding:8px 12px; margin-top:8px;}
+.more summary{letter-spacing:.3px;}
+.more .mrow{border-left:3px solid #d8e2f0; padding:4px 8px; margin:5px 0; border-radius:0 8px 8px 0; background:#fff; line-height:1.65;}
+.more .mrow::before{content:none;}
+.more .mrow b{color:var(--navy2); font-weight:800;}
+.more .mrow.warn{border-left-color:#e4b8b8; background:#fdf6f6;}
+.more .mrow.warn b{color:var(--red);}
+.more .mrow.cmp{border-left-color:#ecd9a8; background:#fffaf0;}
+.more .mrow.cmp b{color:var(--amber);}
+.lanet{background:linear-gradient(90deg,#e8f0fa,#f0f5fb); border-left:3px solid var(--navy2);}
+.lane{border-radius:12px;}
 </style>
 </head>
 <body>
@@ -241,36 +286,7 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
   </nav>
 </header>
 
-<div class="page on" id="p0">
-  <div class="tiles">
-    <button class="tile a" data-act="go" data-page="1" type="button">
-      <div class="ti">💊</div><div class="tt">药物计算器</div>
-      <div class="td">ICU常用药 · 输体重出剂量/配液/泵速 · 勾选生成医嘱单</div>
-    </button>
-    <button class="tile b" data-act="go" data-page="3" type="button">
-      <div class="ti">⚡</div><div class="tt">临床情景</div>
-      <div class="td">儿科急症标准流程：DKA·持续癫痫·脓毒性休克·PALS·高钾…</div>
-    </button>
-    <button class="tile c" data-act="go" data-page="4" type="button">
-      <div class="ti">📐</div><div class="tt">评分与参考</div>
-      <div class="td">GCS·脓毒症评分·儿童血压百分位·生命体征·常用公式</div>
-    </button>
-    <button class="tile" style="background:linear-gradient(150deg,#4a148c,#6a1b9a 60%,#8e24aa);" data-act="go" data-page="5" type="button">
-      <div class="ti">📖</div><div class="tt">基础知识</div>
-      <div class="td">化验正常值·液体疗法·酸碱速查·气道呼吸支持·营养热卡</div>
-    </button>
-    <button class="tile" style="background:linear-gradient(150deg,#4e342e,#6d4c41 60%,#8d6e63);" data-act="go" data-page="2" type="button">
-      <div class="ti">📋</div><div class="tt">医嘱单</div>
-      <div class="td">已选医嘱汇总 · 复制文本 · 打印</div>
-    </button>
-  </div>
-  <div class="p0note">
-    <b>口径说明</b>：药物剂量口径以本院《ICU常用药》（2024.8.29）为第一权威，指南/UpToDate 建议并置标注；临床情景剂量来自
-    ISPAD、ILAE、AHA PALS、SSC-P、中国儿童专家共识等权威指南，与本院清单冲突处已在页内并置。计算结果仅供临床参考，开具医嘱前请双人核对。
-  </div>
-</div>
-
-<div class="page" id="p1">
+<div class="page on" id="p1">
   <div class="searchrow"><input id="q" type="search" placeholder="搜药名 / 分类 / 参考值（如：美罗、利尿、镇痛、万古）"></div>
   <div class="quickrow" id="quickrow"></div>
   <div id="groups"></div>
@@ -284,6 +300,7 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
     <div class="btnrow" style="margin-top:12px;">
       <button class="btn pri" data-act="ocopy" type="button">复制全部</button>
       <button class="btn" data-act="oprint" type="button">打印</button>
+      <button class="btn" data-act="fbcopy" id="fbrow" style="display:none;background:#fff8e1;border-color:#ecd9a8;color:#92600a;" type="button">⚑ 复制反馈</button>
       <button class="linklike" data-act="oclear" style="color:#b00020;">清空</button>
     </div>
     <div id="otip" style="font-size:12px;color:#1a7f37;margin-top:6px;min-height:16px;"></div>
@@ -291,7 +308,7 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
 </div>
 
 <div class="page" id="p3">
-  <div class="backrow" data-act="go" data-page="0">‹ 模块选择</div>
+  <div class="backrow" data-act="go" data-page="1">‹ 药物</div>
   <div class="searchrow" style="padding:0 0 6px;"><input id="q3" type="search" placeholder="搜情景（如：DKA、癫痫、高钾、中毒、ECMO）"></div>
   <div class="emg-hero" style="background:linear-gradient(165deg,#283593,#3949ab 55%,#5e35b1);">
     <div class="et">⚡ 临床情景</div>
@@ -301,7 +318,7 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
 </div>
 
 <div class="page" id="p5">
-  <div class="backrow" data-act="go" data-page="0">‹ 模块选择</div>
+  <div class="backrow" data-act="go" data-page="1">‹ 药物</div>
   <div class="emg-hero" style="background:linear-gradient(150deg,#4a148c,#6a1b9a 60%,#8e24aa);">
     <div class="et">📖 基础知识</div>
     <div class="ed">化验正常值 · 液体疗法 · 酸碱速查 · 气道与呼吸支持 · 营养热卡——教材口径速查+速算工具。</div>
@@ -311,7 +328,7 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
 </div>
 
 <div class="page" id="p4">
-  <div class="backrow" data-act="go" data-page="0">‹ 模块选择</div>
+  <div class="backrow" data-act="go" data-page="1">‹ 药物</div>
   <div class="searchrow" style="padding:0 0 6px;"><input id="q4" type="search" placeholder="搜评分/参考（如：血压、GCS、Phoenix、公式）"></div>
   <div class="emg-hero" style="background:linear-gradient(150deg,#33691e,#558b2f 60%,#2e7d32);">
     <div class="et">📐 评分与参考</div>
@@ -332,7 +349,7 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
 'use strict';
 /* ================= 分组 ================= */
 const GRPS=[
- {id:'ab',ico:'🦠',t:'抗感染用药',sub:'皮试：青霉素50U · 头孢30μg',drugs:['fluclox','amoxclav','piptaz4','piptaz8','cefaZ','cefathia','cefu','ceftia','cefz','cfsl','ceftd','ceftria','latamox','cfpm','atm','aztro','lvfx','cipro','ertap','imip','mero','vanc','teic','linez','amik','clinda','doxy','tiga','metro','fluco','itra','vori_wei','caspofun','ambim','polymyx','acv','gcv','osel','peram','smz']},
+ {id:'ab',ico:'🦠',t:'抗感染用药',sub:'皮试：青霉素50U · 头孢30μg',drugs:['fluclox','amoxclav','piptaz4','piptaz8','cefaZ','cefathia','cefu','ceftia','cefz','cfsl','ceftd','ceftria','latamox','cfpm','atm','aztro','lvfx','cipro','ertap','imip','mero','vanc','teic','linez','amik','clinda','doxy','tiga','metro','fluco','itra','vori_wei','caspofun','ambim','polymyx','acv','gcv','osel','peram','smz','isepamicin','rifampicin_iv','fosfomycin','ornidazole','micafungin','tissue']},
  {id:'anes',ico:'💉',t:'麻醉 · 镇静镇痛 · 肌松',sub:'阿片类 / 镇静催眠 / 肌松',drugs:['vecur','morphine','fentanyl','sufen','remi','hydromorp','chloral','phenobarb','midaz','diazepam','dexmed','propofol','tuoNING1']},
  {id:'cv',ico:'🫀',t:'循环系统',sub:'强心 / 血管活性 / 抗心律失常 / 降压扩管',drugs:['digoxin','cedilanid','captopril_chd','nife','nicard','nimo','NTP','NTG','phentol','anisodamine','amio_load','propaf','verap','atp','lido_push','esmolol','protamine','pge_kaishi','sildenafil','bosentan','mil_load','olprinone_load','eph_push','iso','neosyn','atropine','pit','cp']},
  {id:'resp',ico:'🫁',t:'呼吸系统 · 雾化',sub:'平喘 / 祛痰 / 喉头水肿',drugs:['salb_ipo','bud','ambroxol','doxofylline']},
@@ -388,8 +405,11 @@ cfsl:{n:'头孢哌酮舒巴坦',b:'舒普深',sub:'三代头孢+酶抑制剂',ta
  ref:'说明书（2:1舒普深）：40-80mg/kg/d 分2-4次，舒巴坦成分≤80mg/kg/d',
  src:'30-60mg/kg*d，上限240mg/kg*d（神外80 q8）（2:1时的剂量）。q12-q6。G/NS',note:'三代头孢+酶抑制剂，半衰期2h',head:'头孢皮试阴性后使用（皮试30μg）',
  c:{k:'pkd',lo:30,hi:60,def:40,fq:['q12h','q8h','q6h'],dfq:'q8h',dil:'5%GS或NS',capD:240,ckn:'神外80mg/kg q8；上限为2:1剂型口径'}},
-ceftd:{n:'头孢他啶',b:'复达欣/达力舒',sub:'三代头孢',tags:'他啶',rt:'静滴',
- ref:'说明书：30-100mg/kg/d 分2-3次，单次≤2g（重症可50-60mg/kg q8h）',
+ceftd:{
+ ind:'铜绿假单胞菌、中性粒缺乏发热、HAP/VAP一线',
+ adverse:'皮疹腹泻、一过性肝酶升高、Coombs阳性',
+ compat:'NS/5%GS均可',n:'头孢他啶',b:'复达欣/达力舒',sub:'三代头孢',tags:'他啶',rt:'静滴',
+ ref:'说明书：30-100mg/kg/d 分2-3次，单次≤2g（重症可50-60mg/kg q8h）｜院内04表：>2月30-100mg/kg/d分2-3；免疫抑制/囊性纤维化/脑膜炎150mg/kg/d(max 6g/d)分3',
  src:'30-100mg/kg*d。q12-q8。G/NS。单次上限2g',note:'三代头孢，半衰期1.8-2h',head:'头孢皮试阴性后使用（皮试30μg）',
  c:{k:'pkd',lo:30,hi:100,def:50,fq:['q12h','q8h','q6h'],dfq:'q8h',dil:'5%GS或NS',capU:2000}},
 ceftria:{n:'头孢曲松',b:'罗氏芬（原研）',sub:'三代头孢',tags:'曲松',rt:'静滴',
@@ -401,7 +421,7 @@ latamox:{n:'拉氧头孢',b:'噻吗灵',sub:'氧头孢烯类',tags:'拉氧',rt:'
  src:'40mg/kg。q12。G/NS',note:'与三代头孢近似，G-及厌氧，半衰期2h；⚠影响凝血功能，注意VitK1',head:'头孢皮试阴性后使用（皮试30μg）',
  c:{k:'pk',lo:40,hi:40,def:40,fq:['q12h'],dfq:'q12h',dil:'5%GS或NS'}},
 cfpm:{n:'头孢吡肟',b:'信力威',sub:'四代头孢',tags:'吡肟',rt:'静滴',
- ref:'BNFc/说明书：40-50mg/kg/次 q8-12h，单次≤2g',
+ ref:'BNFc/说明书：40-50mg/kg/次 q8-12h，单次≤2g｜院内04表：轻中度50mg/kg q12h、重度50 q8h(max2g/dose，MIC≥16可q6h)；GFR10-50 q24h',
  src:'40mg/kg,q12至50mg/kg,q8。G/NS',note:'四代头孢，可抗一部分厌氧，可中量代替甲硝唑',head:'头孢皮试阴性后使用（皮试30μg）',
  c:{k:'pk',lo:40,hi:50,def:40,fq:['q12h','q8h'],dfq:'q12h',dil:'5%GS或NS'}},
 atm:{n:'氨曲南',sub:'单环β-内酰胺',tags:'曲南',rt:'静滴',
@@ -413,7 +433,7 @@ aztro:{n:'阿奇霉素',b:'希舒美',sub:'大环内酯',tags:'奇霉素',rt:'�
  src:'10mg/kg。qd。G/NS。用3天停4天，浓度<1mg/ml',note:'15元环大环内酯，G+及G-，百日咳、支原体，半衰期41-68h',
  c:{k:'pk',lo:10,hi:10,def:10,fq:['qd'],dfq:'qd',dil:'5%GS或NS',conc:1,capU:500,rate:'浓度<1mg/ml，建议1h以上',ckn:'支原体肺炎：用3天停4天序贯'}},
 lvfx:{n:'左氧氟沙星',b:'可乐必妥',sub:'喹诺酮',tags:'左氧',rt:'静滴',
- ref:'UpToDate/BNFc：<5岁 8-10mg/kg/d分2次；≥5岁 10mg/kg qd；单次≤500mg',
+ ref:'UpToDate/BNFc：<5岁 8-10mg/kg/d分2次；≥5岁 10mg/kg qd；单次≤500mg｜院内04表：6月-5岁8-10mg/kg q12h；≥5岁10mg/kg qd(max750/d)；GFR10-29 q24h',
  src:'5mg/kg q12；5-6岁以上10mg/kg qd。单次上限500-600mg',note:'喹诺酮类，耐大环内酯支原体，浓度依赖性',
  c:{k:'band',by:'a',bands:[{mx:71,lab:'<6岁',d:5,unit:'mg/kg',fq:'q12h'},{lab:'≥6岁',d:10,unit:'mg/kg',fq:'qd'}],capU:500,dil:'5%GS或NS',ckn:'上限500-600mg/次'}},
 cipro:{n:'环丙沙星',sub:'喹诺酮',tags:'环丙',rt:'静滴',
@@ -425,15 +445,21 @@ ertap:{n:'厄他培南',b:'怡万之',sub:'碳青霉烯',tags:'培南',rt:'静�
  src:'15mg/kg(胰腺炎30，Max1g)，q12，NS，浓度<20mg/ml，3月以上可用（28天内禁用）',note:'碳青霉烯，G+G-及厌氧，时间依赖性，半衰期4h；不能对抗鲍曼和铜绿',
  c:{k:'pk',lo:15,hi:15,def:15,fq:['q12h'],dfq:'q12h',dil:'NS',conc:20,capU:1000,ckn:'胰腺炎30mg/kg；≥3月龄方可使用'}},
 imip:{n:'亚胺培南西司他丁',b:'泰能',sub:'碳青霉烯',tags:'培南',rt:'静滴',
- ref:'UpToDate：15-25mg/kg/次 q6h（⚠癫痫风险，CNS感染慎用）',
+ ref:'UpToDate：15-25mg/kg/次 q6h（⚠癫痫风险，CNS感染慎用）｜院内04表：>3月<40kg 15mg/kg q6h（handbook 15-25 q6h max4g/d）；≥40kg 1-2g/d分3-4',
  src:'15mg/kg。q6。G/NS。上限2g/d或25mg/kg，浓度<5mg/ml',note:'碳青霉烯，抗菌强度优于美罗培南（10%血药浓度）；⚠使用该药后丙戊酸(德巴金)浓度急剧降低',
  c:{k:'pk',lo:15,hi:15,def:15,fq:['q6h'],dfq:'q6h',dil:'5%GS或NS',conc:5,capU:2000,ckn:'上限2g/d或25mg/kg/次；⚠与丙戊酸钠严禁联用'}},
-mero:{n:'美罗培南',b:'倍能/美平',sub:'碳青霉烯',tags:'培南',rt:'静滴',
- ref:'UpToDate：20mg/kg/次 q8h；CNS感染40mg/kg q8h；<3月龄减量延间隔（与本院一致）',
+mero:{
+ ind:'重症革兰阴性菌感染/CNS感染（血药浓度50%达脑脊液）/中性粒缺乏发热/ESBL菌',
+ adverse:'皮疹腹泻、输注过快惊厥、血小板减少（长程）；⚠与丙戊酸严禁同用',
+ compat:'NS/5%GS均可；癫痫史慎用',n:'美罗培南',b:'倍能/美平',sub:'碳青霉烯',tags:'培南',rt:'静滴',
+ ref:'UpToDate：20mg/kg/次 q8h；CNS感染40mg/kg q8h；<3月龄减量延间隔（与本院一致）｜院内04表：GFR30-50 20-40mg/kg q12h；GFR10-29 10-20 q12h；<10 10-20 q24h',
  src:'10-20mg/kg，CNS感染：40mg/kg。q8。G/NS。三个月以下问药师',note:'碳青霉烯，G+G-及厌氧，时间依赖性，CNS感染优势（50%血药浓度）；⚠降低丙戊酸浓度',
  c:{k:'pk',lo:10,hi:20,def:20,fq:['q8h'],dfq:'q8h',dil:'5%GS或NS',ckn:'CNS感染40mg/kg q8；<3月龄请会诊/问药师；⚠与丙戊酸钠严禁联用'}},
-vanc:{n:'万古霉素',b:'稳可信',sub:'糖肽类',tags:'万古',rt:'静滴',
- ref:'UpToDate：15mg/kg/次 q6h（目标谷10-15，重症15-20）；伪膜性肠炎口服（成人125mg qid，儿童遵药师）',
+vanc:{
+ ind:'MRSA/MRSE重症感染、革兰阳性菌血流感染、伪膜性肠炎（口服）',
+ adverse:'红人综合征（输注过快）、耳肾毒性（长程）、血小板减少',
+ compat:'NS为主，5%GS亦可；避免碱性液同管；输注≥1h',n:'万古霉素',b:'稳可信',sub:'糖肽类',tags:'万古',rt:'静滴',
+ ref:'UpToDate：15mg/kg/次 q6h（目标谷10-15，重症15-20）；伪膜性肠炎口服（成人125mg qid，儿童遵药师）｜院内04表(Lexicomp)：轻中度40-45mg/kg/d分q6-8h(max2g/d)、重度45-60(max4g/d)、中枢15mg/kg q6h；肾损按15mg/kg q6h或20 q8h调整',
  src:'10mg/kg。q6。G/NS。浓度<5mg/ml',note:'糖肽类，G+，时间依赖性；用5次/9次后测血药谷浓度（目标15-30μg/ml）；伪膜性肠炎口服10mg/kg q6',
  c:{k:'pk',lo:10,hi:15,def:10,fq:['q6h','q8h'],dfq:'q6h',dil:'5%GS或NS',conc:5,rate:'输注≥1h，防红人综合征',ckn:'开始给药后第5剂（约48h）测谷浓度，目标15-30μg/ml（血流感染下限10）'}},
 teic:{n:'替考拉宁',b:'加立信',sub:'糖肽类',tags:'替考',rt:'静滴',
@@ -442,7 +468,7 @@ teic:{n:'替考拉宁',b:'加立信',sub:'糖肽类',tags:'替考',rt:'静滴',
  cs:[{l:'负荷（首3剂）',bn:'负荷',k:'band',by:'a',bands:[{mx:2,lab:'<2月',d:16},{lab:'≥2月',d:10}],unit:'mg/kg',fq:['q12h','qd'],dfq:'q12h',dil:'5%GS或NS'},
      {l:'维持',bn:'维持',k:'band',by:'a',bands:[{mx:2,lab:'<2月',d:8},{lab:'≥2月',d:10}],unit:'mg/kg',fq:['qd'],dfq:'qd',dil:'5%GS或NS'}]},
 linez:{n:'利奈唑胺',b:'天礼/斯沃',sub:'恶唑烷酮',tags:'利奈',rt:'静滴',
- ref:'UpToDate：<12y 10mg/kg q8h；≥12y 600mg q12h；疗程≤14天（血小板减少风险）',
+ ref:'UpToDate：<12y 10mg/kg q8h；≥12y 600mg q12h；疗程≤14天（血小板减少风险）｜院内04表：肾损<5岁10mg/kg q8h、5-11岁10mg/kg q12h',
  src:'10mg/kg q8；>12岁600mg q12。无需配液。用前用后NS20ml冲管；同针剂：10mg/kg q8（>12岁600mg q12）',note:'恶唑烷酮类，抑制蛋白合成，对抗耐药G+（含VRE）；口服生物利用度90-95%，基本可替代静脉（序贯）',
  cs:[
    {l:'静脉',bn:'静脉',k:'band',by:'a',bands:[{mx:155,lab:'<12岁',d:10},{lab:'≥12岁',d:600,unit:'mg',fq:'q12h'}],fq:['q8h','q12h'],dfq:'q8h',dil:'即用型无需配液',ckn:'>12岁600mg q12h；注意血小板减少（>14天风险↑），监测血常规'},
@@ -450,7 +476,7 @@ linez:{n:'利奈唑胺',b:'天礼/斯沃',sub:'恶唑烷酮',tags:'利奈',rt:'�
  ]},
 
 amik:{n:'阿米卡星',sub:'氨基糖苷',tags:'阿米卡 丁卡',rt:'静滴',
- ref:'UpToDate：10-15mg/kg/次 q12h（首次可负荷）；需TDM峰谷浓度',
+ ref:'UpToDate：10-15mg/kg/次 q12h（首次可负荷）；需TDM峰谷浓度｜院内04表：handbook 15-22.5mg/kg/d分3或15-20 qd；脑膜炎20-30mg/kg/d分3',
  src:'10mg/kg首次，后7.5mg/kg。q12。G/NS。10-14天后停药',note:'氨基糖苷类，浓度依赖性，主要G-；⚠耳肾毒性，需TDM，10-14天必须停药',
  c:{k:'pk',lo:7.5,hi:7.5,def:7.5,fq:['q12h'],dfq:'q12h',dil:'5%GS或NS',ckn:'首剂10mg/kg；有条件测峰谷浓度；疗程≤10-14天'}},
 clinda:{n:'克林霉素',b:'莱美特宁',sub:'林可霉素类',tags:'克林',rt:'静滴',
@@ -462,15 +488,15 @@ doxy:{n:'多西环素',sub:'四环素',tags:'多西 强力',rt:'静滴',
  src:'8岁以上：4.4mg/kg首日，后2.2-4.4mg/kg/d，qd/q12；>45kg按成人剂量',note:'四环素类，用于耐药支原体（8岁以下权衡后超说明书使用）',
  c:{k:'band',by:'a',bands:[{mx:95,lab:'<8岁（超说明书）',d:2.2},{lab:'≥8岁',d:2.2}],fq:['q12h','qd'],dfq:'q12h',dil:'5%GS或NS',ckn:'首日4.4mg/kg（分1-2次），维持2.2-4.4mg/kg/d；>45kg按成人'}},
 tiga:{n:'替加环素',b:'泰阁',sub:'甘氨酰环素',tags:'替加',rt:'静滴',
- ref:'UpToDate/说明书：1.2mg/kg q12h（8-17y），单次≤50mg',
+ ref:'UpToDate/说明书：1.2mg/kg q12h（8-17y），单次≤50mg｜院内04表：8-11岁1.2mg/kg q12h；12-17岁50mg q12h；肝损C首剂100mg后25mg q12h',
  src:'1.2mg/kg。q12。G/NS。单次上限50mg（1瓶），先用1周，一般不超过1周',note:'米诺环素衍生物，用于全耐药菌（如鲍曼）',
  c:{k:'pk',lo:1.2,hi:1.2,def:1.2,fq:['q12h'],dfq:'q12h',dil:'5%GS或NS',capU:50}},
 metro:{n:'甲硝唑',sub:'硝基咪唑',tags:'甲硝 厌氧',rt:'静滴',
- ref:'UpToDate：7.5-10mg/kg/次 q8h（厌氧感染）',
+ ref:'UpToDate：7.5-10mg/kg/次 q8h（厌氧感染）｜院内04表：22.5-40mg/kg/d分3(max1.5g/d)；肝损C减半；肾GFR<10 4mg/kg q6h',
  src:'7.5mg/kg（1.5ml/kg）。q8。无需配液。单次上限1.5g，最大q6',note:'抗厌氧菌',
  c:{k:'pk',lo:7.5,hi:7.5,def:7.5,fq:['q8h','q6h'],dfq:'q8h',dil:'即用型无需配液',capU:1500}},
 fluco:{n:'氟康唑',b:'扶君乐',sub:'三唑类抗真菌',tags:'氟康',rt:'静滴',
- ref:'UpToDate：浅表3-6mg/kg/d；侵袭性6-12mg/kg/d（<2周或<2月龄延长间隔）',
+ ref:'UpToDate：浅表3-6mg/kg/d；侵袭性6-12mg/kg/d（<2周或<2月龄延长间隔）｜院内04表：6-12mg/kg qd；念珠菌治疗首日12mg/kg(max800)继以12 qd或6 q12h(max600/d)',
  src:'1-2mg/kg/d(浅表) 3-6mg/kg/d(深部)。隔日1次-qd。G/NS；6mg/kg qd',note:'三唑类，广谱抗真菌（念珠菌）；年龄越小给药间隔越长；口服序贯',
  cs:[
    {l:'浅表感染',bn:'浅表',k:'pkd',lo:1,hi:2,def:3,fq:['qd','q48h'],dfq:'qd',dil:'5%GS或NS'},
@@ -482,7 +508,7 @@ itra:{n:'伊曲康唑',sub:'三唑类抗真菌',tags:'伊曲',rt:'口服',
  ref:'说明书：口服液 3-5mg/kg/d 分1-2次（空腹）',
  src:'2mg/kg qd（口服液）',note:'广谱抗真菌（曲霉），口服液空腹服',c:{k:'pk',lo:2,hi:2,def:2,fq:['qd'],dfq:'qd'}},
 vori_wei:{n:'伏立康唑',b:'威凡',sub:'三唑类抗真菌',tags:'伏立',rt:'静滴',
- ref:'UpToDate：负荷9mg/kg q12×2次→维持8mg/kg q12（静脉）；肝功能不全维持减半（与本院一致）',
+ ref:'UpToDate：负荷9mg/kg q12×2次→维持8mg/kg q12（静脉）；肝功能不全维持减半（与本院一致）｜院内04表（威凡/汇邦灵）：>12y且≥50kg 负荷6mg/kg q12h、维持4 q12h；>12y且<50kg 负荷9、维持4-8；2-12岁 负荷9、维持8',
  src:'首两剂9mg/kg，后8mg/kg。q12。NS。浓度≤5mg/ml，输速≤3mg/kg/h；首两剂6mg/kg，后4mg/kg。q12。NS。浓度≤5mg/ml，输速≤3mg/kg/h；维持9mg/kg q12（单次上限350mg仅供参考）；维持4mg/kg q12（仅供参考）',note:'广谱抗真菌（曲霉/念珠），注意肝功能（Child A/B维持减半）；国产剂量与威凡不同；口服负荷同静脉（首2剂9mg/kg q12）；国产口服剂量',
  cs:[
    {l:'威凡·负荷（第1个24h×2剂）',bn:'负荷',k:'pk',lo:9,hi:9,def:9,fq:['q12h'],dfq:'q12h',dil:'NS',conc:5,rate:'输注1-2h，≤3mg/kg/h'},
@@ -494,24 +520,24 @@ vori_wei:{n:'伏立康唑',b:'威凡',sub:'三唑类抗真菌',tags:'伏立',rt:
  ]},
 
 caspofun:{n:'卡泊芬净',b:'科赛斯',sub:'棘白菌素',tags:'卡泊',rt:'静滴',
- ref:'UpToDate：负荷70mg/m²（单次≤70mg）→维持50mg/m² qd（与本院一致）',
+ ref:'UpToDate：负荷70mg/m²（单次≤70mg）→维持50mg/m² qd（与本院一致）｜院内04表：用酶诱导剂(利福平/奈韦拉平/卡马西平等)时70mg/m² qd；肝A AUC+55%、肝B +76%',
  src:'首剂70mg/m²，后续50mg/m²。qd。NS。输1h以上',note:'棘白菌素类，抑制β-1,3-D-葡聚糖合酶；m²=√(身高cm×体重kg/3600)',
  cs:[{l:'负荷（第1天）',bn:'负荷',k:'m2',lo:70,hi:70,def:70,fq:['qd'],dfq:'qd',dil:'NS',rate:'输注≥1h'},
      {l:'维持',bn:'维持',k:'m2',lo:50,hi:50,def:50,fq:['qd'],dfq:'qd',dil:'NS',rate:'输注≥1h',ckn:'中度肝功能不全维持降至35mg/m²'}]},
 ambim:{n:'两性霉素B',sub:'多烯类抗真菌',tags:'两性',rt:'静滴',
- ref:'UpToDate：去氧胆酸盐0.5-1mg/kg/d（从0.25起渐加）；脂质体3-5mg/kg/d',
+ ref:'UpToDate：去氧胆酸盐0.5-1mg/kg/d（从0.25起渐加）；脂质体3-5mg/kg/d｜院内04表：脂质体10mg规格可用；普通制剂0.02-0.1起始渐增至0.6-0.7mg/kg/d；handbook起始0.25-0.5逐日加0.25',
  src:'清单未给剂量——遵说明书/药师（小剂量起始渐增）',note:'多烯类广谱抗真菌；⚠肾毒性、低钾、发热寒战；仅用5%GS配，避光，需缓慢输注≥2-6h',
  c:{k:'info'}},
 polymyx:{n:'多粘菌素B',b:'雅乐',sub:'多肽类',tags:'多粘',rt:'静滴',
- ref:'UpToDate：1.5-2.5万U/kg/d 分2次（危及生命可至4.5万），肾毒性需TDM',
+ ref:'UpToDate：1.5-2.5万U/kg/d 分2次（危及生命可至4.5万），肾毒性需TDM｜院内04表：婴儿1.5-4万U/kg分2、儿童1.5-2.5万U/kg分2；负荷2.5万U/kg+维持2.5-3万U/kg/d分2',
  src:'1-2-4万U/kg*d（大孩子50-100万U/d），q12h。G/NS。一支50mg:50万U',note:'对抗全耐药鲍曼等G-；⚠肾毒性、色素沉着',
  c:{k:'band',by:'a',bands:[{mx:180,lab:'儿童',d:2,unit:'万U/kg/d',fq:'q12h'},{lab:'成人（参考）',d:'50-100万U/d q12h'}],dil:'5%GS或NS',ckn:'1-4万U/kg/d分2次，常用2万；从低量起始'}},
 acv:{n:'阿昔洛韦',sub:'核苷类抗病毒',tags:'阿昔',rt:'静滴',
- ref:'UpToDate：HSV脑炎20mg/kg q8h；皮肤黏膜/水痘10-15mg/kg q8h；充分水化',
+ ref:'UpToDate：HSV脑炎20mg/kg q8h；皮肤黏膜/水痘10-15mg/kg q8h；充分水化｜院内04表：肥胖用理想体重；儿童max500mg/m²/dose q8h；CrCL25-50 q12h、10-25 q24h',
  src:'10mg/kg。q8。G/NS。上限500mg',note:'干扰DNA多聚酶（HSV/VZV）；⚠水化防结晶性肾损伤',
  c:{k:'pk',lo:10,hi:20,def:10,fq:['q8h'],dfq:'q8h',dil:'5%GS或NS',capU:500,rate:'输注≥1h',ckn:'HSV脑炎20mg/kg q8；输注前后水化，尿量不足慎用'}},
 gcv:{n:'更昔洛韦',sub:'核苷类抗病毒',tags:'更昔',rt:'静滴',
- ref:'UpToDate：诱导5mg/kg q12h×2-3周→维持5mg/kg qd（CMV视网膜炎/肺炎）',
+ ref:'UpToDate：诱导5mg/kg q12h×2-3周→维持5mg/kg qd（CMV视网膜炎/肺炎）｜院内04表：5mg/kg q12h×7-14天→5mg/kg qd×7天；肾损初始减25-50%',
  src:'5mg/kg。q12。G/NS。一周后改为5mg/kg qd。输入>1h，浓度<10mg/ml',note:'巨细胞病毒（CMV）一线；⚠骨髓抑制（中性粒/血小板）',
  c:{k:'pk',lo:5,hi:5,def:5,fq:['q12h'],dfq:'q12h',dil:'5%GS或NS',conc:10,rate:'输注≥1h',ckn:'诱导2-3周后转维持5mg/kg qd；每周查血常规'}},
 osel:{n:'奥司他韦',b:'达菲/可威',sub:'神经氨酸酶抑制剂',tags:'奥司他韦 流感',rt:'口服',
@@ -523,9 +549,35 @@ peram:{n:'帕拉米韦',sub:'神经氨酸酶抑制剂',tags:'帕拉 流感',rt:'
  src:'1月内6mg/kg，1-3月8mg/kg，4月以上10mg/kg。qd。无需配液。上限600mg，用1-5天',note:'甲流乙流（静脉）',
  c:{k:'band',by:'a',bands:[{mx:1,lab:'<1月',d:6},{mx:3,lab:'1-3月',d:8},{lab:'≥4月',d:10}],unit:'mg/kg',fq:['qd'],dfq:'qd',dil:'即用型无需配液',capU:600,ckn:'疗程1-5天'}},
 smz:{n:'复方磺胺甲噁唑',b:'复方新诺明(5:1)',sub:'磺胺类',tags:'磺胺 复方新诺明 SMZ',rt:'口服',
- ref:'UpToDate：以TMP计8-12mg/kg/d 分2次；PCP 15-20mg/kg/d(TMP) 分3-4次',
+ ref:'UpToDate：以TMP计8-12mg/kg/d 分2次；PCP 15-20mg/kg/d(TMP) 分3-4次｜院内04表：≥2月且<40kg SMZ20-30mg+TMP4-6mg/kg q12h；PCP SMZ18.75-25+TMP3.75-5mg/kg q12h',
  src:'40kg以下24-36mg/kg/d，q12。一片=SMZ 0.4g+TMP 0.08g（共0.48g）',note:'⚠2个月以内禁用（核黄疸风险）；PCP治疗45-105mg/kg/d',
  c:{k:'pkd',lo:24,hi:36,def:30,fq:['q12h','bid'],dfq:'q12h',head:'⚠ <2月龄禁用',ckn:'剂量以SMZ计；PCP（卡肺）45-105mg/kg/d分3-4次；多饮水'}},
+
+isepamicin:{n:'异帕米星',sub:'氨基糖苷',tags:'异帕米星 异帕',rt:'静滴',
+ ref:'院内04表：15mg/kg/d 分2次（马丁代尔）',
+ src:'本院2026抗感染手册在列',note:'耳肾毒性；与其他氨基糖苷/多粘菌素合用增毒；与β内酰胺分瓶滴注',
+ c:{k:'pkd',lo:15,hi:15,def:15,fq:['q12h'],dfq:'q12h',dil:'5%GS或NS',ckn:'肾功能不全减量/延间隔；⚠耳肾毒性，有条件TDM'}},
+rifampicin_iv:{n:'利福平（静脉）',sub:'抗结核',tags:'利福平 结核',rt:'静滴',
+ ref:'院内04表：结核10-20mg/kg qd（≤0.6g/d）；其他感染15mg/kg/d分2-4',
+ src:'本院2026抗感染手册在列（维夫欣0.45g）',head:'肝酶诱导剂——显著降低激素/免疫抑制剂/华法林等血药浓度',
+ c:{k:'pkd',lo:10,hi:20,def:15,fq:['qd','bid'],dfq:'qd',dil:'5%GS或NS',ckn:'尿液唾液泪液浅红为正常；监测肝肾功与血常规'}},
+fosfomycin:{n:'磷霉素钠',sub:'其他抗菌',tags:'磷霉素',rt:'静滴',
+ ref:'院内04表：0.1-0.3g/kg/d 分2-3次滴注；与β内酰胺/氨基糖苷协同',
+ src:'本院2026抗感染手册在列（4g/支，每克含钠0.32g）',head:'滴速宜慢1-2h以上；每克含钠0.32g——限钠者注意',
+ c:{k:'pkd',lo:100,hi:300,def:200,unit:'mg/kg/d',fq:['q12h','q8h'],dfq:'q12h',dil:'5%GS或NS',rate:'1-2h以上',ckn:'肾功能减退减量；较大剂量监测肝功能'}},
+ornidazole:{n:'奥硝唑',sub:'硝基咪唑',tags:'奥硝唑 厌氧',rt:'静滴',
+ ref:'院内04表：20-30mg/kg/d 分2次；肝损间隔延长；肾损减量',
+ src:'本院2026抗感染手册在列（100ml:0.25g）',head:'⚠脑脊髓病变/癫痫/器官硬化/造血低下/慢性酒精中毒禁用；单独滴注并冲管',
+ c:{k:'pkd',lo:20,hi:30,def:25,unit:'mg/kg/d',fq:['q12h'],dfq:'q12h',dil:'即用型',ckn:'增强华法林抗凝'}},
+micafungin:{n:'米卡芬净',sub:'棘白菌素',tags:'米卡芬净 米开民',rt:'静滴',
+ ref:'院内04表：1.5-3mg/kg/d qd（max150mg/d）；肝肾功能无需调整',
+ src:'本院2026抗感染手册在列（50mg 米开民）',head:'不能透血脑屏障；蛋白结合率99%',
+ c:{k:'pkd',lo:1.5,hi:3,def:3,unit:'mg/kg/d',fq:['qd'],dfq:'qd',dil:'NS或5%GS',capU:150,rt:'静滴',ckn:'与西罗莫司/硝苯地平/伊曲康唑联用时监测并必要时减后者'}},
+tissue:{n:'抗感染组织浓度速查',sub:'参考表',tags:'组织浓度 脑脊液 肺 尿',rt:'参考',
+ ref:'本院2026抗感染手册「组织中浓度」表（血清倍数）',
+ src:'指导中枢/肺部/泌尿感染选药',head:'指导中枢/肺部感染选药',
+ c:{k:'info'},
+ note:'<b>脑脊液浓度高</b>：甲硝唑(≥50×)、阿昔洛韦(≥50×)、氟康唑(>60×)、氟胞嘧啶(60-100×)；可透：三四代头孢(5-50×)、碳青霉烯(5-50×)、喹诺酮(5-50×)、氨基糖苷(5-50×)、万古（炎性可透）、利福平；<b>几乎不透</b>：大环内酯、替考拉宁、多粘菌素、两性霉素B(<5×)、伊曲康唑、卡泊芬净/米卡芬净(<5×)；利奈唑胺有争议。<br><b>肺组织渗透高</b>：大环内酯、喹诺酮(≥100×)、替加环素、利奈唑胺(≥100×)、头孢吡肟(≥100×)；β内酰胺与万古中等——增频/延长输注可提高浓度。<br><b>胞内菌（军团菌/支原体/结核）</b>：大环内酯、喹诺酮肺泡巨噬细胞浓度高（14-18×/≥400×）；β内酰胺与氨基糖苷难入胞内。<br><b>尿浓度高</b>：β内酰胺、喹诺酮（莫西沙星除外）、磷霉素、氟康唑(90×)、氟胞嘧啶(90×)。'},
 vecur:{n:'维库溴铵',b:'仙林',sub:'非去极化肌松',tags:'维库 肌松',rt:'静推',
  ref:'UpToDate：单次0.08-0.1mg/kg；维持0.5-1.7μg/kg/min（与本院一致）',
  src:'单次0.1mg/kg（NS 2ml）；泵入0.8-1.4μg/kg/min',note:'1min起效，持续约10min——⚠必须先插管+充分镇静镇痛',
@@ -559,7 +611,10 @@ chloral:{n:'水合氯醛',sub:'镇静催眠',tags:'水合氯醛 镇静',rt:'口�
  src:'口服0.5ml/kg；纳肛0.25ml/kg。上限10ml/次，一天最多3-4次，半小时起效',note:'安全范围较小；口服强烈刺激性；⚠心律失常及血压不好禁用，易引起室性心律失常',
  cs:[{l:'口服',bn:'口服',k:'mlkg',lo:0.3,hi:0.5,def:0.5,fq:['st','prn'],dfq:'st',rt:'口服',capU:10},
      {l:'保留灌肠（纳肛）',bn:'灌肠',k:'mlkg',lo:0.25,hi:0.4,def:0.25,fq:['st'],dfq:'st',rt:'灌肠',capU:10,ckn:'上限10ml/次；日最多3-4次'}]},
-phenobarb:{n:'苯巴比妥',b:'鲁米那',sub:'巴比妥类',tags:'鲁米那 苯巴 止惊',rt:'静推',
+phenobarb:{
+ ind:'惊厥（止惊）、镇静',
+ adverse:'呼吸抑制、低血压、镇静过长；罕见皮疹',
+ compat:'NS/5%GS均可',n:'苯巴比妥',b:'鲁米那',sub:'巴比妥类',tags:'鲁米那 苯巴 止惊',rt:'静推',
  ref:'UpToDate止惊：首剂15-20mg/kg；维持3-5mg/kg/d 分2次',
  src:'单次5-10mg/kg（上限200mg/次）；止惊首剂10mg/kg，后2.5mg/kg q12。G/NS；1-2-4-6mg/kg*h（超难治性癫痫）',note:'抗惊厥、镇静催眠（精二）；65%肝代谢，肝衰禁用；不能突然停药；超难治性癫痫持续状态的巴比妥昏迷；⚠呼吸抑制、低血压，需插管+脑电监测',
  cs:[
@@ -567,12 +622,18 @@ phenobarb:{n:'苯巴比妥',b:'鲁米那',sub:'巴比妥类',tags:'鲁米那 苯
    {l:'泵入·超难治性SE',bn:'泵入·超难治性SE',k:'inf',unit:'mg/kg/h',lo:1,hi:6,def:2,rec:[10,50],dil:'NS/5%GS',ckn:'仅超难治性SE；须EEG爆发抑制监测；插管+血流动力学支持'},
  ]},
 
-midaz:{n:'咪达唑仑',b:'力月西',sub:'苯二氮卓',tags:'咪达 力月西 镇静',rt:'静推',
+midaz:{
+ ind:'操作镇静/惊厥急症一线BZD/机械通气镇静',
+ adverse:'呼吸抑制、低血压、谵妄；长程撤药',
+ compat:'NS/5%GS均可',n:'咪达唑仑',b:'力月西',sub:'苯二氮卓',tags:'咪达 力月西 镇静',rt:'静推',
  ref:'UpToDate：推注0.05-0.1mg/kg；维持0.5-2μg/kg/min起滴定（止惊可至6-18）',
  src:'单次0.1-0.3mg/kg；泵入1-30μg/kg/min（10mg/2ml原液+G/NS 8ml→10mg/10ml）',note:'苯二氮卓（注射剂精一）；快速推注可致低血压呼吸抑制',
  cs:[{l:'单次静推',bn:'静推',k:'pk',lo:0.1,hi:0.3,def:0.1,unit:'mg/kg',fq:['st'],dfq:'st',rt:'静推',rate:'缓推2-3min',ckn:'惊厥急症一线（见临床情景-癫痫持续状态）'},
      {l:'持续泵入（镇静）',bn:'泵入',k:'inf',unit:'μg/kg/min',lo:0.5,hi:6,def:1,rec:[1,50],dil:'5%GS/NS',rec2:null,ckn:'配法参考：10mg+溶媒至10ml（1mg/ml）；长时间泵入防撤药'}]},
-diazepam:{n:'地西泮',b:'安定',sub:'苯二氮卓',tags:'安定 地西',rt:'静推',
+diazepam:{
+ ind:'惊厥急症、肌张力障碍危象',
+ adverse:'呼吸抑制、谵妄、静脉炎',
+ compat:'原液缓推；勿与其他药混',n:'地西泮',b:'安定',sub:'苯二氮卓',tags:'安定 地西',rt:'静推',
  ref:'UpToDate/ILAE：0.15-0.3mg/kg（单次≤10mg），5min可重复',
  src:'0.1-0.3mg/kg。10mg/2ml原液',note:'苯二氮卓（精二）；惊厥急症一线；⚠呼吸抑制，推速<1mg/min',
  c:{k:'pk',lo:0.1,hi:0.3,def:0.3,unit:'mg/kg',fq:['st'],dfq:'st',rt:'静推',rate:'缓推≤1mg/min；原液可直推',ckn:'推注后备好气道；5-10min可重复；直肠给药0.3-0.5mg/kg'}},
@@ -646,7 +707,10 @@ anisodamine:{n:'山莨菪碱（654-2）',sub:'抗胆碱',tags:'654-2 山莨菪',
  ref:'国内教材：0.3-2mg/kg/次（感染性休克辅助）',
  src:'0.3-2mg/kg，走20min。1ml/10mg',note:'外周血管阻力高时解痉扩管；感染性休克辅助',
  c:{k:'pk',lo:0.3,hi:2,def:0.5,fq:['st','q12h'],dfq:'st',dil:'NS稀释至20ml',rate:'20min输注',ckn:'口干/面色潮红/心率增快为常见反应；青光眼禁用'}},
-amio_load:{n:'胺碘酮',sub:'III类抗心律失常',tags:'胺碘酮 可达龙',rt:'静滴',
+amio_load:{
+ ind:'室上速/室速二线、JET、难治性VF/pVT',
+ adverse:'低血压（负荷期）、心动过缓、长程甲功/肝/肺',
+ compat:'仅用5%GS（NS浑浊）',n:'胺碘酮',sub:'III类抗心律失常',tags:'胺碘酮 可达龙',rt:'静滴',
  ref:'UpToDate：负荷5mg/kg（30-60min）可重复×2-3（与本院一致）',
  src:'5mg/kg，5G:10-20ml，半小时走完。必要时可重复1-2次；5-25μg/kg*min；清单未给口服量（阵发性房扑q12h）——常用10mg/kg/d分2次，1-2周后减为5mg/kg/d，遵上级',note:'室上速/急性JET；⚠禁用于长QT；血流不稳定可暂不用首剂；负荷后维持；甲状腺功能随访；口服维持窦律',
  cs:[
@@ -689,7 +753,10 @@ protamine:{n:'鱼精蛋白',sub:'肝素拮抗',tags:'鱼精蛋白',rt:'静推',
  ref:'UpToDate：1mg中和100U肝素（按末次剂量与时间衰减），单次≤25-50mg（与本院一致）',
  src:'0.5-1mg/kg，5G:4ml。单次<25mg。肝素CRRT后：按最后2h肝素量1mg鱼精对抗100U肝素；肝素停用超半小时减半',note:'先心术后出血或肝素抗凝后拮抗；⚠过敏/肺高压反应，缓推',
  c:{k:'pk',lo:0.5,hi:1,def:0.5,fq:['st'],dfq:'st',rt:'静推',capU:25,rate:'缓推10min以上',ckn:'1mg中和约100U肝素（末次给药10-15min内）；超时肝素半衰期减量；鱼精蛋白本身也有抗凝作用勿过量'}},
-pge_kaishi:{n:'前列地尔',sub:'PGE1',tags:'前列地尔 凯时 PGE1',rt:'静滴',
+pge_kaishi:{
+ ind:'导管依赖性先心维持动脉导管开放、肺高压评估',
+ adverse:'呼吸暂停（10-15%，备插管）、低血压、发热潮红；长程胃幽门增生',
+ compat:'NS/5%GS稀释；微球制剂现配现用',n:'前列地尔',sub:'PGE1',tags:'前列地尔 凯时 PGE1',rt:'静滴',
  ref:'2025中国基层先心共识：起始5-10ng/kg/min（低于传统0.05-0.1μg/kg/min口径——双口径并置）；凯时微球缓释5μg/次（本院口径）',
  src:'5μg，5G:5-25ml，走2h（凯时10μg只能走2h）；0.6μg/kg，5G:5-25ml，走2h',note:'扩管、抑制血小板聚集；输血外渗肿胀、可疑血栓时改善循环',
  cs:[
@@ -705,7 +772,10 @@ bosentan:{n:'波生坦',b:'全可利',sub:'内皮素受体拮抗',tags:'波生�
  ref:'UpToDate：起始1mg/kg bid→4周后2mg/kg bid（与本院一致）',
  src:'2mg/kg。q12',note:'ETA/ETB拮抗；⚠肝毒性，每月查肝功',
  c:{k:'pk',lo:1,hi:2,def:2,fq:['q12h'],dfq:'q12h',rt:'口服',ckn:'起始1mg/kg q12，4周后增至2mg/kg q12；监测转氨酶'}},
-mil_load:{n:'米力农',sub:'PDE3抑制剂',tags:'米力农',rt:'静推',
+mil_load:{
+ ind:'心衰/肺高压/PPHN辅助、心术后低心排',
+ adverse:'低血压（扩血管）、心律失常；肾衰减量',
+ compat:'NS/5%GS均可',n:'米力农',sub:'PDE3抑制剂',tags:'米力农',rt:'静推',
  ref:'UpToDate：负荷25-50μg/kg（可免）→0.25-0.75μg/kg/min',
  src:'25-75μg/kg。NS。10min输完；0.5-1μg/kg*min',note:'低血压者免负荷直接维持；正性肌力+扩血管；肾功能不全减量',
  cs:[
@@ -721,7 +791,10 @@ olprinone_load:{n:'奥普力农',sub:'PDE3抑制剂',tags:'奥普力农',rt:'静
    {l:'维持泵入',bn:'维持泵入',k:'inf',unit:'μg/kg/min',lo:0.1,hi:0.4,def:0.2,rec:[0.12,50],dil:'5%GS/NS'},
  ]},
 
-eph_push:{n:'肾上腺素',sub:'儿茶酚胺',tags:'肾上腺素 副肾 抢救',rt:'静推',
+eph_push:{
+ ind:'心跳骤停、脓毒性休克冷型、过敏性休克（IM）、支气管痉挛',
+ adverse:'心动过速、心律失常、外渗组织坏死',
+ compat:'1:10000静推；不与碱性液同管',n:'肾上腺素',sub:'儿茶酚胺',tags:'肾上腺素 副肾 抢救',rt:'静推',
  ref:'PALS：0.01mg/kg（0.1ml/kg 1:10000）IV/IO q3-5min，单次≤1mg（与本院一致）',
  src:'0.1ml/kg（万分之一1:10000）。严重时可直接推原液（1mg/1ml）；1.5mg/1.5ml+NS 1.5ml（脱机后喉头水肿）',note:'心跳骤停0.01mg/kg q3-5min；过敏休克首选IM（见临床情景）；喉头水肿/喉炎；消旋肾上腺素同类',
  cs:[
@@ -741,7 +814,10 @@ neosyn:{n:'去氧肾上腺素',sub:'α1激动',tags:'去氧肾 新福林',rt:'�
    {l:'泵入',bn:'泵入',k:'inf',unit:'μg/kg/min',lo:5,hi:20,def:10,rec:[3,50],dil:'5%GS/NS'},
  ]},
 
-atropine:{n:'阿托品',sub:'抗胆碱',tags:'阿托品',rt:'静推',
+atropine:{
+ ind:'症状性心动过缓、有机磷（大剂量）、插管前',
+ adverse:'心率增快、口干、谵妄（大剂量）',
+ compat:'原液可静推',n:'阿托品',sub:'抗胆碱',tags:'阿托品',rt:'静推',
  ref:'PALS：0.02mg/kg（最小0.1mg），5min可重复，总≤0.04mg/kg（儿童总≤1-2mg）',
  src:'0.01mg/kg，>1min，5min后可重复，最大总量0.04mg/kg。规格1ml/0.5mg；有机磷解毒用法遵急诊/上级方案（清单未给儿童剂量）',note:'症状性心动过缓一线（先给氧+通气）；阿托品化为目标，反复给药',
  cs:[
@@ -749,11 +825,17 @@ atropine:{n:'阿托品',sub:'抗胆碱',tags:'阿托品',rt:'静推',
    {l:'有机磷（遵专科）',bn:'有机磷（遵专科）',k:'info'},
  ]},
 
-salb_ipo:{n:'沙丁胺醇+异丙托溴铵（雾化）',b:'万托林/爱全乐',sub:'β2激动+抗胆碱',tags:'沙丁胺醇 万托林 异丙托 喘',rt:'雾化',
+salb_ipo:{
+ ind:'喘息发作/哮喘急性期/毛细支气管炎喘息',
+ adverse:'心率增快、震颤、低钾（反复大量）',
+ compat:'氧驱动雾化；不与碱性药同瓶',n:'沙丁胺醇+异丙托溴铵（雾化）',b:'万托林/爱全乐',sub:'β2激动+抗胆碱',tags:'沙丁胺醇 万托林 异丙托 喘',rt:'雾化',
  ref:'中国儿童哮喘2025：≤20kg 2.5mg/次、>20kg 5mg/次 q20min×3；GINA 0.15mg/kg；异丙托<20kg 250μg、≥20kg 500μg',
  src:'沙丁胺醇2.5mg（半支）/异丙托溴铵1ml（半支）',note:'高峰压、气道痉挛；喘息发作一线',
  c:{k:'abs',def:2.5,unit:'ml',lo:1,hi:4,fq:['q20min','q2h','q4h','q6h'],dfq:'q4h',rt:'雾化',head:'联合液：沙丁胺醇2.5mg+异丙托溴铵250μg/次（可q20min×3首小时）',ckn:'急性喘息首小时可q20min×3；心率增快/震颤为常见反应；持续泵雾化0.5-1.5ml/h'}},
-bud:{n:'布地奈德（雾化）',b:'普米克令舒',sub:'ICS',tags:'布地奈德 普米克',rt:'雾化',
+bud:{
+ ind:'喘息/喉炎/气道炎症；喉炎剂量最大',
+ adverse:'声音嘶哑、口腔念珠菌（漱口可防）',
+ compat:'雾化专用混悬液',n:'布地奈德（雾化）',b:'普米克令舒',sub:'ICS',tags:'布地奈德 普米克',rt:'雾化',
  ref:'说明书：0.5-1mg/次 bid；急性喉炎2019雾化共识：2.0-4.0mg/次每0.5h可重复（2-3次不缓解再评估气道）',
  src:'1mg（1支）',note:'气道炎症；喉炎/喘息辅助',
  c:{k:'abs',def:1,unit:'mg',lo:0.5,hi:2,fq:['bid','qd','q12h'],dfq:'bid',rt:'雾化'}},
@@ -765,7 +847,10 @@ doxofylline:{n:'多索茶碱',sub:'茶碱类',tags:'多索茶碱 平喘',rt:'静
  ref:'说明书：3-5mg/kg/次 qd-bid（本院qd并行）',
  src:'3-5mg/kg。qd。G/NS',note:'平喘；⚠心悸/惊厥，注意与红霉素、喹诺酮相互作用',
  c:{k:'pk',lo:3,hi:5,def:3,fq:['q12h','qd'],dfq:'qd',dil:'5%GS或NS',rate:'≥30min',ckn:'肝功能不全减量；用茶碱类者测血药浓度（10-20μg/ml）'}},
-ome:{n:'奥美拉唑',b:'洛赛克',sub:'PPI',tags:'奥美拉唑 洛赛克 抑酸',rt:'静滴',
+ome:{
+ ind:'应激性溃疡/反流/消化道出血；大出血q8h+泵',
+ adverse:'头痛腹泻、长程B12下降/低镁',
+ compat:'粉针只能用指定溶媒；20ml以上稀释',n:'奥美拉唑',b:'洛赛克',sub:'PPI',tags:'奥美拉唑 洛赛克 抑酸',rt:'静滴',
  ref:'UpToDate：0.6-1mg/kg/次 qd-bid（出血可q8h）；单次≤40mg（与本院一致）',
  src:'1mg/kg。qd-q12（消化道大出血用到q8）。G/NS。单次上限40mg；0.1mg/kg*h（胰腺炎）',note:'应激性溃疡/反流/消化道出血；持续抑酸',
  cs:[
@@ -854,7 +939,10 @@ khpo4:{n:'复合磷酸氢钾',sub:'补磷',tags:'磷酸钾 补磷',rt:'静滴',
  ref:'UpToDate：磷0.5-1mmol/kg/d静脉补磷（再喂养按阶梯；本院按ml计需换算mmol）',
  src:'1-2.5ml，5%GS稀释200倍；补磷时不能同时补钾（1ml≈3ml 10%KCl的钾）',note:'低磷血症；1ml约含磷1mmol+钾0.44mmol×3？按说明书',
  c:{k:'abs',def:1,unit:'ml',lo:0.5,hi:2.5,fq:['qd','q12h'],dfq:'qd',dil:'5%GS稀释200倍',rate:'缓慢匀速',ckn:'⚠带入钾——补磷期间停补钾并核对总钾；肾衰慎用；推荐按磷mmol计算（见临床情景-再喂养）'}},
-calcglu:{n:'10%葡萄糖酸钙',sub:'补钙',tags:'葡萄糖酸钙 补钙 低钙',rt:'静推',
+calcglu:{
+ ind:'症状性低钙、高钾心脏保护、大量输血枸橼酸中毒',
+ adverse:'推注过快心动过缓、外渗坏死',
+ compat:'与镁/SB不同管；洋地黄化慎用',n:'10%葡萄糖酸钙',sub:'补钙',tags:'葡萄糖酸钙 补钙 低钙',rt:'静推',
  ref:'UpToDate/PALS：元素钙10-20mg/kg/次=10%葡萄糖酸钙1-2ml/kg（与本院一致）',
  src:'1-2ml/kg，5%GS或10%GS等量稀释，不能和镁同时输',note:'低钙症状性/高钾心脏保护；⚠推注过快致心动过缓',
  c:{k:'mlkg',lo:1,hi:2,def:1,fq:['st','q6h','q8h','q12h'],dfq:'st',rt:'静推',rate:'缓推（稀释后≥10-15min）',ckn:'1ml=0.45mEq(9mg)元素钙；心电监护下推；洋地黄化患者慎用；不与镁/碳酸氢钠同管'}},
@@ -875,7 +963,10 @@ gs10_low:{n:'葡萄糖',sub:'糖水',tags:'葡萄糖 低血糖',rt:'静推',
    {l:'50%GS',bn:'50%GS',k:'abs',def:25,unit:'ml',lo:10,hi:40,fq:['st'],dfq:'st',dil:'等量NS稀释后静脉',rate:'中心静脉为宜',ckn:'外周需稀释；推后接糖水维持防反跳低血糖'},
  ]},
 
-ins_dka:{n:'胰岛素',sub:'血糖调节',tags:'胰岛素 酮症 DKA',rt:'泵入',
+ins_dka:{
+ ind:'DKA（扩容1h后）、高血糖',
+ adverse:'低血糖（最常见）、低钾',
+ compat:'只能用NS/5%GS；不与其他药共管',n:'胰岛素',sub:'血糖调节',tags:'胰岛素 酮症 DKA',rt:'泵入',
  ref:'ISPAD 2022/中国儿童DKA指南2024：补液1h后0.05-0.1U/kg/h（禁静推负荷）（本院口径一致）',
  src:'1U+5%GS:10ml配（0.1U/ml）；走速0.05-0.1-0.2U/kg*h；0.2-0.25U/kg配10%GS:10ml/kg，走2h',note:'DKA：补液1h后才启动，0.05-0.1U/kg/h，禁静推负荷；移钾入胞；警惕迟发低血糖（输后30-60min起、持续4-6h）',
  cs:[
@@ -920,7 +1011,10 @@ calfser:{n:'小牛血清去蛋白（奥德金）',sub:'神经营养',tags:'奥�
  ref:'说明书：成人0.2-0.8g/d；本院0.2g',
  src:'0.2g。qd。G/NS',note:'脑缺血损害辅助',
  c:{k:'abs',def:0.2,unit:'g',lo:0.2,hi:0.8,fq:['qd'],dfq:'qd',dil:'5%GS或NS'}},
-mannitol:{n:'20%甘露醇',sub:'渗透性脱水',tags:'甘露醇 降颅压',rt:'静滴',
+mannitol:{
+ ind:'颅内高压、脑疝抢救、渗透性脱水',
+ adverse:'反跳、电解质紊乱、肾损伤（尿闭禁用）',
+ compat:'单独通路；结晶需温化',n:'20%甘露醇',sub:'渗透性脱水',tags:'甘露醇 降颅压',rt:'静滴',
  ref:'中国颅内压共识：0.25-1g/kg/次脉冲（本院2.5-5ml/kg=0.5-1g一致）',
  src:'2.5-5ml/kg（0.5-1g/kg）。q12-q6。脑出血病人慎用，可用小剂量如3ml/kg',note:'颅内高压一线渗透治疗；⚠反跳、肾损伤、电解质紊乱',
  c:{k:'mlkg',lo:1.25,hi:5,def:2.5,fq:['q12h','q8h','q6h','q4h'],dfq:'q8h',rate:'30min快速输注',head:'脑出血/活动性出血慎用；小剂量2.5ml/kg（0.5g/kg）起始；监测电解质q6h',ckn:'0.5-1g/kg/次；输后30-60min起效维持4-6h；尿闭/心衰禁用'}},
@@ -1032,7 +1126,10 @@ tpo:{n:'重组人血小板生成素',b:'特比澳',sub:'升血小板',tags:'TPO 
  ref:'说明书：300U/kg/d qd（本院一致）',
  src:'300U/kg。qd。用5-7天（效果好于特尔康）',note:'rhTPO升血小板',
  c:{k:'pkd',lo:300,hi:300,def:300,unit:'U/kg/d',fq:['qd'],dfq:'qd',rt:'皮下注射'}},
-hydrocor:{n:'氢化可的松',sub:'糖皮质激素',tags:'氢考 氢化可的松',rt:'静滴',
+hydrocor:{
+ ind:'肾上腺危象、儿茶酚胺抵抗性脓毒性休克、CAH危象',
+ adverse:'类固醇效应、感染风险、水钠潴留',
+ compat:'NS/5%GS均可（1:1）',n:'氢化可的松',sub:'糖皮质激素',tags:'氢考 氢化可的松',rt:'静滴',
  ref:'SSC-P 2020：儿茶酚胺抵抗休克氢考2-5mg/kg/d；肾上腺危象首剂50-100mg/m²（本院5mg/kg q8为脱机前口径，危象剂量另见情景）',
  src:'5mg/kg。q8。G/NS（脱机前使用）；50mg，NS:50ml',note:'应激剂量见临床情景-肾上腺危象（50-100mg/m²）；感染性休克2mg/kg？；脱机后喉头水肿',
  cs:[
@@ -1040,7 +1137,10 @@ hydrocor:{n:'氢化可的松',sub:'糖皮质激素',tags:'氢考 氢化可的松
    {l:'喷喉',bn:'喷喉',k:'abs',def:50,unit:'mg',lo:25,hi:100,fq:['q6h','q8h','st'],dfq:'q8h',rt:'喷喉'},
  ]},
 
-mepred:{n:'甲泼尼龙（甲强龙）',sub:'糖皮质激素',tags:'甲强龙 甲泼尼龙',rt:'静滴',
+mepred:{
+ ind:'哮喘重度、重症感染辅助、先心术后、炎症性疾病',
+ adverse:'高血糖、感染风险、消化道溃疡（类固醇效应）',
+ compat:'NS/5%GS均可；大剂量短程为主',n:'甲泼尼龙（甲强龙）',sub:'糖皮质激素',tags:'甲强龙 甲泼尼龙',rt:'静滴',
  ref:'儿童哮喘指南2025：1-2mg/kg/d（≤40-60mg/d）；先心术后本院1-3 q8为外科口径',
  src:'1-3mg/kg。q8。G/NS:10ml。3天后减量，5天后停完（先心术后）',note:'抗炎（等效氢考4倍）；重症喘息1-2mg/kg',
  c:{k:'pk',lo:1,hi:2,def:2,fq:['q8h','q12h','qd'],dfq:'q12h',dil:'5%GS或NS',ckn:'哮喘重度1-2mg/kg/d分2-3次；先心术后1-3mg/kg q8短期；冲击15-30mg/kg另议'}},
@@ -1072,7 +1172,10 @@ cvs:{n:'复合维生素B片',sub:'营养',tags:'复合VB',rt:'口服',
  ref:'说明书：成人1-2片tid',
  src:'1-2片/次。bid-tid（B1 3mg，B2 1.5mg，B6 0.2mg/片）',note:'代谢病需求大，请会诊',
  c:{k:'abs',def:1,unit:'片',lo:0.5,hi:2,fq:['bid','tid'],dfq:'tid',rt:'口服'}},
-furos_push:{n:'呋塞米',b:'速尿',sub:'袢利尿',tags:'呋塞米 速尿 利尿',rt:'静推',
+furos_push:{
+ ind:'水肿/肺水肿/容量过负荷、高血压辅助',
+ adverse:'低钾低氯碱中毒、耳毒性（快推/与氨基糖苷协同）',
+ compat:'NS稀释',n:'呋塞米',b:'速尿',sub:'袢利尿',tags:'呋塞米 速尿 利尿',rt:'静推',
  ref:'UpToDate：0.5-2mg/kg/次（水肿/肺水肿），日总量≤6mg/kg/d短期',
  src:'0.2-1mg/kg prn；或0.5mg/kg q8。NS:2ml。上限6mg/kg*d；1-2mg/kg/d分1-2次（口服生物利用度约50%，剂量为静脉2倍）；0.1-0.4mg/kg/h。NS',note:'抑制髓袢升支粗段；长期用防低钾低氯碱中毒；口服利尿；持续泵入利尿更平稳（少间歇性大剂量）',
  cs:[
@@ -1113,7 +1216,10 @@ chlorprom:{n:'氯丙嗪',sub:'吩噻嗪',tags:'氯丙嗪 冬眠灵',rt:'肌注',
  ref:'说明书：0.5-1mg/kg/次（<6月禁用）',
  src:'0.55mg/kg，6-8h可重复；6月-5岁最大40mg/d，5-12岁最大75mg/d',note:'呃逆、恶心呕吐；⚠锥体外系反应',
  c:{k:'pk',lo:0.5,hi:1,def:0.55,fq:['q6h','q8h','prn'],dfq:'q8h',rt:'肌注/口服',head:'⚠ <6月禁用；低血压/锥体外系反应'}},
-naloxone:{n:'纳洛酮',sub:'阿片拮抗',tags:'纳洛酮 解毒',rt:'静推',
+naloxone:{
+ ind:'阿片类过量/新生儿母亲用药暴露',
+ adverse:'戒断（阿片依赖者）、肺水肿罕见',
+ compat:'NS/5%GS均可；作用短需重复',n:'纳洛酮',sub:'阿片拮抗',tags:'纳洛酮 解毒',rt:'静推',
  ref:'WHO/PALS：0.01-0.1mg/kg递增至呼吸恢复（半衰期短需重复/泵维持）',
  src:'0.01-0.04mg/kg',note:'阿片过量解毒；半衰期短于多数阿片，需重复/泵维持',
  c:{k:'pk',lo:0.01,hi:0.1,def:0.04,fq:['st','q2-3min'],dfq:'st',rt:'静推',rate:'快速',ckn:'无效可加量至0.1mg/kg/次；阿片依赖者激发戒断；作用30-60min，需观察反跳'}},
@@ -1152,7 +1258,10 @@ cp:{n:'磷酸肌酸钠',b:'唯嘉能',sub:'心肌保护',tags:'磷酸肌酸 保�
 inosine:{n:'肌苷',sub:'保肝辅酶',tags:'肌苷',rt:'静滴',
  src:'50/100mg。qd。G/NS:20ml',note:'保肝辅助',
  c:{k:'band',by:'a',bands:[{mx:36,lab:'婴幼儿',d:50,unit:'mg'},{lab:'儿童',d:100,unit:'mg'}],fq:['qd'],dfq:'qd',dil:'5%GS或NS'}},
-sb:{n:'5%碳酸氢钠',sub:'纠酸/高钾',tags:'碳酸氢钠 纠酸 SB',rt:'静滴',
+sb:{
+ ind:'代酸（pH<7.2谨慎）、高钾、药物中毒碱化',
+ adverse:'低钙抽搐、高钠、代谢性碱中毒、CO2升高',
+ compat:'勿与钙剂/镁同管（沉淀）',n:'5%碳酸氢钠',sub:'纠酸/高钾',tags:'碳酸氢钠 纠酸 SB',rt:'静滴',
  ref:'国内教材：5%SB 3-5ml/kg提高HCO₃约4-6mmol/L；半量公式见情景页',
  src:'1-3-5ml/kg（严重时直接推）；5%GS稀释2.5倍静滴；高钾时3-5ml/kg原液静推；水化碱化时用4ml/kg',note:'1ml 5%SB=0.6mmol；纠酸目标见临床情景；⚠纠正过快致低钙/高钠',
  cs:[{l:'代谢性酸中毒（稀释后）',bn:'纠酸',k:'mlkg',lo:1,hi:5,def:3,fq:['st','qd'],dfq:'st',dil:'5%GS稀释2.5倍（5%SB 1ml+5%GS 1.5ml）',rate:'稀释后匀速，严重时直接原液缓推',ckn:'半量纠酸公式：ml=BE×W×0.15（5%SB 1ml=0.6mmol）；见临床情景-代谢性酸中毒'},
@@ -1449,7 +1558,7 @@ SCEN.push(
        ck:['ESETT：LEV60/FOS20PE/VPA40 三药等效——任选其一','⚠丙戊酸禁用于肝病/线粒体病/代谢病，禁与碳青霉烯同用','苯巴比妥20mg/kg备选（呼吸抑制，<2y备插管）']};}}
  ]},
 {id:'icp',ico:'🧠',name:'急性颅内高压 / 脑疝',grp:'神经系统急症',
- tag:'ICP>20mmHg干预；CPP 40-50底线；阶梯=体位镇静→渗透治疗→过渡通气→巴比妥→去骨瓣',links:['mannitol','hsn3'],
+ tag:'ICP>20mmHg干预；CPP 40-50底线；阶梯=体位镇静→渗透治疗→过渡通气→巴比妥→去骨瓣',slinks:['gcs'],links:['mannitol','hsn3'],
  srcs:['Brain Trauma Foundation 儿科TBI指南第3版（Kochanek 2019）','中国颅内静脉/颅内高压相关共识（2020神经外科重症）','中国甘露醇治疗颅内压增高共识2019'],
  secs:[
   {t:'① 识别与分级',html:`<div class="emg-lad">
@@ -1474,7 +1583,7 @@ SCEN.push(
        ck:['脑疝可升级23.4%NaCl 0.5ml/kg（≤30ml，中心静脉）','纠钠过快>10-12mmol/L/d风险脱髓鞘——高钠治疗窗内控制']};}}
  ]},
 {id:'htn_emg',ico:'📈',name:'高血压急症',grp:'神经系统急症',
- tag:'首8h降≤25%、12-24h至P95；静脉滴定：尼卡地平/硝普钠一线；过快降压=脑肾缺血',links:['nicard','NTP'],
+ tag:'首8h降≤25%、12-24h至P95；静脉滴定：尼卡地平/硝普钠一线；过快降压=脑肾缺血',slinks:['bp'],links:['nicard','NTP'],
  srcs:['AAP 2017 儿童高血压筛查与管理临床实践指南（Flynn等）','中国儿童高血压防治相关共识'],
  secs:[
   {t:'① 判定',html:`<div class="emg-lad">
@@ -1497,7 +1606,7 @@ SCEN.push(
        ck:['从0.5起，q15-30min滴定；目标：首8h降≤25%','避光？无需——硝普钠才避光；反射性心动过速常见']};}}
  ]},
 {id:'meningitis',ico:'🦠',name:'细菌性脑膜炎（初始处置）',grp:'神经系统急症',
- tag:'抗菌+地塞米松1小时内——不得因影像/腰穿延误；<3月方案不同；降颅压同步',links:['ceftria','vanc'],
+ tag:'抗菌+地塞米松1小时内——不得因影像/腰穿延误；<3月方案不同；降颅压同步',slinks:['gcs'],links:['ceftria','vanc'],
  srcs:['《儿童社区获得性细菌性脑膜炎诊断与治疗指南》2025版','AAP/IDSA脑膜炎指南要点','中国专家共识'],
  secs:[
   {t:'① 处置时间线',html:`
@@ -1520,7 +1629,7 @@ SCEN.push(
 /* ================= 临床情景批次C：循环呼吸急症（SSC-P 2020/中国2025共识 / AHA PALS 2020+2025更新 / GINA / CPS croup / 儿童心衰2020） ================= */
 SCEN.push(
 {id:'sepsis',ico:'🔥',name:'脓毒性休克',grp:'循环呼吸急症',
- tag:'1小时集束化：液体10-20ml/kg+广谱抗菌+升压药；儿茶酚胺抵抗→氢考；冷休克EPI/暖休克NE',links:['eph_push','hydrocor','albumin'],
+ tag:'1小时集束化：液体10-20ml/kg+广谱抗菌+升压药；儿茶酚胺抵抗→氢考；冷休克EPI/暖休克NE',slinks:['phoenix'],links:['eph_push','hydrocor','albumin'],
  srcs:['SSC国际儿童脓毒症与脓毒性休克指南2020（Weiss等）','《儿童脓毒性休克管理专家共识（2025）》（中国）','米兰脓毒性休克定义2020'],
  secs:[
   {t:'① 识别（米兰2020）',html:`<div class="emg-lad">
@@ -2300,6 +2409,46 @@ SCEN.push(
        ck:['effluent是「总量」概念——机器上各泵速之和（含UF）','净超滤率按血压滴定','药物TDM：万古/氨基糖苷/NAC等按清除补量']};}}
  ]});
 
+/* ================= 临床情景批次G：急性胰腺炎（儿童） ================= */
+SCEN.push(
+{id:'pancreatitis',ico:'🔺',name:'急性胰腺炎',grp:'消化系统急症',
+ tag:'脂肪酶>3×正常上限+腹痛/影像即诊断；酶高低不等于严重度；轻中度24-72h内早期肠内是主流——「饿到酶正常」已过时；不预防性用抗生素',
+ srcs:['儿童急性胰腺炎多外推自成人证据（ACP/AGA口径：早期肠内、LR优先、不预防抗生素）——已标注','本院ICU常用药清单（生长抑素/奥曲肽/乌司他丁/奥美拉唑口径）','NASPGHAN儿科胰腺炎口径（公开综述）'],
+ links:['stila','octreotide','ustin','ome'],
+ secs:[
+  {t:'① 诊断（儿童特点）',html:`<div class="emg-lad">
+    <div class="lrow lamber"><span class="lv">诊断三联（满足2条）</span><span>①典型腹痛（上腹/脐周，可向背放射）②血脂肪酶（或淀粉酶）<b>&gt;3×正常上限</b>③影像学（超声初筛/CT/MRCP）</span></div>
+    <div class="lrow lred"><span class="lv">儿童陷阱</span><span>①<b>淀粉酶可正常</b>（婴幼儿、外伤后）——脂肪酶更可靠且持续更久；②酶的高低<b>不反映严重度</b>，勿按酶降决定进食；③外伤后胰损伤（腹部撞击）易漏</span></div>
+    <div class="lrow lgray"><span class="lv">儿童病因谱（查因清单）</span><span>解剖/胆石胆泥（超声+MRCP）、<b>药物</b>（丙戊酸、L-天冬酰胺酶/培门冬、激素、硫唑嘌呤）、感染（腮腺炎/肺炎支原体等）、外伤、高脂血症、HLH/全身炎症、解剖畸形（胰胆合流异常）——反复发作者查基因（PRSS1/CFTR等）</span></div>
+  </div>`},
+  {t:'② 严重度分层（儿童证据有限，外推成人口径）',html:`<div class="emg-lad">
+    <div class="lrow lgreen"><span class="lv">轻/中度</span><span>无持续器官衰竭——占绝大多数，按下面路径处理，重点=营养与镇痛</span></div>
+    <div class="lrow lred"><span class="lv">重度</span><span>器官衰竭<b>持续&gt;48h</b>（改良Atlanta外推）：休克/呼衰/肾衰——PICU；儿童评分系统不成熟，可参考BISAP/CRP（48h&gt;150）动态评估</span></div>
+    <div class="lrow lgray"><span class="lv">预后预警线</span><span><b>BUN升高/持续↑</b>（容量不足的最实用指标）、SIRS持续、血钙&lt;2、白蛋白↓——q12-24h复查BUN/CRP/血气</span></div>
+  </div>`},
+  {t:'③ 处置六步',html:`
+   <div class="emg-step"><span class="sno">Step1 液体复苏（最早期可干预项）</span><br>等渗晶体（<b>乳酸林格/NS</b>）<b>10-20ml/kg</b>起，按尿量（目标&gt;0.5-1ml/(kg·h)）/BUN/乳酸滴定；<b>48h内BUN不降反升=复苏不足信号</b>；纠正低钙、控制血糖。</div>
+   <div class="emg-step"><span class="sno">Step2 疼痛管理</span><br>阿片类可用且不改变病程（吗啡/氢吗啡酮/芬太尼，见药卡）；NSAID慎用（容量/肾）；肋间/硬膜外为重度难治性选项。</div>
+   <div class="emg-step"><span class="sno">Step3 营养（重大观念更新）</span><br><b>轻中度：24-72h内早期肠内喂养</b>——耐受即经口/鼻胃管，<b>不需等疼痛消失或酶正常</b>；不耐受/重度/呕吐显著→鼻空肠管喂养；完全肠内失败才PN（PN见本科室处方台）。</div>
+   <div class="emg-step"><span class="sno">Step4 抑酸与本院在用药</span><br>奥美拉唑 1mg/kg（应激性溃疡预防；大出血q8h）；<b>生长抑素泵 3.5μg/(kg·h)</b> 或 <b>奥曲肽 1-3μg/(kg·h)</b>（本院在用，证据有限——疼痛/住院时长获益不确切，属经验性用药，遵上级）；<b>乌司他丁</b>（蛋白酶抑制剂）本院口径1-2万U/kg？见药卡（说明书成人口径为主，儿童证据有限）。</div>
+   <div class="emg-step"><span class="sno">Step5 抗生素（不预防！）</span><br><b>预防性抗生素无效且有害</b>——不用；仅<b>感染性坏死/脓肿/胆管炎</b>时用（碳青霉烯等，覆盖革兰阴性+厌氧）；抗菌后仍需引流（穿刺/外科）。</div>
+   <div class="emg-step"><span class="sno">Step6 病因与并发症</span><br>胆源性+胆管炎/胆道梗阻→<b>ERCP（72h内）</b>；无菌性液体积聚观察为主，包裹性坏死症状性→延迟（&gt;4周）穿刺/引流；堵源（停可疑药物：丙戊酸/培门冬等）；高脂血症性→控甘油三酯（胰岛素/血浆置换遵专科）。</div>`},
+  {t:'④ 监测',html:`<div class="emg-step">生命体征+出入量q4-8h（重度q1-4h）；<b>BUN/肌酐 q12-24h</b>（容量与预后线）；CRP q24-48h；血钙/血糖/白蛋白；脂肪酶不需连续复查（不指导决策）；重度+机械通气/肾衰按PICU路径。</div>`},
+  {t:'⑤ 常见坑',html:`<div class="emg-red">① 按酶的高低判断轻重/决定进食（酶不等于病）；② 「禁食到酶正常」——过时观念，早期肠内反而预后好；③ 预防性抗生素（无效有害）；④ 儿童淀粉酶正常就排除；⑤ 忘了查药物性病因（培门冬/丙戊酸在血液肿瘤患儿极常见）；⑥ 胆源性+胆管炎没约ERCP；⑦ 反复发作不查解剖/基因。</div>`}],
+ cals:[
+  {id:'panc_calc',title:'胰腺炎早期处置速算（复苏/营养/本院三药）',
+   inputs:[{k:'w',lab:'体重',unit:'kg',def:25,step:0.5},{k:'h',lab:'48h目标脱水',unit:'ml',def:0,step:50}],
+   out:(v)=>{if(!v.w)return{lines:['填体重'],ck:[]};
+     const maint=v.w<=10?v.w*4:(v.w<=20?40+(v.w-10)*2:60+(v.w-20));
+     const ufr=v.h?v.h/48:0;
+     return {lines:['液体：LR/NS 10-20ml/kg='+f(v.w*10)+'-'+f(v.w*20)+'ml起，按尿量/BUN滴定','维持量 '+f(maint)+'ml/h（4-2-1）'+(v.h?('＋净超滤 '+f(ufr)+'ml/h（48h脱'+v.h+'ml）'):''),
+       '生长抑素泵 '+f(v.w*3.5)+'μg/h（3.5μg/kg/h：NS至50ml，泵速 '+f(v.w*3.5*50/(v.w*7))+'ml/h）',
+       '或 奥曲肽 '+f(v.w*1)+'-'+f(v.w*3)+'μg/h（1-3μg/kg/h）',
+       '乌司他丁 '+f(v.w*10000)+'-'+f(v.w*20000)+'U/次（1-2万U/kg，5%GS稀释，q8h）',
+       '奥美拉唑 '+f(v.w*1)+'mg qd（应激预防）'],
+       ck:['早期肠内：24-72h内尝试经口/鼻胃管，不等酶降','不预防性抗生素——感染性坏死才用','本院三药（生长抑素/奥曲肽/乌司他丁）为经验性口径，遵上级']};}}
+ ]});
+
 /* ================= 评分与参考（05；血压百分位与脓毒症详表见同目录追加） ================= */
 const SCORES=[
 {id:'gcs',ico:'🧠',name:'GCS 格拉斯哥昏迷评分（含婴儿版）',type:'form',
@@ -2912,6 +3061,13 @@ function toggleBasket(key){
   try{localStorage.setItem('picuBK',JSON.stringify(basket));}catch(e){}
   renderBasket(); renderAdds();
 }
+function renderFB(){
+  try{const L=JSON.parse(localStorage.getItem('picuFB')||'[]');
+    const el=$('fbrow'); if(!el)return;
+    el.style.display=L.length?'flex':'none';
+    if(L.length)el.querySelector('.clabel').innerHTML='⚑ 反馈 <b>'+L.length+'</b> 条';
+  }catch(e){}
+}
 function renderBasket(){
   const keys=Object.keys(basket);
   $('cartsz').textContent=keys.length;
@@ -3132,7 +3288,7 @@ function cardHtml(id){
   let cspec=D.sp||'';
   if(!cspec){const c0=lanes[0];
     if(c0&&c0.def!=null&&c0.k!=='band'&&c0.k!=='info')cspec=f(c0.def)+(doseUnitLab(c0)==='mg/kg/d'?'mg/kg/d':(c0.unit||'mg/kg'));
-    else if(c0&&c0.k==='band'&&typeof c0.bands[0].d==='number')cspec=c0.bands.map(b=>f(b.d)).join('/');}
+    else if(c0&&c0.k==='band')cspec=c0.bands.filter(b=>typeof b.d==='number').map(b=>f(b.d)+(b.unit?b.unit:'')).join('/');}
   return `<div class="card" id="card_${id}">
     <div class="chead" data-act="cap" data-card="${id}">
       <span class="tri">▸</span><span class="ct">${D.n}</span>
@@ -3140,13 +3296,19 @@ function cardHtml(id){
     </div>
     <div class="cbody">
       ${D.head?`<div class="emg-amber" style="margin-top:8px;">${D.head}</div>`:''}
+      ${D.spec?`<div class="spec" style="margin-top:8px;">规格 <b>${D.spec}</b></div>`:''}
       ${lanesHtml}
       <div class="btnrow">${addBtns}<button class="linklike" data-act="go" data-page="2" type="button">查看医嘱单 ›</button></div>
-      ${(D.ref||D.src)?`<div class="ckbox dosebox"><div class="t">📋 剂量参考对照</div>
-      ${D.ref?`<div class="r"><b>指南·说明书参考</b>：${D.ref}</div>`:''}
-      ${D.src?`<div class="r"><b>本院清单口径</b>：${D.src}</div>`:''}
-      <div class="r" style="color:#8a97ab">两源不一致时以上级/药师核定为准；取量结合年龄、肝肾功能与严重程度</div></div>`:''}
-      ${D.note?`<details class="more"><summary>药理与备注 ▾</summary><div class="mrow">${D.note}</div></details>`:''}
+      ${(D.ref||D.src)?`<div class="ckbox dosebox"><div class="t">📋 剂量参考对照<button type="button" class="linklike" data-act="fb" data-card="${id}" style="float:right;margin:0;font-size:11.5px;">⚑ 记问题</button></div>
+      ${D.ref?`<div class="r"><span class="srcTag g">指南</span>${D.ref}</div>`:''}
+      ${D.src?`<div class="r"><span class="srcTag h">本院</span>${D.src}</div>`:''}
+      <div class="r" style="color:#8a97ab;font-size:11px">两源不一致时以上级/药师核定为准；取量结合年龄、肝肾功能与严重程度</div></div>`:''}
+      ${(D.ind||D.note||D.adverse||D.compat)?`<details class="more"><summary>应用场景 · 药理 · 不良反应 ▾</summary>
+      ${D.ind?`<div class="mrow"><b>应用场景</b>：${D.ind}</div>`:''}
+      ${D.note?`<div class="mrow"><b>药理与备注</b>：${D.note.split('；').filter(x=>x.trim()).join('<br>· ')}</div>`:''}
+      ${D.adverse?`<div class="mrow warn"><b>不良反应</b>：${D.adverse}</div>`:''}
+      ${D.compat?`<div class="mrow cmp"><b>配伍</b>：${D.compat}</div>`:''}
+      </details>`:''}
     </div>
   </div>`;
 }
@@ -3158,7 +3320,7 @@ function updCard(id){
     if(!o)continue;
     const L=calcOf(D,li);
     if(!L){o.textContent='';k.textContent='';continue;}
-    o.innerHTML=L.lines.map(esc).join('<br>')||'—';
+    o.innerHTML=L.lines.map((x,i)=>`<div class="${i===0||x.indexOf('泵速')===0?'o1':'o2'}">${esc(x)}</div>`).join('')||'—';
     k.innerHTML=L.ck.length?L.ck.join('<br>'):'—';
   }
 }
@@ -3213,7 +3375,7 @@ function renderGroups(){
         <div class="gmain"><div class="gt2">${g.t}</div>${g.sub?`<div class="gsub">${g.sub}</div>`:''}</div>
         <span class="gcnt">${g.drugs.length}</span>
       </div>
-      <div class="gbody" id="gbody_${gi}" style="display:none">${g.drugs.map(id=>cardHtml(id)).join('')}</div>
+      <div class="gbody" id="gbody_${gi}" style="display:none">${groupBody(g)}</div>
     </div>`).join('');
   Object.keys(DRUGS).forEach(updCard);
 }
@@ -3229,6 +3391,17 @@ function filterTiles(listId,qs){
     g.style.display=any?'':'none';
   });
 }
+function groupBody(g){
+  /* 新生儿模式：点组展开→所有药卡直接渲染，用subrow做视觉分组（不是导航层） */
+  let html='',cur=null;
+  g.drugs.forEach(id=>{
+    const D=DRUGS[id]; if(!D)return;
+    const sub=(D.sub||'').trim()||'其他';
+    if(sub!==cur){html+=`<div class="subrow">${sub}</div>`;cur=sub;}
+    html+=cardHtml(id);
+  });
+  return html;
+}
 function applySearch(qs){
   const q=(qs||'').trim();
   GRPS.forEach((g,gi)=>{
@@ -3237,14 +3410,17 @@ function applySearch(qs){
     if(!q){el.style.display=''; body.style.display='none'; el.classList.remove('open');
       tri.textContent='▸';
       g.drugs.forEach(id=>{const c=$('card_'+id); if(c)c.style.display='';}); return;}
-    let any=false;
+    let any=false; let html='';
     g.drugs.forEach(id=>{
-      const D=DRUGS[id], c=$('card_'+id); if(!c)return;
-      const hit=(D.n+' '+(D.b||'')+' '+(D.tags||'')+' '+(D.sub||'')+' '+(D.ref||'')).indexOf(q)>=0;
-      c.style.display=hit?'':'none'; if(hit)any=true;
+      const D=DRUGS[id]; if(!D)return;
+      const hit=(D.n+' '+(D.b||'')+' '+(D.tags||'')+' '+(D.sub||'')+' '+(D.ref||'')+' '+(D.note||'')).indexOf(q)>=0;
+      if(hit){html+=cardHtml(id); any=true;}
     });
     el.style.display=any?'':'none';
-    if(any){el.classList.add('open'); body.style.display='block'; tri.textContent='▾';}   /* 搜索命中自动展开 */
+    if(any){
+      el.classList.add('open'); body.style.display='block'; tri.textContent='▾';
+      body.innerHTML='<div style="padding:2px 4px 6px;color:var(--ink2);font-size:12px;">搜索「'+q+'」匹配 '+g.drugs.filter(id=>{const D=DRUGS[id];return D&&(D.n+' '+(D.b||'')+' '+(D.tags||'')+' '+(D.sub||'')+' '+(D.ref||'')+' '+(D.note||'')).indexOf(q)>=0;}).length+' 个药</div>'+html;
+    }
   });
 }
 
@@ -3282,6 +3458,7 @@ function scenHtml(s){
     <div class="backrow" data-act="sback">‹ 临床情景列表</div>
     <div class="emg-hero"><div class="et">${s.ico} ${s.name}</div><div class="ed">${s.tag}</div></div>
     ${(s.links&&s.links.length)?`<div class="chiprow" style="margin-top:9px;">${s.links.filter(id=>DRUGS[id]).map(id=>`<button class="chip" data-act="quickdrug" data-d="${id}" type="button">💊 ${DRUGS[id].n}</button>`).join('')}<button class="chip" data-act="go" data-page="1" type="button">💊 全部药物</button></div>`:''}
+    ${(s.slinks&&s.slinks.length)?`<div class="chiprow" style="margin-top:6px;">${s.slinks.filter(sid=>SCORES.some(x=>x.id===sid)).map(sid=>{const sc=SCORES.find(x=>x.id===sid);return `<button class="chip" data-act="scen" data-sc="${sid}" type="button">📐 ${sc.name}</button>`;}).join('')}</div>`:''}
     ${s.secs.map(sec=>`<div class="emg-sec">${sec.t?`<div class="st">${sec.t}</div>`:''}${sec.html}</div>`).join('')}
     ${(s.cals&&s.cals.length)?`<div class="emg-sec"><div class="st">🧮 情景计算器（与顶部体重联动，可加入医嘱单）</div>${s.cals.map(calcHtml).join('')}</div>`:''}
     ${(s.srcs&&s.srcs.length)?`<div class="emg-sec"><details class="emg-det"><summary>依据来源</summary>${s.srcs.map(x=>'<div class="mrow">· '+esc(x)+'</div>').join('')}</details></div>`:''}
@@ -3313,6 +3490,7 @@ function updScCalc(cid){
 }
 let curViewPg=3;
 function showScen(id){
+  try{history.replaceState(null,'','#v='+id);}catch(e){}
   const isScore=SCORES.some(x=>x.id===id);
   document.querySelectorAll('.emgview').forEach(x=>x.style.display='none');
   const v=$('v_'+id); if(v)v.style.display='block';
@@ -3323,10 +3501,17 @@ function showScen(id){
   window.scrollTo(0,0);
 }
 function go(n,keep){
+  if(!keep){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}
   if(n!==3&&n!==4&&n!==5&&!keep)document.querySelectorAll('.emgview').forEach(v=>v.style.display='none');
-  if(!keep){[$('emglist'),$('scorelist'),$('reflist')].forEach(el=>{if(el)el.style.display='';});
+  if(!keep){
+    [$('emglist'),$('scorelist'),$('reflist')].forEach(el=>{if(el)el.style.display='';});
+    GRPS.forEach((_,i)=>{const el=$('grp_'+i); if(!el)return;
+      el.classList.remove('open'); el.style.display='';
+      const b=el.querySelector('.gbody'); if(b)b.style.display='none';
+      const tri=el.querySelector('.gtri'); if(tri)tri.textContent='▸';
+    });
     document.querySelectorAll('#p3 .emg-hero, #p4 .emg-hero, #p5 .emg-hero').forEach(h=>h.style.display='');}
-  [['p0',0],['p1',1],['p2',2],['p3',3],['p4',4],['p5',5]].forEach(([p,i])=>{$(p).className='page'+(n===i?' on':'');});
+  [['p1',1],['p2',2],['p3',3],['p4',4],['p5',5]].forEach(([p,i])=>{$(p).className='page'+(n===i?' on':'');});
   [['nv1',1],['nv3',3],['nv4',4],['nv5',5],['nv2',2]].forEach(([id,pg])=>{$(id).className=$(id).className.replace(/\s*on/,'')+(pg===n?' on':'');});
   $('cartbar').style.display=n===2?'none':'flex';
   if(n===2)renderBasket();
@@ -3430,9 +3615,26 @@ document.addEventListener('click',e=>{
   else if(a==='pmore'){$('pmeta').classList.toggle('show');}
   else if(a==='cap'){const c=$('card_'+t.dataset.card); c.classList.toggle('open');
     const tri=c.querySelector('.tri'); if(tri)tri.textContent=c.classList.contains('open')?'▾':'▸';}
-  else if(a==='gcap'){const g=$('grp_'+t.dataset.g); g.classList.toggle('open');
-    g.querySelector('.gbody').style.display=g.classList.contains('open')?'block':'none';
-    g.querySelector('.gtri').textContent=g.classList.contains('open')?'▾':'▸';}
+  else if(a==='gcap'){
+    const gi=+t.dataset.g;
+    const g=$('grp_'+gi);
+    const wasOpen=g.classList.contains('open');
+    /* 全关 */
+    GRPS.forEach((_,i)=>{
+      const el=$('grp_'+i); if(!el)return;
+      el.classList.remove('open');
+      const b=el.querySelector('.gbody'); if(b)b.style.display='none';
+      const tri=el.querySelector('.gtri'); if(tri)tri.textContent='▸';
+    });
+    if(!wasOpen){
+      g.classList.add('open');
+      g.querySelector('.gbody').style.display='block';
+      g.querySelector('.gbody').innerHTML=groupBody(g);
+      g.querySelector('.gtri').textContent='▾';
+    }
+  }
+  else if(a==='subopen'){showSub(+t.dataset.g,t.dataset.sub); window.scrollTo(0,0);}
+  else if(a==='gback'){const gi=+t.dataset.g; const g=$('grp_'+gi); g.querySelector('.gbody').innerHTML=groupBody(GRPS[gi],gi);}
   else if(a==='step'||a==='scstep')doStep(t);
   else if(a==='add')toggleBasket(t.dataset.key);
   else if(a==='del'){delete basket[t.dataset.key]; try{localStorage.setItem('picuBK',JSON.stringify(basket));}catch(err){} renderBasket(); renderAdds();}
@@ -3442,6 +3644,17 @@ document.addEventListener('click',e=>{
   else if(a==='scen')showScen(t.dataset.sc);
   else if(a==='refopen')showRef(t.dataset.sc);
   else if(a==='quickdrug')gotoDrugCard(t.dataset.d);
+  else if(a==='fb'){
+    const D=DRUGS[t.dataset.card]; const txt=prompt('「'+(D?D.n:t.dataset.card)+'」问题（剂量/配液/口径/其他）：');
+    if(txt&&txt.trim()){try{const L=JSON.parse(localStorage.getItem('picuFB')||'[]');
+      L.push({t:new Date().toLocaleString('zh-CN'),d:t.dataset.card,n:D?D.n:t.dataset.card,x:txt.trim()});
+      localStorage.setItem('picuFB',JSON.stringify(L));
+      renderFB(); alert('已记录（共'+L.length+'条）——医嘱单页可复制反馈');}catch(e){}}
+  }
+  else if(a==='fbcopy'){
+    try{const L=JSON.parse(localStorage.getItem('picuFB')||'[]');
+      copyText('【PICU-AI 反馈汇总】\n'+L.map((x,i)=>(i+1)+'、['+x.t+'] '+x.n+'：'+x.x).join('\n'),'otip');}catch(e){}
+  }
   else if(a==='sback')go(curViewPg);
   else if(a==='sopt'){
     const sid=t.dataset.s,k=t.dataset.k,v=parseFloat(t.dataset.v);
@@ -3496,12 +3709,19 @@ document.addEventListener('pointerdown',e=>{
 /* ================= init ================= */
 function initAll(){
   renderGroups(); renderQuick(); renderScenList(); renderScoreList(); renderRefList();
+  try{
+    const h=location.hash.match(/#v=([A-Za-z0-9_]+)/);
+    if(h&&(SCEN.some(x=>x.id===h[1])||SCORES.some(x=>x.id===h[1])||REFS.some(x=>x.id===h[1])))showScen(h[1]);
+  }catch(e){}
+  try{
+    if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){navigator.serviceWorker.register('./sw.js').catch(function(){});}
+  }catch(e){}
   $('pw').value=PT.w;
   if(PT.ay!=null)$('pa').value=PT.ay;
   if(PT.am!=null)$('pm').value=PT.am;
   if(PT.h!=null)$('ph').value=PT.h;
   if(PT.sx)$('psx').value=PT.sx;
-  updPnow(); renderBasket(); renderAdds(); go(0);
+  updPnow(); renderBasket(); renderAdds(); renderFB(); go(1);
 }
 initAll();
 
