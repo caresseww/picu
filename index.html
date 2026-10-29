@@ -3870,13 +3870,17 @@ function filterTiles(listId,qs){
   });
 }
 function groupBody(g){
-  /* 新生儿模式：点组展开→所有药卡直接渲染，用subrow做视觉分组（不是导航层） */
-  let html='',cur=null;
-  g.drugs.forEach(id=>{
+  const buckets=[]; const bmap={};
+  g.drugs.forEach(function(id){
     const D=DRUGS[id]; if(!D)return;
     const sub=(D.sub||'').trim()||'其他';
-    if(sub!==cur){html+=`<div class="subrow">${sub}</div>`;cur=sub;}
-    html+=cardHtml(id);
+    if(!(sub in bmap)){bmap[sub]=[];buckets.push(sub);}
+    bmap[sub].push(id);
+  });
+  let html='';
+  buckets.forEach(function(sub){
+    html+='<div class="subrow">'+sub+'</div>';
+    bmap[sub].forEach(function(id){html+=cardHtml(id);});
   });
   return html;
 }
