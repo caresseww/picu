@@ -241,6 +241,26 @@ table.tbl td.mono{font-family:var(--mono); white-space:nowrap;}
   border-left:2.5px solid var(--navy2); border-radius:0 6px 6px 0; text-transform:uppercase;}
 .subrow:first-child{margin-top:4px;}
 
+/* ===== 层层递进 drill-down ===== */
+.crumb{display:flex; align-items:center; gap:7px; padding:8px 2px 6px; font-size:12.5px; font-weight:600; color:var(--ink2); flex-wrap:wrap;}
+.crumb .cb-lnk{color:var(--navy2); cursor:pointer; user-select:none; font-weight:700;}
+.crumb .cb-lnk:active{opacity:.5;}
+.crumb .cb-sep{color:#c4cad6;}
+.crumb .cb-cur{color:var(--ink); font-weight:800;}
+.subtiles{display:grid; grid-template-columns:1fr 1fr; gap:9px; padding:4px 0 8px;}
+.stile{background:#fdfdfb; border:1px solid var(--line); border-radius:14px; padding:10px 12px; cursor:pointer;
+  user-select:none; box-shadow:0 1px 4px rgba(20,30,50,.05); transition:background .15s;}
+.stile:active{background:#eef3fb;}
+.stile.solo{grid-column:1/-1;}
+.stile.alt{background:linear-gradient(150deg,#eef4fc,#f8fbff); border-color:#c9d9ef;}
+.stile .sname{font-size:13.5px; font-weight:800; color:var(--navy); display:flex; align-items:center; gap:7px; line-height:1.4;}
+.stile .sname .sn-cnt{margin-left:auto; font-family:var(--mono); font-size:11px; color:#fff; background:var(--navy2);
+  border-radius:10px; padding:1px 8px; font-weight:700; flex:0 0 auto;}
+.stile .spv{font-size:11px; color:var(--ink2); margin-top:4px; line-height:1.55;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+#emglist .stile.solo,#scorelist .stile.solo,#reflist .stile.solo{padding:13px 14px;}
+#emglist .stile .sname,#scorelist .stile .sname,#reflist .stile .sname{font-size:15px;}
+
 /* ===== v10.1 卡片视觉精修 ===== */
 .card{border-radius:18px; box-shadow:0 2px 8px rgba(20,30,50,.08);}
 .chead{transition:background .15s;}
@@ -3836,9 +3856,9 @@ function renderQuick(){
 function gotoDrugCard(id){
   if(!DRUGS[id])return;
   const gi=GRPS.findIndex(g=>g.drugs.includes(id)); if(gi<0)return;
-  go(1);
-  const g=$('grp_'+gi);
-  g.classList.add('open'); g.querySelector('.gbody').style.display='block'; g.querySelector('.gtri').textContent='▾';
+  go(1);   /* 复位后直达所在子类 */
+  const sub=((DRUGS[id].sub||'')+'').trim()||'其他';
+  p1OpenSub(gi,sub);
   const c=$('card_'+id);
   if(c){c.classList.add('open'); c.querySelector('.cbody').style.display='block';
     const tri=c.querySelector('.tri'); if(tri)tri.textContent='▾';
@@ -3857,18 +3877,6 @@ function renderGroups(){
     </div>`).join('');
   Object.keys(DRUGS).forEach(updCard);
 }
-function filterTiles(listId,qs){
-  const q=(qs||'').trim();
-  document.querySelectorAll('#'+listId+' .gtile').forEach(t=>{
-    t.style.display=(!q||t.textContent.indexOf(q)>=0)?'':'none';
-  });
-  document.querySelectorAll('#'+listId+' .emg-grp').forEach(g=>{
-    const sibs=[...g.nextElementSibling?[]:[]];
-    let any=false, n=g.nextElementSibling;
-    while(n&&n.classList&&n.classList.contains('gtile')){ if(n.style.display!=='none')any=true; n=n.nextElementSibling; }
-    g.style.display=any?'':'none';
-  });
-}
 function groupBody(g){
   const buckets=[]; const bmap={};
   g.drugs.forEach(function(id){
@@ -3884,24 +3892,87 @@ function groupBody(g){
   });
   return html;
 }
+/* ===== 层层递进 drill-down 状态 ===== */
+const DRILL={p1:{g:-1,sub:null,all:false}, p3:{g:null}, p4:{g:null}, p5:{g:null}};
+function p1Buckets(gi){
+  const buckets=[], bmap={};
+  GRPS[gi].drugs.forEach(id=>{
+    const D=DRUGS[id]; if(!D)return;
+    const sub=(D.sub||'').trim()||'其他';
+    if(!(sub in bmap)){bmap[sub]=[];buckets.push(sub);}
+    bmap[sub].push(id);
+  });
+  return {buckets:buckets, bmap:bmap};
+}
+function p1Back(){
+  DRILL.p1={g:-1, sub:null, all:false};
+  GRPS.forEach((_,i)=>{
+    const el=$('grp_'+i); if(!el)return;
+    el.style.display=''; el.classList.remove('open');
+    const b=el.querySelector('.gbody'); if(b)b.style.display='none';
+    const tr=el.querySelector('.gtri'); if(tr)tr.textContent='▸';
+  });
+}
+function p1Open(gi){   /* L1：组内子类 tiles */
+  DRILL.p1={g:gi, sub:null, all:false};
+  GRPS.forEach((_,i)=>{
+    const el=$('grp_'+i); if(!el)return;
+    if(i!==gi){el.style.display='none'; el.classList.remove('open');
+      const b=el.querySelector('.gbody'); if(b)b.style.display='none';
+      const tr=el.querySelector('.gtri'); if(tr)tr.textContent='▸';}
+  });
+  const g=$('grp_'+gi);
+  g.classList.add('open'); g.style.display='';
+  const b=g.querySelector('.gbody'); b.style.display='block'; b.innerHTML=p1SubTiles(gi);
+  const tr=g.querySelector('.gtri'); if(tr)tr.textContent='▾';
+  window.scrollTo(0,0);
+}
+function p1SubTiles(gi){
+  const g=GRPS[gi], B=p1Buckets(gi);
+  let h='<div class="crumb"><span class="cb-lnk" data-act="p1back">‹ 全部分组</span><span class="cb-sep">›</span><span class="cb-cur">'+esc(g.ico+' '+g.t)+'</span></div>';
+  h+='<div class="subtiles">';
+  h+='<div class="stile solo alt" data-act="p1sub" data-s=""><div class="sname">📋 全部药物<span class="sn-cnt">'+g.drugs.length+'</span></div><div class="spv">按药理小类连续展开全部药卡</div></div>';
+  B.buckets.forEach(sub=>{
+    const names=B.bmap[sub].map(id=>DRUGS[id].n).join('、');
+    h+='<div class="stile" data-act="p1sub" data-s="'+esc(sub)+'"><div class="sname">'+esc(sub)+'<span class="sn-cnt">'+B.bmap[sub].length+'</span></div><div class="spv">'+esc(names)+'</div></div>';
+  });
+  return h+'</div>';
+}
+function p1OpenSub(gi,sub){   /* L2：子类药卡；sub空=全部 */
+  DRILL.p1={g:gi, sub:sub||null, all:!sub};
+  const g=$('grp_'+gi), b=g.querySelector('.gbody');
+  b.innerHTML='<div class="crumb"><span class="cb-lnk" data-act="p1subback">‹ '+esc(GRPS[gi].t)+'</span><span class="cb-sep">›</span><span class="cb-cur">'+(sub?esc(sub):'全部药物')+'</span></div>'+
+    (sub?p1BucketCards(gi,sub):groupBody(GRPS[gi]));
+  b.style.display='block';
+  const B=p1Buckets(gi);
+  (sub?(B.bmap[sub]||[]):GRPS[gi].drugs).forEach(id=>{if(DRUGS[id])updCard(id);});
+  window.scrollTo(0,0);
+}
+function p1BucketCards(gi,sub){
+  const B=p1Buckets(gi);
+  return (B.bmap[sub]||[]).map(id=>cardHtml(id)).join('');
+}
 function applySearch(qs){
   const q=(qs||'').trim();
+  if(!q){
+    if(DRILL.p1.g>=0){p1OpenSub(DRILL.p1.g, DRILL.p1.all?'':(DRILL.p1.sub||''));}
+    else p1Back();
+    return;
+  }
   GRPS.forEach((g,gi)=>{
     const el=$('grp_'+gi); if(!el)return;
     const body=el.querySelector('.gbody'), tri=el.querySelector('.gtri');
-    if(!q){el.style.display=''; body.style.display='none'; el.classList.remove('open');
-      tri.textContent='▸';
-      g.drugs.forEach(id=>{const c=$('card_'+id); if(c)c.style.display='';}); return;}
     let any=false; let html='';
     g.drugs.forEach(id=>{
       const D=DRUGS[id]; if(!D)return;
-      const hit=(D.n+' '+(D.b||'')+' '+(D.tags||'')+' '+(D.sub||'')+' '+(D.ref||'')+' '+(D.note||'')).indexOf(q)>=0;
+      const hit=(D.n+' '+(D.b||'')+' '+(D.tags||'')+' '+(D.sub||'')+' '+(D.ref||'')+' '+(D.note||'')+' '+(D.ind||'')).indexOf(q)>=0;
       if(hit){html+=cardHtml(id); any=true;}
     });
     el.style.display=any?'':'none';
     if(any){
       el.classList.add('open'); body.style.display='block'; tri.textContent='▾';
-      body.innerHTML='<div style="padding:2px 4px 6px;color:var(--ink2);font-size:12px;">搜索「'+q+'」匹配 '+g.drugs.filter(id=>{const D=DRUGS[id];return D&&(D.n+' '+(D.b||'')+' '+(D.tags||'')+' '+(D.sub||'')+' '+(D.ref||'')+' '+(D.note||'')).indexOf(q)>=0;}).length+' 个药</div>'+html;
+      const n=g.drugs.filter(id=>{const D=DRUGS[id];return D&&(D.n+' '+(D.b||'')+' '+(D.tags||'')+' '+(D.sub||'')+' '+(D.ref||'')+' '+(D.note||'')+' '+(D.ind||'')).indexOf(q)>=0;}).length;
+      body.innerHTML='<div style="padding:2px 4px 6px;color:var(--ink2);font-size:12px;">搜索「'+esc(q)+'」匹配 '+n+' 个药</div>'+html;
     }
   });
 }
@@ -3922,18 +3993,50 @@ function fallbackCopy(t,done){
 /* ================= 临床情景 ================= */
 const SCENCALC={};
 const SCENCALC_KEYS=[];
-function renderScenList(){
-  const grps={};
-  SCEN.forEach(s=>{(grps[s.grp]=grps[s.grp]||[]).push(s);});
-  $('emglist').innerHTML=Object.keys(grps).map(g=>`
-    <div class="emg-grp">${g}</div>
-    ${grps[g].map(s=>`<div class="gtile" data-act="scen" data-sc="${s.id}">
-      <span class="gi">${s.ico}</span>
-      <div><div class="gn">${s.name}</div><div class="gd">${s.tag}</div></div>
-    </div>`).join('')}`).join('');
+const SCGRPICO={'循环呼吸急症':'🫀','代谢内分泌急症':'🍬','神经系统急症':'🧠','血液肾脏中毒急症':'🩸','体外支持 · 血液净化':'🔄','消化系统急症':'🍽️'};
+const SCGRPICO4={'评分量表':'📋','参考值与速算':'🧮'};
+const RFGGRPICO={'指南全文库':'📚','检验参考':'🧪','治疗基础':'🧴'};
+function scenGrps(){const grps={};SCEN.forEach(s=>{(grps[s.grp]=grps[s.grp]||[]).push(s);});return grps;}
+function scenTile(s){
+  return '<div class="gtile" data-act="scen" data-sc="'+s.id+'"><span class="gi">'+s.ico+'</span><div><div class="gn">'+s.name+'</div><div class="gd">'+s.tag+'</div></div></div>';
+}
+function crumb(backAct,backTxt,curTxt){
+  return '<div class="crumb"><span class="cb-lnk" data-act="'+backAct+'">‹ '+backTxt+'</span><span class="cb-sep">›</span><span class="cb-cur">'+curTxt+'</span></div>';
+}
+function renderScenList(){p3Render();
   $('views').insertAdjacentHTML('beforeend',SCEN.map(s=>scenHtml(s)).join(''));
   SCEN.forEach(s=>{(s.cals||[]).forEach(c=>{SCENCALC[c.id]=c; SCENCALC_KEYS.push(c.id);});});
   Object.keys(SCENCALC).forEach(updScCalc);
+}
+function p3Render(){
+  const el=$('emglist'); if(!el)return;
+  if(!DRILL.p3.g){
+    const grps=scenGrps();
+    el.innerHTML=Object.keys(grps).map(gn=>{
+      const arr=grps[gn];
+      if(arr.length===1)return scenTile(arr[0]);   /* 单情景分类不套壳，直达 */
+      const pv=arr.slice(0,4).map(x=>x.name).join('、');
+      return '<div class="stile solo" data-act="p3open" data-g="'+esc(gn)+'"><div class="sname">'+(SCGRPICO[gn]||'📂')+' '+esc(gn)+'<span class="sn-cnt">'+arr.length+'</span></div><div class="spv">'+esc(pv)+(arr.length>4?'…':'')+'</div></div>';
+    }).join('');
+  }else{
+    const arr=scenGrps()[DRILL.p3.g]||[];
+    el.innerHTML=crumb('p3back','情景分类',(SCGRPICO[DRILL.p3.g]||'📂')+' '+esc(DRILL.p3.g))+
+      arr.map(scenTile).join('');
+  }
+}
+function p3Search(qs){
+  const q=(qs||'').trim(); const el=$('emglist'); if(!el)return;
+  if(!q){p3Render();return;}
+  const grps=scenGrps(); let h='';
+  Object.keys(grps).forEach(gn=>{
+    const hits=grps[gn].filter(s=>{
+      const linkNames=(s.links||[]).map(id=>DRUGS[id]?DRUGS[id].n:'').join(' ');
+      return (s.name+' '+s.tag+' '+linkNames).indexOf(q)>=0;
+    });
+    if(!hits.length)return;
+    h+='<div class="emg-grp">'+(SCGRPICO[gn]||'')+' '+esc(gn)+'</div>'+hits.map(scenTile).join('');
+  });
+  el.innerHTML=h||'<div class="oempty">没有匹配的情景</div>';
 }
 function scenHtml(s){
   return `<div class="emgview" id="v_${s.id}" style="display:none">
@@ -3974,27 +4077,39 @@ let curViewPg=3;
 function showScen(id){
   try{history.replaceState(null,'','#v='+id);}catch(e){}
   const isScore=SCORES.some(x=>x.id===id);
+  const sc=SCEN.find(x=>x.id===id); if(sc)DRILL.p3.g=sc.grp;   /* 返回时落在所属分类 */
+  const rf=REFS.find(x=>x.id===id); if(rf)DRILL.p5.g=rf.grp;
+  const sco=SCORES.find(x=>x.id===id); if(sco)DRILL.p4.g=scGrpOf(sco);
   document.querySelectorAll('.emgview').forEach(x=>x.style.display='none');
   const v=$('v_'+id); if(v)v.style.display='block';
-  curViewPg=isScore?4:3;
+  curViewPg=isScore?4:(rf?5:3);
   go(curViewPg,true);
-  [$('emglist'),$('scorelist')].forEach(el=>{if(el)el.style.display='none';});   /* 详情页顶掉列表 */
-  document.querySelectorAll('#p3 .emg-hero, #p4 .emg-hero').forEach(h=>h.style.display='none');
+  [$('emglist'),$('scorelist'),$('reflist')].forEach(el=>{if(el)el.style.display='none';});   /* 详情页顶掉列表 */
+  document.querySelectorAll('#p3 .emg-hero, #p4 .emg-hero, #p5 .emg-hero').forEach(h=>h.style.display='none');
+  window.scrollTo(0,0);
+}
+function setPage(n){
+  [['p1',1],['p2',2],['p3',3],['p4',4],['p5',5]].forEach(([p,i])=>{$(p).className='page'+(n===i?' on':'');});
+  [['nv1',1],['nv3',3],['nv4',4],['nv5',5],['nv2',2]].forEach(([id,pg])=>{$(id).className=$(id).className.replace(/\s*on/,'')+(pg===n?' on':'');});
+}
+function showListPage(n){   /* 列表态：隐藏详情view、恢复列表与hero、按DRILL重渲染列表 */
+  document.querySelectorAll('.emgview').forEach(v=>v.style.display='none');
+  [$('emglist'),$('scorelist'),$('reflist')].forEach(el=>{if(el)el.style.display='';});
+  p3Render(); p4Render(); p5Render();
+  document.querySelectorAll('#p3 .emg-hero, #p4 .emg-hero, #p5 .emg-hero').forEach(h=>h.style.display='');
+  setPage(n);
   window.scrollTo(0,0);
 }
 function go(n,keep){
   if(!keep){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}
-  if(n!==3&&n!==4&&n!==5&&!keep)document.querySelectorAll('.emgview').forEach(v=>v.style.display='none');
   if(!keep){
+    p1Back();
+    DRILL.p3.g=null; DRILL.p4.g=null; DRILL.p5.g=null;
+    if(n!==3&&n!==4&&n!==5)document.querySelectorAll('.emgview').forEach(v=>v.style.display='none');
     [$('emglist'),$('scorelist'),$('reflist')].forEach(el=>{if(el)el.style.display='';});
-    GRPS.forEach((_,i)=>{const el=$('grp_'+i); if(!el)return;
-      el.classList.remove('open'); el.style.display='';
-      const b=el.querySelector('.gbody'); if(b)b.style.display='none';
-      const tri=el.querySelector('.gtri'); if(tri)tri.textContent='▸';
-    });
+    p3Render(); p4Render(); p5Render();
     document.querySelectorAll('#p3 .emg-hero, #p4 .emg-hero, #p5 .emg-hero').forEach(h=>h.style.display='');}
-  [['p1',1],['p2',2],['p3',3],['p4',4],['p5',5]].forEach(([p,i])=>{$(p).className='page'+(n===i?' on':'');});
-  [['nv1',1],['nv3',3],['nv4',4],['nv5',5],['nv2',2]].forEach(([id,pg])=>{$(id).className=$(id).className.replace(/\s*on/,'')+(pg===n?' on':'');});
+  setPage(n);
   $('cartbar').style.display=n===2?'none':'flex';
   if(n===2)renderBasket();
   if(n!==1)applySearch('');
@@ -4002,15 +4117,37 @@ function go(n,keep){
 }
 
 /* ================= 基础知识模块 ================= */
-function renderRefList(){
-  const grps={};
-  REFS.forEach(s=>{(grps[s.grp]=grps[s.grp]||[]).push(s);});
-  $('reflist').innerHTML=Object.keys(grps).map(g=>`
-    <div class="emg-grp">${g}</div>
-    ${grps[g].map(s=>`<div class="gtile" data-act="refopen" data-sc="${s.id}">
-      <span class="gi">${s.ico}</span>
-      <div><div class="gn">${s.name}</div><div class="gd">${s.tag}</div></div>
-    </div>`).join('')}`).join('');
+function refTile(s){
+  return '<div class="gtile" data-act="refopen" data-sc="'+s.id+'"><span class="gi">'+s.ico+'</span><div><div class="gn">'+s.name+'</div><div class="gd">'+s.tag+'</div></div></div>';
+}
+function p5Render(){
+  const el=$('reflist'); if(!el)return;
+  const grps={}; REFS.forEach(s=>{(grps[s.grp]=grps[s.grp]||[]).push(s);});
+  if(!DRILL.p5.g){
+    el.innerHTML=Object.keys(grps).map(gn=>{
+      const arr=grps[gn];
+      if(arr.length===1)return refTile(arr[0]);   /* 单条目板块直达 */
+      const pv=arr.slice(0,4).map(x=>x.name.replace(/^[^ ]+ /,'')).join('、');
+      return '<div class="stile solo" data-act="p5open" data-g="'+esc(gn)+'"><div class="sname">'+(RFGGRPICO[gn]||'📂')+' '+esc(gn)+'<span class="sn-cnt">'+arr.length+'</span></div><div class="spv">'+esc(pv)+'</div></div>';
+    }).join('');
+  }else{
+    el.innerHTML=crumb('p5back','基础知识',(RFGGRPICO[DRILL.p5.g]||'📂')+' '+esc(DRILL.p5.g))+
+      (grps[DRILL.p5.g]||[]).map(refTile).join('');
+  }
+}
+function p5Search(qs){
+  const q=(qs||'').trim(); const el=$('reflist'); if(!el)return;
+  if(!q){p5Render();return;}
+  const grps={}; REFS.forEach(s=>{(grps[s.grp]=grps[s.grp]||[]).push(s);});
+  let h='';
+  Object.keys(grps).forEach(gn=>{
+    const hits=grps[gn].filter(s=>(s.name+' '+s.tag).indexOf(q)>=0);
+    if(!hits.length)return;
+    h+='<div class="emg-grp">'+(RFGGRPICO[gn]||'')+' '+esc(gn)+'</div>'+hits.map(refTile).join('');
+  });
+  el.innerHTML=h||'<div class="oempty">没有匹配的内容</div>';
+}
+function renderRefList(){p5Render();
   $('views').insertAdjacentHTML('beforeend',REFS.map(s=>`
     <div class="emgview" id="v_${s.id}" style="display:none">
       <div class="backrow" data-act="sback">‹ 基础知识</div>
@@ -4023,23 +4160,40 @@ function renderRefList(){
   REFS.forEach(s=>(s.cals||[]).forEach(c=>{SCENCALC[c.id]=c; SCENCALC_KEYS.push(c.id);}));
   REFS.forEach(s=>(s.cals||[]).forEach(c=>updScCalc(c.id)));
 }
-function showRef(id){
-  document.querySelectorAll('.emgview').forEach(x=>x.style.display='none');
-  const v=$('v_'+id); if(v)v.style.display='block';
-  curViewPg=5;
-  go(5,true);
-  [$('emglist'),$('scorelist'),$('reflist')].forEach(el=>{if(el)el.style.display='none';});
-  document.querySelectorAll('#p3 .emg-hero, #p4 .emg-hero, #p5 .emg-hero').forEach(h=>h.style.display='none');
-  window.scrollTo(0,0);
-}
+function showRef(id){showScen(id);}
 /* ================= 评分模块 ================= */
 const SCOREVALS={};
-function renderScoreList(){
-  $('scorelist').innerHTML=SCORES.map(s=>`
-    <div class="gtile" data-act="scen" data-sc="${s.id}">
-      <span class="gi">${s.ico}</span>
-      <div><div class="gn">${s.name}</div><div class="gd">${s.tag}</div></div>
-    </div>`).join('');
+function scGrpOf(s){return s.type==='calc'?'参考值与速算':'评分量表';}
+function scoreTile(s){
+  return '<div class="gtile" data-act="scen" data-sc="'+s.id+'"><span class="gi">'+s.ico+'</span><div><div class="gn">'+s.name+'</div><div class="gd">'+s.tag+'</div></div></div>';
+}
+function p4Render(){
+  const el=$('scorelist'); if(!el)return;
+  if(!DRILL.p4.g){
+    const grps={}; SCORES.forEach(s=>{(grps[scGrpOf(s)]=grps[scGrpOf(s)]||[]).push(s);});
+    el.innerHTML=Object.keys(grps).map(gn=>{
+      const arr=grps[gn];
+      const pv=arr.slice(0,3).map(x=>x.name.replace(/（[^）]*）/g,'')).join('、');
+      return '<div class="stile solo" data-act="p4open" data-g="'+esc(gn)+'"><div class="sname">'+(SCGRPICO4[gn]||'📂')+' '+esc(gn)+'<span class="sn-cnt">'+arr.length+'</span></div><div class="spv">'+esc(pv)+'…</div></div>';
+    }).join('');
+  }else{
+    el.innerHTML=crumb('p4back','评分与参考',(SCGRPICO4[DRILL.p4.g]||'📂')+' '+esc(DRILL.p4.g))+
+      SCORES.filter(s=>scGrpOf(s)===DRILL.p4.g).map(scoreTile).join('');
+  }
+}
+function p4Search(qs){
+  const q=(qs||'').trim(); const el=$('scorelist'); if(!el)return;
+  if(!q){p4Render();return;}
+  const grps={}; SCORES.forEach(s=>{(grps[scGrpOf(s)]=grps[scGrpOf(s)]||[]).push(s);});
+  let h='';
+  Object.keys(grps).forEach(gn=>{
+    const hits=grps[gn].filter(s=>(s.name+' '+s.tag).indexOf(q)>=0);
+    if(!hits.length)return;
+    h+='<div class="emg-grp">'+(SCGRPICO4[gn]||'')+' '+esc(gn)+'</div>'+hits.map(scoreTile).join('');
+  });
+  el.innerHTML=h||'<div class="oempty">没有匹配的评分/参考</div>';
+}
+function renderScoreList(){p4Render();
   $('views').insertAdjacentHTML('beforeend',SCORES.map(s=>scoreHtml(s)).join(''));
   SCORES.forEach(s=>(s.cals||[]).forEach(c=>{SCENCALC[c.id]=c; SCENCALC_KEYS.push(c.id);}));   /* 评分calc注册进全局引擎 */
   SCORES.forEach(s=>scoreChange(s.id));   /* 初始化计算（calc类页首屏即出结果） */
@@ -4099,24 +4253,19 @@ document.addEventListener('click',e=>{
     const tri=c.querySelector('.tri'); if(tri)tri.textContent=c.classList.contains('open')?'▾':'▸';}
   else if(a==='gcap'){
     const gi=+t.dataset.g;
-    const g=$('grp_'+gi);
-    const wasOpen=g.classList.contains('open');
-    /* 全关 */
-    GRPS.forEach((_,i)=>{
-      const el=$('grp_'+i); if(!el)return;
-      el.classList.remove('open');
-      const b=el.querySelector('.gbody'); if(b)b.style.display='none';
-      const tri=el.querySelector('.gtri'); if(tri)tri.textContent='▸';
-    });
-    if(!wasOpen){
-      g.classList.add('open');
-      g.querySelector('.gbody').style.display='block';
-      g.querySelector('.gbody').innerHTML=groupBody(g);
-      g.querySelector('.gtri').textContent='▾';
-    }
+    if(DRILL.p1.g===gi&&(DRILL.p1.sub||DRILL.p1.all))p1Open(gi);   /* L2→L1 */
+    else if(DRILL.p1.g===gi)p1Back();                              /* L1→L0 */
+    else p1Open(gi);                                               /* L0→L1 */
   }
-  else if(a==='subopen'){showSub(+t.dataset.g,t.dataset.sub); window.scrollTo(0,0);}
-  else if(a==='gback'){const gi=+t.dataset.g; const g=$('grp_'+gi); g.querySelector('.gbody').innerHTML=groupBody(GRPS[gi],gi);}
+  else if(a==='p1back')p1Back();
+  else if(a==='p1sub')p1OpenSub(DRILL.p1.g>=0?DRILL.p1.g:+t.dataset.g, t.dataset.s||'');
+  else if(a==='p1subback')p1Open(DRILL.p1.g);
+  else if(a==='p3open'){DRILL.p3.g=t.dataset.g; p3Render(); window.scrollTo(0,0);}
+  else if(a==='p3back'){DRILL.p3.g=null; p3Render(); window.scrollTo(0,0);}
+  else if(a==='p4open'){DRILL.p4.g=t.dataset.g; p4Render(); window.scrollTo(0,0);}
+  else if(a==='p4back'){DRILL.p4.g=null; p4Render(); window.scrollTo(0,0);}
+  else if(a==='p5open'){DRILL.p5.g=t.dataset.g; p5Render(); window.scrollTo(0,0);}
+  else if(a==='p5back'){DRILL.p5.g=null; p5Render(); window.scrollTo(0,0);}
   else if(a==='step'||a==='scstep')doStep(t);
   else if(a==='add')toggleBasket(t.dataset.key);
   else if(a==='del'){delete basket[t.dataset.key]; try{localStorage.setItem('picuBK',JSON.stringify(basket));}catch(err){} renderBasket(); renderAdds();}
@@ -4137,7 +4286,16 @@ document.addEventListener('click',e=>{
     try{const L=JSON.parse(localStorage.getItem('picuFB')||'[]');
       copyText('【PICU-AI 反馈汇总】\n'+L.map((x,i)=>(i+1)+'、['+x.t+'] '+x.n+'：'+x.x).join('\n'),'otip');}catch(e){}
   }
-  else if(a==='sback')go(curViewPg);
+  else if(a==='sback'){
+    const openV=[...document.querySelectorAll('.emgview')].find(v=>v.style.display==='block');
+    const vid=openV?openV.id.slice(2):null;
+    const sc=SCEN.find(x=>x.id===vid); if(sc)DRILL.p3.g=sc.grp;       /* 返回所属分类而非顶层 */
+    const rf=REFS.find(x=>x.id===vid); if(rf)DRILL.p5.g=rf.grp;
+    const sco=SCORES.find(x=>x.id===vid); if(sco)DRILL.p4.g=scGrpOf(sco);
+    try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}
+    showListPage(curViewPg);
+    $('cartbar').style.display='flex';
+  }
   else if(a==='sopt'){
     const sid=t.dataset.s,k=t.dataset.k,v=parseFloat(t.dataset.v);
     if(!SCOREVALS[sid])SCOREVALS[sid]={};
@@ -4155,9 +4313,9 @@ document.addEventListener('input',e=>{
   if(t.id==='ph'){setPT('h',t.value===''?null:parseFloat(t.value)); return;}
   if(t.id==='psx'){setPT('sx',t.value); return;}
   if(t.id==='q'){applySearch(t.value); return;}
-  if(t.id==='q3'){filterTiles('emglist',t.value); return;}
-  if(t.id==='q4'){filterTiles('scorelist',t.value); return;}
-  if(t.id==='q5'){filterTiles('reflist',t.value); return;}
+  if(t.id==='q3'){p3Search(t.value); return;}
+  if(t.id==='q4'){p4Search(t.value); return;}
+  if(t.id==='q5'){p5Search(t.value); return;}
   if(t.dataset.din){const p=t.dataset.din.split(':'); const id=p[0],li=+p[1];
     const st=laneSt(id); st.man[li]=true; st.dose[li]=t.value===''?null:parseFloat(t.value);
     updCard(id); return;}
@@ -4191,19 +4349,21 @@ document.addEventListener('pointerdown',e=>{
 /* ================= init ================= */
 function initAll(){
   renderGroups(); renderQuick(); renderScenList(); renderScoreList(); renderRefList();
+  let deep=null;
   try{
     const h=location.hash.match(/#v=([A-Za-z0-9_]+)/);
-    if(h&&(SCEN.some(x=>x.id===h[1])||SCORES.some(x=>x.id===h[1])||REFS.some(x=>x.id===h[1])))showScen(h[1]);
-  }catch(e){}
-  try{
-    if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){navigator.serviceWorker.register('./sw.js').catch(function(){});}
+    if(h&&(SCEN.some(x=>x.id===h[1])||SCORES.some(x=>x.id===h[1])||REFS.some(x=>x.id===h[1])))deep=h[1];
   }catch(e){}
   $('pw').value=PT.w;
   if(PT.ay!=null)$('pa').value=PT.ay;
   if(PT.am!=null)$('pm').value=PT.am;
   if(PT.h!=null)$('ph').value=PT.h;
   if(PT.sx)$('psx').value=PT.sx;
-  updPnow(); renderBasket(); renderAdds(); renderFB(); go(1);
+  updPnow(); renderBasket(); renderAdds(); renderFB();
+  if(deep)showScen(deep); else go(1);   /* 深链直达时不能再跑go(1)——会关view并清hash */
+  try{
+    if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){navigator.serviceWorker.register('./sw.js').catch(function(){});}
+  }catch(e){}
 }
 initAll();
 
