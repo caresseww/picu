@@ -376,7 +376,7 @@ const GRPS=[
  {id:'gi',ico:'🍼',t:'消化系统',sub:'抑酸 / 止吐 / 保肝利胆 / 胰腺',drugs:['ome','cimetidine','ondan','simeth','mb_po','stila','octreotide','ustin','udca','ademet','glutath','glycy','ornith','arginine','vinegar','inosine']},
  {id:'lyte',ico:'🧂',t:'电解质 · 液体',sub:'钾钠钙镁磷 / 碳酸氢钠 / 葡萄糖 / 胶体',drugs:['kcl_iv','nacl_conc','mgso4','khpo4','calcglu','cacl2_push','gs10_low','sb','ins_dka','hes','dextran','albumin']},
  {id:'neuro',ico:'🧠',t:'神经系统 · 抗癫痫',sub:'抗癫痫 / 脑水肿 / 促醒 / 神经营养',drugs:['vpa_push','levet_po','oxcar','clonaz','topi','lamot','nalmefen','calfser','mannitol','glycerol','hsn3','bvitamins']},
- {id:'heme',ico:'🩸',t:'血液 · 止血 · 血制品',sub:'止血 / 抗凝 / 血制品',drugs:['reptilase','carbaz','amicap_load','amicap_maint','vitk1','thromb_pow','pcc','fibrin','heparin','lmwh','nadrop','warfarin','aspirin','dipy','urokin_ivig','ivig','charcoal','tat','tig','ppd','gcsf','il11','tpo']},
+ {id:'heme',ico:'🩸',t:'血液 · 止血 · 血制品',sub:'止血 / 抗凝 / 血制品',drugs:['reptilase','carbaz','amicap_load','amicap_maint','vitk1','thromb_pow','pcc','fibrin','heparin','lmwh','nadrop','warfarin','aspirin','dipy','urokin_ivig','ivig','charcoal','tat','tig','ppd','gcsf','il11','tpo', 'nafamostat']},
  {id:'endo',ico:'🧪',t:'内分泌 · 代谢',sub:'激素 / 血糖 / 代谢辅助',drugs:['hydrocor','mepred','dexam','desmop','carnit','carnitpo','coq10','cvs']},
  {id:'diure',ico:'💧',t:'利尿脱水',sub:'袢利尿 / 保钾 / 渗透性',drugs:['furos_push','spiron','hctz']},
  {id:'detox',ico:'🛡️',t:'解毒剂（中毒急救）',sub:'⚠指南推荐口径·本院清单多数未列——需紧急调拨',drugs:['nac','mbiv','flumaz','palido','defox','fomep','hydroxo','acetamid','thiosul','glucagonOD']},
@@ -1412,6 +1412,15 @@ fibrin:{n:'人纤维蛋白原',b:'法布莱士',sub:'血制品',tags:'纤维蛋�
  ref:'WS/T 795-2022：按0.1-0.15g/kg或维持Fib>1.5g/L（活动出血>2g/L）',
  src:'一次一瓶（0.5g/支），灭菌注射用水溶解',note:'低纤维蛋白原血症；比冷沉淀不含枸橼酸、浓度高',
  c:{k:'abs',def:0.5,unit:'g',lo:0.5,hi:1,fq:['st','qd'],dfq:'st',rate:'溶解后30-60min',ckn:'目标Fib>1.5g/L（活动出血>2）；按0.1g/kg补（WS/T 795），遵血库；溶解禁剧烈振荡'}},
+nafamostat:{n:'甲磺酸萘莫司他',sub:'抗凝',tags:'萘莫司他 nafamostat 区域抗凝 CRRT ECMO HIT 高出血',rt:'泵入',
+ head:'🔴超说明书用药（儿科CRRT/ECMO区域抗凝）——须上级+药师双确认，用前先问药房有无药',
+ ind:'体外回路（CRRT/ECMO）的区域抗凝药——思路与枸橼酸相同：只让回路里的血不凝，血回体内前药已基本失活（半衰期约5-8分钟，体内快速降解+部分被滤器清除），全身出血风险低于持续肝素。选它的情况：①出血高危（术后早期、颅内出血、消化道出血）不适合全身肝素化；②HIT或抗凝血酶Ⅲ缺乏（不经ATⅢ起效）；③肝衰耐不了枸橼酸（无钙蓄积问题）。兼为丝氨酸蛋白酶抑制剂（日本亦用于急性胰腺炎）。儿科证据主要来自日韩中心：CRRT常用0.32-0.6mg/kg/h（起点0.3-0.5），按ACT/APTT与滤器寿命滴定；儿科ECMO亦有经验，方案随团队。',
+ adverse:'⚠高钾血症（代表性不良反应）：q4-6h查血钾，无尿/高分解者更密；过敏（皮疹→休克罕见，出现即停药）；粒细胞缺乏/白细胞减少（少见，长程查血常规）；肝酶升高、腹泻、低血糖个案。抗凝过量的表现=回路静脉端ACT/APTT超目标+穿刺点渗血增多——先减泵速再查其他。禁与含钙液同管；停药数分钟即失效，拔管前无需桥接。',
+ note:'丝氨酸蛋白酶抑制剂；仅从回路动脉端（引血端）单通路泵入，不与血制品/其他药共通路；监测采血在回路静脉端（ACT约170-200s或APTT 1.5-2.5倍，按团队目标）；滤器仍早凝→先查血流量/预冲/TMP/导管位置再上调剂量；现配现用（效价随时间下降）',
+ compat:'NS或5%GS溶解后泵入；单独通路，避免与含钙/碱性液体同一管路',
+ ref:'UpToDate/KDIGO：CRRT抗凝首选枸橼酸；萘莫司他为高出血风险/枸橼酸禁忌的替代（日本CRRT口径成人0.3-0.5mg/kg/h；儿科文献0.32-0.6mg/kg/h）；儿科ECMO经验以日本中心为主，方案随团队',
+ src:'本院2026总表未见常规备药——需要时提前与药房确认库存与规格',
+ c:{k:'inf',unit:'mg/kg/h',lo:0.2,hi:0.8,def:0.4,step:0.1,rec:[2.5,50],dil:'NS',ckn:'从回路动脉端泵入；q4-6h查K⁺＋ACT/APTT；超说明书：上级+药师双确认'}},
 heparin:{n:'肝素钠（泵入）',sub:'抗凝',tags:'肝素 抗凝',rt:'泵入',
  ind:'普通肝素与抗凝血酶Ⅲ结合灭活凝血酶及Ⅹa，起效快、半衰期短、可被鱼精蛋白快速拮抗，为PICU首选静脉抗凝药；PICU典型场景：CRRT及ECMO体外管路抗凝（ECMO以ACT滴定，CRRT用于枸橼酸禁忌者）、深静脉血栓/肺栓塞急性期负荷后泵入维持、心导管及心脏术后与机械瓣围术期、DIC高凝期或血栓高危的低剂量抗凝；重要使用前提：治疗强度必须实验室滴定——APTT达对照1.5-2.5倍或抗Ⅹa 0.35-0.7IU/ml；新生儿与婴幼儿肝素清除快、分布容积大，常规剂量常不足，应尽早以抗Ⅹa监测指导；用药前查基线血小板筛查HIT并评估抗凝血酶活性；肝素抵抗者（AT缺乏、脓毒症）需个体化增量或换药。',
  adverse:'最常见为出血（穿刺部位、消化道、颅内），联用抗血小板药、溶栓或近期手术时更高；红灯反应：肝素诱导的血小板减少症（HIT-II），多在用药5-10天后血小板较基线降超50%或伴新发血栓，一经怀疑立即停用肝素类并换非肝素抗凝（如阿加曲班），4T评分辅助；长期大剂量致骨质疏松；抑制醛固酮致低醛固酮性高钾血症，肾功能不全者查血钾；偶见过敏；监测要点：APTT或抗Ⅹa按方案滴定、血小板基线及定期复查、出血体征、ECMO/CRRT期间ACT；过量出血以鱼精蛋白缓慢拮抗（推注过快可致低血压、肺动脉高压）。',
@@ -2822,7 +2831,7 @@ SCEN.push(
     <tr><td>ACT/生命体征</td><td class="mono">按处方目标</td><td>超窗按团队规程调肝素</td></tr>
   </table></div>`},
   {t:'④ 用药在ECMO上怎么变',html:`
-   <div class="emg-step">①<b>肝素</b>：维持5-30U/kg/h滴定ACT 180-220s；置管时负荷50-100U/kg（团队给）；②<b>抗生素</b>：分布容积变大+管路吸附——剂量上调+TDM（万古/氨基糖苷必测）；③<b>镇静镇痛</b>：咪达唑仑/芬太尼常用，但管路也吸附一部分——躁动先想镇静不足再想别的；④<b>输血阈值</b>：团队口径（常Hb&lt;80-100维持携氧，PLT&gt;80-100、Fib&gt;1.5防出血）；⑤<b>水溶性药会被管路「吃掉」</b>（如NAC等解毒剂需追加）；⑥血制品按低中心静脉...按团队规程，输血后流量可能波动（容量动）。</div>`},
+   <div class="emg-step">①<b>肝素</b>：维持5-30U/kg/h滴定ACT 180-220s；置管时负荷50-100U/kg（团队给）；②<b>抗生素</b>：分布容积变大+管路吸附——剂量上调+TDM（万古/氨基糖苷必测）；③<b>镇静镇痛</b>：咪达唑仑/芬太尼常用，但管路也吸附一部分——躁动先想镇静不足再想别的；④<b>输血阈值</b>：团队口径（常Hb&lt;80-100维持携氧，PLT&gt;80-100、Fib&gt;1.5防出血）；⑤<b>水溶性药会被管路「吃掉」</b>（如NAC等解毒剂需追加）；⑥血制品按低中心静脉...按团队规程，输血后流量可能波动（容量动）；⑦<b>抗凝矛盾每天都是主线</b>：管路+氧合器=「异物表面」血极易凝，身体里却随时可能出血（最怕颅内）——ACT/APTT按目标、PLT&gt;80-100、Fib&gt;1.5、每小时看出血点；⑧<b>出血高危/HIT/ATⅢ缺</b>时部分中心改用<b>萘莫司他区域抗凝</b>（约0.3-0.6mg/kg/h，半衰期约5-8min「只在管路里抗」）——本院有无此方案问ECMO团队（CRRT页②有详解，药卡在「血液·止血·血制品→抗凝」）。</div>`},
   {t:'⑤ 时机与撤离（谁该上/什么时候拔）',html:`
    <div class="emg-step"><b>呼吸（VV）</b>：最优治疗（肺保护通气±NO/高频）仍P/F&lt;80或OI&gt;40、进行性恶化、不可逆气漏/肺出血→会诊。<b>循环（VA）</b>：足量容量+2种升压+正性肌力仍乳酸↑/尿少/灌注差；<b>暴发性心肌炎上机指征（中国2020共识）</b>：CI<2L/(min·m²)、乳酸>4进行性↑、VIS≥20、CPR 15min——任一持续3h即上机；E-CPR=复苏15-20min无ROSC且病因可逆。<br><b>撤离</b>：VV=降气流量试停气30-60min看原肺；VA=降流量至30-50%+clamp试验+心超；<b>每天早交班问一句「今天能试减吗」</b>。</div>
    <div class="emg-red"><b>常见坑</b>：①等心跳停才叫ECMO；②只盯流量数字不看乳酸/尿量等灌注终点；③溶血当「尿色深」忽略；④不查ATⅢ就怪「肝素耐药」狂加肝素；⑤抗生素常规剂量（管路吸附+分布变大）；⑥躁动不作处理（撕管+流量崩）；⑦忘了每天评估撤离。</div>`}],
@@ -2858,7 +2867,18 @@ SCEN.push(
     <tr><td><b>滤器寿命</b></td><td>一根滤器用多久就凝——越短越说明抗凝不足/血流量问题</td></tr>
     <tr><td><b>FO液体过负荷</b></td><td>（进-出）÷体重×100%；&gt;10-20%是启动CRRT的重要理由</td></tr>
   </table></div>`},
-  {t:'② 处方怎么开（一张单子说清）',html:`<div class="tblwrap"><table class="tbl">
+  {t:'② 抗凝专节：管路里凝血 vs 病人出血（值ECMO/CRRT夜班的头号矛盾）',html:`
+   <div class="emg-step"><b>为什么血一进管路就容易凝？</b>在身体里不凝，靠的是血管内皮光滑+血流不停冲刷。一进体外回路全变了：①管壁和滤器膜是「异物表面」，凝血因子一碰就激活瀑布；②血泵剪切力+任何气泡交界再踹一脚；③引血端负压让血流变慢淤滞；④小孩管路细、血流量相对低。于是有了那对每天都要面对的矛盾：<b>「管路凝血」（体外）vs「病人出血」（体内）</b>——抗凝足管路不凝但体内可能出血（最怕颅内），抗凝不足滤器几小时凝废+血栓进体内。<b>所有抗凝方案的全部目标就一句话：只让回路里的血不凝，别让身体出血</b>——这就是「局部/区域抗凝」（枸橼酸、萘莫司他）存在的原因。</div>
+   <div class="tblwrap"><table class="tbl">
+    <tr><th>方案</th><th>机制人话</th><th>剂量起点</th><th>监测</th><th>选它/避开它</th></tr>
+    <tr><td><b>枸橼酸</b>（一线首选）</td><td>螯合钙→只在回路里「缺钙不凝」，回体内前补钙</td><td class="mono">按血流量滴定（机器方案）</td><td>滤器后iCa 0.25-0.35＋体内iCa 1.0-1.2；总钙/iCa&lt;2.5</td><td>绝大多数患儿首选；❌严重肝衰/低灌注=枸橼酸蓄积（酸中毒↑＋总钙/iCa&gt;2.5）→减量或换方案</td></tr>
+    <tr><td><b>萘莫司他</b></td><td>丝氨酸蛋白酶抑制剂，直接摁住凝血酶等；半衰期约5-8min→回体内前基本失活=「区域抗凝」</td><td class="mono">0.3-0.5mg/kg/h 回路动脉端泵入（儿科文献0.32-0.6）</td><td>ACT/APTT按团队目标；血钾q4-6h</td><td>高出血风险、HIT/ATⅢ缺、肝衰不能用枸橼酸时；⚠高钾/过敏；儿科=超说明书</td></tr>
+    <tr><td><b>普通肝素</b></td><td>借抗凝血酶Ⅲ灭活Ⅱa/Ⅹa（全身抗凝）</td><td class="mono">5-20U/kg/h</td><td>ACT/APTT/抗Ⅹa；低效先查ATⅢ（「肝素耐药」）</td><td>便宜、可鱼精蛋白拮抗；❌HIT、出血高危、ATⅢ缺乏</td></tr>
+    <tr><td><b>阿加曲班</b></td><td>直接凝血酶抑制剂（不依赖ATⅢ）</td><td class="mono">按团队方案（肝功能差减量）</td><td>APTT 1.5-3倍基线</td><td>HIT时首选；儿科经验有限</td></tr>
+    <tr><td><b>无抗凝</b></td><td>—</td><td class="mono">高血流量+定时盐水冲洗</td><td>TMP/滤器颜色q1h</td><td>仅大出血/重度血小板减少短期顶；滤器寿命短要有预期</td></tr>
+   </table></div>
+   <div class="emg-step"><b>萘莫司他（nafamostat，甲磺酸萘莫司他）人话版</b>：一个「超短效抗凝药」，思路和枸橼酸一样——<b>只在管路里抗凝，血回到身体前就已灭活</b>（半衰期约5-8分钟，体内快速降解+部分被滤器清走）。从回路<b>动脉端（引血端）单通路</b>泵入。它同时是胰蛋白酶抑制剂（日本还用它治急性胰腺炎）。<b>今晚什么时候会碰到它</b>：①病人出血风险高（术后早期/颅内出血/消化道出血）不敢上全身肝素；②HIT或ATⅢ缺乏；③肝衰耐不了枸橼酸。<b>值班盯三件事</b>：①抗凝强度——回路静脉端采血查ACT/APTT（按团队目标）＋看TMP/滤器颜色/滤器寿命；②<b>血钾</b>——它会把钾顶高，q4-6h查（无尿者更密）；③过敏皮疹（罕见休克即停）＋长程查血常规（粒细胞缺乏少见但报告过）。<b>剂量</b>：CRRT 0.3-0.5mg/kg/h持续泵入（儿科文献0.32-0.6），按ACT/APTT滴定——滤器还早凝先查血流量/预冲/导管位置再上调。<b>身份提醒</b>：说明书适应症为血液透析抗凝/急性胰腺炎（成人口径），儿科属<b>超说明书用药，必须上级+药师双确认</b>；本院药房有无货先用前问清（药卡在「血液·止血·血制品→抗凝」分类，可直接算泵速）。</div>`},
+  {t:'③ 处方怎么开（一张单子说清）',html:`<div class="tblwrap"><table class="tbl">
     <tr><th>处方项</th><th>儿科常用起点</th><th>备注</th></tr>
     <tr><td>血流量QB</td><td class="mono">3-5ml/(kg·min)（婴幼儿绝对值常20-50ml/min起）</td><td>血压不稳从小起滴定</td></tr>
     <tr><td>effluent总量</td><td class="mono">20-25ml/(kg·h)</td><td>=透析液+置换液+净超滤之和</td></tr>
@@ -2868,7 +2888,7 @@ SCEN.push(
     <tr><td>监测</td><td class="mono">血气+电解质q4-6h｜iCa按抗凝方案q4-6h｜血糖q2-4h</td><td></td></tr>
   </table></div>
   <div class="emg-step"><b>启动时机（儿科=更早更宽）</b>：FO&gt;10-20%；AKI 2-3期+任一并发症（高钾/酸中毒/高氨）；顽固高钾/严重代酸；尿毒症脑病心包炎；可清除毒物（甲醇/乙二醇/锂/水杨酸/二甲双胍/毒鼠强）；先天代谢病高氨（CVVHD首选）；肿瘤溶解。<b>出现第一个并发症就评估，不等第二个</b>。</div>`},
-  {t:'③ 交接班必问8件事',html:`<div class="tblwrap"><table class="tbl">
+  {t:'④ 交接班必问8件事',html:`<div class="tblwrap"><table class="tbl">
     <tr><th>#</th><th>问什么</th><th>为什么</th></tr>
     <tr><td>1</td><td class="mono">模式？为什么上？第几天？</td><td>判断今天的目标（脱水？排钾？撑到肾功能恢复？）</td></tr>
     <tr><td>2</td><td class="mono">血流量多少？引血顺畅吗？</td><td>动脉压报警=引血不畅的前科</td></tr>
@@ -2879,7 +2899,7 @@ SCEN.push(
     <tr><td>7</td><td class="mono">哪些药被清除需要补量？（万古/氨基糖苷/NAC…）</td><td>不补=治疗不足</td></tr>
     <tr><td>8</td><td class="mono">今天计划：继续/减量/试停？</td><td>每天评估，不无限挂着</td></tr>
   </table></div>`},
-  {t:'④ 报警/异常对照表（先查什么）',html:`<div class="tblwrap"><table class="tbl">
+  {t:'⑤ 报警/异常对照表（先查什么）',html:`<div class="tblwrap"><table class="tbl">
     <tr><th>情况</th><th>先查</th><th>处理方向</th></tr>
     <tr><td><b>动脉压（引血端）过低报警</b></td><td>导管贴壁/患者躁动/容量不足</td><td>换体位、镇静、补容量；反复=导管位置问题</td></tr>
     <tr><td><b>静脉压（回血端）过高</b></td><td>回输管打折/夹闭/导管头贴壁</td><td>理管；持续=导管问题</td></tr>
@@ -2889,7 +2909,7 @@ SCEN.push(
     <tr><td><b>血气酸中毒加重</b></td><td>枸橼酸蓄积？（总钙/iCa&gt;2.5）</td><td>减枸橼酸/换肝素/查肝功能</td></tr>
   </table></div>
   <div class="emg-step"><b>每天都要想的四件事</b>：①今天脱多少水？②钾磷镁钙补不补？③哪些药要补量？④能不能减停？——CRRT不是「挂上就不用管」，它每小时都在改你的电解质和药浓度。</div>`},
-  {t:'⑤ 常见坑',html:`<div class="emg-red">① 等尿毒症才启动（儿科看FO和第一个并发症）；② 净超滤按「脱水目标」猛脱→低血压（超滤率跟着血压走）；③ 枸橼酸方案不查钙比值（蓄积酸中毒）；④ 万古/氨基糖苷/NAC不补量（被机器洗掉了）；⑤ 置换液拿「标准袋」不管个体化（高氨患者钠靶不同）；⑥ 滤器反复凝血只会加肝素（不查ATⅢ/血流量/导管）；⑦ 突然全停不试减（应每日减量评估）；⑧ 低温不管（管路加温+保温）。</div>`}],
+  {t:'⑥ 常见坑',html:`<div class="emg-red">① 等尿毒症才启动（儿科看FO和第一个并发症）；② 净超滤按「脱水目标」猛脱→低血压（超滤率跟着血压走）；③ 枸橼酸方案不查钙比值（蓄积酸中毒）；④ 万古/氨基糖苷/NAC不补量（被机器洗掉了）；⑤ 置换液拿「标准袋」不管个体化（高氨患者钠靶不同）；⑥ 滤器反复凝血只会加肝素（不查ATⅢ/血流量/导管）；⑦ 突然全停不试减（应每日减量评估）；⑧ 低温不管（管路加温+保温）。</div>`}],
  cals:[
   {id:'crrt_calc',title:'CRRT 处方速算（剂量/血流量/超滤目标）',
    inputs:[{k:'w',lab:'体重',unit:'kg',def:20,step:0.5},{k:'dose',lab:'处方剂量',unit:'ml/(kg·h)',def:25,step:5},{k:'q',lab:'血流量',unit:'ml/(kg·min)',def:4,step:1},{k:'uf',lab:'24h目标脱水量',unit:'ml',def:200,step:50}],
@@ -3599,6 +3619,7 @@ function pickBand(bands,ptv){
 }
 function fqN(fq){const M={'qd':1,'q24h':1,'bid':2,'q12h':2,'tid':3,'q8h':3,'q6h':4,'q4h':6,'q2h':12,'q48h':0.5}; return M[fq]||null;}
 const S={};   /* id -> {dose:[],fq:[],man:[]} 手改剂量/频次记忆 */
+Object.keys(DRUGS).forEach(k=>{DRUGS[k].id=k;});   /* 🔴条目无id字段：不补齐则calcOf读S[undefined]、手改剂量/频次永不生效 */
 function laneSt(id){if(!S[id])S[id]={dose:[],fq:[],man:[]}; return S[id];}
 function laneDose(id,li,lc){
   const st=laneSt(id);
@@ -3988,8 +4009,9 @@ function applySearch(qs){
     el.style.display=any?'':'none';
     if(any){
       el.classList.add('open'); body.style.display='block'; tri.textContent='▾';
-      const n=g.drugs.filter(id=>{const D=DRUGS[id];return D&&(D.n+' '+(D.b||'')+' '+(D.tags||'')+' '+(D.sub||'')+' '+(D.ref||'')+' '+(D.note||'')+' '+(D.ind||'')).indexOf(q)>=0;}).length;
-      body.innerHTML='<div style="padding:2px 4px 6px;color:var(--ink2);font-size:12px;">搜索「'+esc(q)+'」匹配 '+n+' 个药</div>'+html;
+      const hits=g.drugs.filter(id=>{const D=DRUGS[id];return D&&(D.n+' '+(D.b||'')+' '+(D.tags||'')+' '+(D.sub||'')+' '+(D.ref||'')+' '+(D.note||'')+' '+(D.ind||'')).indexOf(q)>=0;});
+      body.innerHTML='<div style="padding:2px 4px 6px;color:var(--ink2);font-size:12px;">搜索「'+esc(q)+'」匹配 '+hits.length+' 个药</div>'+html;
+      hits.forEach(updCard);   /* 搜索结果卡也要渲染医嘱行 */
     }
   });
 }
