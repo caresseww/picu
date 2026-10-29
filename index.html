@@ -531,7 +531,7 @@ ambim:{n:'两性霉素B',sub:'多烯类抗真菌',tags:'两性',rt:'静滴',
 polymyx:{n:'多粘菌素B',b:'雅乐',sub:'多肽类',tags:'多粘',rt:'静滴',
  ref:'UpToDate：1.5-2.5万U/kg/d 分2次（危及生命可至4.5万），肾毒性需TDM｜院内04表：婴儿1.5-4万U/kg分2、儿童1.5-2.5万U/kg分2；负荷2.5万U/kg+维持2.5-3万U/kg/d分2',
  src:'1-2-4万U/kg*d（大孩子50-100万U/d），q12h。G/NS。一支50mg:50万U',note:'对抗全耐药鲍曼等G-；⚠肾毒性、色素沉着',
- c:{k:'band',by:'a',bands:[{mx:180,lab:'儿童',d:2,unit:'万U/kg/d',fq:'q12h'},{lab:'成人（参考）',d:'50-100万U/d q12h'}],dil:'5%GS或NS',ckn:'1-4万U/kg/d分2次，常用2万；从低量起始'}},
+ c:{dv:'5%GS或NS 100ml，1h以上',k:'band',by:'a',bands:[{mx:180,lab:'儿童',d:2,unit:'万U/kg/d',fq:'q12h'},{lab:'成人（参考）',d:'50-100万U/d q12h'}],dil:'5%GS或NS',ckn:'1-4万U/kg/d分2次，常用2万；从低量起始'}},
 acv:{n:'阿昔洛韦',sub:'核苷类抗病毒',tags:'阿昔',rt:'静滴',
  ref:'UpToDate：HSV脑炎20mg/kg q8h；皮肤黏膜/水痘10-15mg/kg q8h；充分水化｜院内04表：肥胖用理想体重；儿童max500mg/m²/dose q8h；CrCL25-50 q12h、10-25 q24h',
  src:'10mg/kg。q8。G/NS。上限500mg',note:'干扰DNA多聚酶（HSV/VZV）；⚠水化防结晶性肾损伤',
@@ -601,7 +601,7 @@ sufen:{n:'舒芬太尼',sub:'阿片类',tags:'舒芬',rt:'静推',
 remi:{n:'瑞芬太尼',sub:'阿片类',tags:'瑞芬',rt:'静滴',
  ref:'UpToDate：0.05-0.3μg/kg/min维持（本院3-6μg/kg/h=0.05-0.1μg/kg/min，在区间内）',
  src:'泵入3-6μg/kg/h（麻醉科可单推1μg/kg）',note:'超短效，肝功能不好时可用；镇痛：瑞芬>舒芬>芬太尼',
- c:{k:'inf',unit:'μg/kg/h',lo:3,hi:6,def:5,rec:[0.0125,50],dil:'5%GS/NS'}},
+ c:{dv:'原液缓推',dv:'原液缓推≥3min',k:'inf',unit:'μg/kg/h',lo:3,hi:6,def:5,rec:[0.0125,50],dil:'5%GS/NS'}},
 hydromorp:{n:'氢吗啡酮',sub:'阿片类',tags:'氢吗啡',rt:'泵入',
  ref:'UpToDate：推注0.01-0.02mg/kg；维持2-8μg/kg/h（与本院一致）',
  src:'泵入2-8μg/kg/h，优先3-4。NS',note:'效价≈吗啡5-8倍',
@@ -666,11 +666,11 @@ tuoNING1:{n:'长托宁',sub:'抗胆碱',tags:'长托宁 戊乙奎醚',rt:'静推
 digoxin:{n:'地高辛口服液',sub:'强心苷',tags:'地高辛',rt:'口服',
  ref:'UpToDate：维持5-10μg/kg/d分2次（婴儿可10-15）；血药浓度0.8-2ng/ml',
  src:'4μg（0.08ml）/kg。q12。第6次后的6小时后查血药浓度',note:'0.005%口服液（50μg/ml）；心衰维持量',
- c:{k:'pk',lo:4,hi:8,def:4,unit:'μg/kg',fq:['q12h'],dfq:'q12h',rt:'口服/鼻饲',ckn:'溶液ml数=μg数÷50；第6剂后6h查地高辛浓度；早产儿/肾功能不全减量'}},
+ c:{dv:'NS/5%GS 稀释缓推≥10min',k:'pk',lo:4,hi:8,def:4,unit:'μg/kg',fq:['q12h'],dfq:'q12h',rt:'口服/鼻饲',ckn:'溶液ml数=μg数÷50；第6剂后6h查地高辛浓度；早产儿/肾功能不全减量'}},
 cedilanid:{n:'去乙酰毛花苷（西地兰）',sub:'强心苷',tags:'西地兰 毛花',rt:'静滴',
  ref:'说明书：饱和量分3次（首剂半量）：总饱和<2y约30-40μg/kg、2-12y约20-30μg/kg',
  src:'10μg/kg（Max 400μg）。q8。5G稀释，10-30min走完。一般只用3次',note:'用于室上速、心衰；半衰期36h；之后监测地高辛浓度',
- c:{k:'pk',lo:5,hi:10,def:10,unit:'μg/kg',fq:['q8h','q12h'],dfq:'q8h',dil:'5%GS',rate:'10-30min输注',capU:400,ckn:'饱和一般分3次（首剂半量）；6h后查地高辛浓度；⚠低钾/高钙增加中毒风险'}},
+ c:{dv:'5%GS 10ml，10-30min输完',k:'pk',lo:5,hi:10,def:10,unit:'μg/kg',fq:['q8h','q12h'],dfq:'q8h',dil:'5%GS',rate:'10-30min输注',capU:400,ckn:'饱和一般分3次（首剂半量）；6h后查地高辛浓度；⚠低钾/高钙增加中毒风险'}},
 captopril_chd:{n:'卡托普利片',sub:'ACEI',tags:'卡托普利',rt:'口服',
  ref:'UpToDate：0.3-0.5mg/kg/d分3次起始，渐调（先心常用0.1-0.3 q8）',
  src:'先心0.1-0.3mg/kg q8；降压0.5-2mg/kg prn',note:'扩小动脉小静脉；首剂后监测血压',
@@ -805,7 +805,7 @@ eph_push:{
 iso:{n:'异丙肾上腺素',sub:'β激动',tags:'异丙 异丙肾',rt:'泵入',
  ref:'UpToDate：0.05-2μg/kg/min（与本院一致）',
  src:'泵速和肾上腺素一样（0.01-2μg/kg*min）',note:'心率慢（房室传导阻滞）、尖端扭转临时起搏桥接',
- c:{k:'inf',unit:'μg/kg/min',lo:0.01,hi:2,def:0.05,rec:[0.6,50],dil:'5%GS/NS',ckn:'扩血管+心率增快——低血压者慎用；QTC延长者禁用于TdP以外的室速'}},
+ c:{dv:'NS 10ml，10min输完',k:'inf',unit:'μg/kg/min',lo:0.01,hi:2,def:0.05,rec:[0.6,50],dil:'5%GS/NS',ckn:'扩血管+心率增快——低血压者慎用；QTC延长者禁用于TdP以外的室速'}},
 neosyn:{n:'去氧肾上腺素',sub:'α1激动',tags:'去氧肾 新福林',rt:'静推',
  ref:'UpToDate：0.5-10μg/kg/次；TOF缺氧发作可用',
  src:'10μg/kg。G/NS:2ml。用于升压以提升PDA依赖的先心血氧；5-20μg/kg*min。升压，可用于TOF缺氧发作',note:'TOF缺氧发作抢救用药之一；纯α缩血管，反射性心率减慢',
@@ -842,7 +842,7 @@ bud:{
 ambroxol:{n:'氨溴索',b:'沐舒坦',sub:'黏液溶解',tags:'氨溴索 沐舒坦 祛痰',rt:'静滴',
  ref:'说明书：≤2y 7.5mg/次 bid；>2y 15mg/次 bid-qd（本院qd并行）',
  src:'<2岁7.5mg，≥2岁15mg。qd。NS:15mg需50ml',note:'祛痰',
- c:{k:'band',by:'a',bands:[{mx:24,lab:'<2岁',d:7.5,unit:'mg'},{lab:'≥2岁',d:15,unit:'mg'}],fq:['qd','bid'],dfq:'qd',dil:'NS'}},
+ c:{dv:'NS 20ml',k:'band',by:'a',bands:[{mx:24,lab:'<2岁',d:7.5,unit:'mg'},{lab:'≥2岁',d:15,unit:'mg'}],fq:['qd','bid'],dfq:'qd',dil:'NS'}},
 doxofylline:{n:'多索茶碱',sub:'茶碱类',tags:'多索茶碱 平喘',rt:'静滴',
  ref:'说明书：3-5mg/kg/次 qd-bid（本院qd并行）',
  src:'3-5mg/kg。qd。G/NS',note:'平喘；⚠心悸/惊厥，注意与红霉素、喹诺酮相互作用',
@@ -885,7 +885,7 @@ octreotide:{n:'奥曲肽（泵入）',sub:'生长抑素类似物',tags:'奥曲�
 ustin:{n:'乌司他丁',sub:'蛋白酶抑制剂',tags:'乌司他丁 胰腺炎',rt:'静滴',
  ref:'说明书：成人10万U/次 tid；儿童1-2万U/kg/次（本院口径）',
  src:'2000U/kg（10万U：5%GS 500ml，走1-2h，qd-q8h）用到症状减退',note:'胰腺炎；休克辅助（稳定溶酶体膜）',
- c:{k:'pk',lo:1000,hi:5000,def:2000,unit:'U/kg',fq:['qd','q8h','q12h'],dfq:'q8h',dil:'5%GS',rate:'1-2h',capU:100000}},
+ c:{dv:'5%GS 100ml，1-2h输完',k:'pk',lo:1000,hi:5000,def:2000,unit:'U/kg',fq:['qd','q8h','q12h'],dfq:'q8h',dil:'5%GS',rate:'1-2h',capU:100000}},
 udca:{n:'熊去氧胆酸',sub:'利胆',tags:'熊去氧 胆汁淤积',rt:'口服',
  ref:'UpToDate/说明书：10-20mg/kg/d 分2-3次',
  src:'清单未给剂量——儿童常用10-20mg/kg/d分2-3次，遵药师',note:'利胆（胆汁淤积）',
@@ -897,11 +897,11 @@ ademet:{n:'腺苷蛋氨酸（思美泰）',sub:'利胆',tags:'思美泰 转甲�
 glutath:{n:'还原型谷胱甘肽',b:'阿拓莫兰',sub:'保肝抗氧化',tags:'谷胱甘肽 阿拓莫兰',rt:'静滴',
  ref:'说明书：成人600-1200mg/d；儿童酌情（本院200-600mg）',
  src:'200/300/600mg酌情。qd-q12。NS',note:'保肝、抗氧化（药物性肝损）',
- c:{k:'abs',def:300,unit:'mg',lo:100,hi:600,fq:['qd','q12h'],dfq:'qd',dil:'NS'}},
+ c:{dv:'NS 20ml',k:'abs',def:300,unit:'mg',lo:100,hi:600,fq:['qd','q12h'],dfq:'qd',dil:'NS'}},
 glycy:{n:'复方甘草酸苷（美能）',sub:'保肝抗炎',tags:'美能 甘草酸',rt:'静滴',
  ref:'说明书：成人5-20ml/次；儿童1-1.5ml/kg/次（本院口径）',
  src:'1-1.5ml/kg。qd。NS',note:'保肝、抗过敏；⚠假性醛固酮症（血压↑/低钾），监测血压血钾',
- c:{k:'mlkg',lo:1,hi:1.5,def:1.2,fq:['qd'],dfq:'qd',dil:'NS',rate:'缓慢',ckn:'长期用注意低钾/高血压/水肿'}},
+ c:{dv:'NS 20ml，缓慢',k:'mlkg',lo:1,hi:1.5,def:1.2,fq:['qd'],dfq:'qd',dil:'NS',rate:'缓慢',ckn:'长期用注意低钾/高血压/水肿'}},
 ornith:{n:'门冬氨酸鸟氨酸（瑞甘）',sub:'降血氨',tags:'瑞甘 鸟氨酸 氨',rt:'静滴',
  ref:'说明书：成人3-6g/d；儿童0.1-0.15g/kg/d（本院口径）',
  src:'0.1-0.15g/kg。qd。G/NS，浓度<2%',note:'高氨血症辅助降氨',
@@ -909,7 +909,7 @@ ornith:{n:'门冬氨酸鸟氨酸（瑞甘）',sub:'降血氨',tags:'瑞甘 鸟�
 arginine:{n:'精氨酸',sub:'降血氨',tags:'精氨酸 氨',rt:'静滴',
  ref:'UCD国际指南（Häberle 2019）：急性期与氮清除剂联用 负荷250-400mg/kg、维持250-500mg/kg/d（本院0.1-0.3g/kg/次为较低剂量口径）',
  src:'0.1-0.3g/kg，5%GS稀释50倍（浓度<2%），走4小时',note:'高氨血症（尿素循环辅助）；⚠酸中毒/高氯',
- c:{k:'pk',lo:0.1,hi:0.3,def:0.25,unit:'g/kg',fq:['qd','q12h'],dfq:'qd',dil:'5%GS（稀释50倍）',rate:'4h以上',ckn:'负荷剂量见临床情景-高氨血症（苯甲酸钠+苯乙酸钠+精氨酸联合）；监测血氯/酸碱'}},
+ c:{k:'pk',lo:0.1,hi:0.3,def:0.25,unit:'g/kg',fq:['qd','q12h'],dfq:'qd',dil:'5%GS稀释50倍',dilRatio:50,rate:'4h以上',ckn:'负荷剂量见临床情景-高氨血症（苯甲酸钠+苯乙酸钠+精氨酸联合）；监测血氯/酸碱'}},
 vinegar:{n:'白醋（灌肠）',sub:'降血氨',tags:'白醋 灌肠 氨',rt:'灌肠',
  ref:'无权威指南口径——本院临床经验用法',
  src:'白醋10ml以上+等量NS（高氨血症，家长自购）',note:'酸性环境促进氨以铵盐排出（辅助手段）',
@@ -930,7 +930,7 @@ mgso4:{n:'硫酸镁',sub:'补镁',tags:'硫酸镁 补镁 低镁',rt:'静滴',
  ref:'UpToDate：元素镁25-50mg/kg/次（=25%MgSO4 0.1-0.2ml/kg，本院一致）',
  src:'0.1-0.3ml/kg，5%GS稀释20倍，走速>1小时，不能和钙同时输；0.2ml/kg（50mg/kg），走20min；1mg/kg*h泵入，抑制尖端扭转室速',note:'低镁血症；重度哮喘辅助；监测血压；TdP一线（无论血镁水平）；负荷可50mg/kg',
  cs:[
-   {l:'补镁',bn:'补镁',k:'mlkg',lo:0.1,hi:0.3,def:0.25,fq:['q12h','qd'],dfq:'q12h',dil:'5%GS稀释20倍',rate:'>1h',ckn:'25%MgSO4 0.2ml/kg=50mg/kg=2mmol/kg元素镁约；与钙不同管；监测膝反射/呼吸/血压'},
+   {l:'补镁',bn:'补镁',k:'mlkg',lo:0.1,hi:0.3,def:0.25,fq:['q12h','qd'],dfq:'q12h',dil:'5%GS稀释',dilRatio:20,rate:'>1h',ckn:'25%MgSO4 0.2ml/kg=50mg/kg=2mmol/kg元素镁约；与钙不同管；监测膝反射/呼吸/血压'},
    {l:'哮喘',bn:'哮喘',k:'mlkg',lo:0.15,hi:0.25,def:0.2,fq:['st'],dfq:'st',dil:'5%GS稀释',rate:'20min',ckn:'中国2025：25-40mg/kg（≤2g/d）；国际50-75——本院0.2ml/kg=50取中上；低血压/面红常见；肾功能不全慎用'},
    {l:'尖端扭转TdP泵',bn:'尖端扭转TdP泵',k:'inf',unit:'mg/kg/h',lo:0.5,hi:2,def:1,rec:[10,50],dil:'5%GS/NS',ckn:'负荷25-50mg/kg缓推（TdP发作时）；监测膝反射与呼吸'},
  ]},
@@ -1006,11 +1006,11 @@ oxcar:{n:'奥卡西平',b:'曲莱',sub:'抗癫痫',tags:'曲莱 奥卡',rt:'口�
 nalmefen:{n:'纳美芬',b:'乐萌',sub:'阿片拮抗',tags:'纳美芬 促醒',rt:'静推',
  ref:'说明书：成人0.5-1mg/次；儿童酌情（本院0.1/0.2mg）',
  src:'0.1/0.2mg。q12。NS:50',note:'纳洛酮替代，解除中枢抑制、昏迷促醒',
- c:{k:'band',by:'a',bands:[{mx:144,lab:'婴幼儿',d:0.1,unit:'mg'},{lab:'儿童',d:0.2,unit:'mg'}],fq:['q12h','st'],dfq:'q12h',dil:'NS'}},
+ c:{dv:'NS 5ml',k:'band',by:'a',bands:[{mx:144,lab:'婴幼儿',d:0.1,unit:'mg'},{lab:'儿童',d:0.2,unit:'mg'}],fq:['q12h','st'],dfq:'q12h',dil:'NS'}},
 calfser:{n:'小牛血清去蛋白（奥德金）',sub:'神经营养',tags:'奥德金 小牛血清',rt:'静滴',
  ref:'说明书：成人0.2-0.8g/d；本院0.2g',
  src:'0.2g。qd。G/NS',note:'脑缺血损害辅助',
- c:{k:'abs',def:0.2,unit:'g',lo:0.2,hi:0.8,fq:['qd'],dfq:'qd',dil:'5%GS或NS'}},
+ c:{dv:'5%GS或NS 20ml',k:'abs',def:0.2,unit:'g',lo:0.2,hi:0.8,fq:['qd'],dfq:'qd',dil:'5%GS或NS'}},
 mannitol:{
  ind:'颅内高压、脑疝抢救、渗透性脱水',
  adverse:'反跳、电解质紊乱、肾损伤（尿闭禁用）',
@@ -1037,7 +1037,7 @@ reptilase:{n:'蛇毒血凝酶',b:'速乐涓',sub:'止血',tags:'血凝酶 速乐
 carbaz:{n:'卡巴克络（卡络磺钠）',sub:'止血',tags:'卡洛 安络血',rt:'静滴',
  ref:'说明书：<5y 20-40mg/次；>5y 60-80mg/次（本院一致）',
  src:'20-40mg(<5岁)，60-80mg(>5岁)。bid-tid。NS',note:'增强毛细血管抵抗力；对大出血/动脉出血效果差',
- c:{k:'band',by:'a',bands:[{mx:60,lab:'<5岁',d:20,unit:'mg'},{lab:'≥5岁',d:60,unit:'mg'}],fq:['bid','tid'],dfq:'bid',dil:'NS'}},
+ c:{dv:'NS 20ml',k:'band',by:'a',bands:[{mx:60,lab:'<5岁',d:20,unit:'mg'},{lab:'≥5岁',d:60,unit:'mg'}],fq:['bid','tid'],dfq:'bid',dil:'NS'}},
 amicap_load:{n:'氨基己酸（首剂）',sub:'抗纤溶',tags:'氨基己酸 止血',rt:'静滴',
  ref:'UpToDate：首剂100-200mg/kg（本院80-120偏保守）',
  src:'首剂80-120mg/kg（10kg:1g；20kg:2.5g；30kg:3g；40kg:4g）qd。无需配液（100ml:4g）',note:'抑制纤溶；消化道/肺出血、ECMO抗纤溶；⚠既往血栓忌用',
@@ -1049,7 +1049,7 @@ amicap_maint:{n:'氨基己酸（维持）',sub:'抗纤溶',tags:'氨基己酸 �
 vitk1:{n:'维生素K1',sub:'促凝',tags:'维K1',rt:'静滴',
  ref:'UpToDate：新生儿1mg、儿童5-10mg（与本院一致）；严重出血可联PCC',
  src:'新生儿1-2mg qd；儿童5-10mg qd-bid。NS:2ml。连用3天',note:'治疗出血（VitK缺乏）；⚠肝衰禁用；静注可致过敏样反应',
- c:{k:'band',by:'a',bands:[{mx:1,lab:'新生儿',d:1,unit:'mg'},{lab:'儿童',d:5,unit:'mg'}],fq:['qd','bid'],dfq:'qd',rate:'缓慢（≥1mg/min）',head:'⚠ 严重肝细胞疾病（肝衰）禁用',ckn:'静推需稀释缓推防类过敏；PT纠正反映疗效'}},
+ c:{dv:'NS 2ml，缓慢（≥1mg/min）',k:'band',by:'a',bands:[{mx:1,lab:'新生儿',d:1,unit:'mg'},{lab:'儿童',d:5,unit:'mg'}],fq:['qd','bid'],dfq:'qd',rate:'缓慢（≥1mg/min）',head:'⚠ 严重肝细胞疾病（肝衰）禁用',ckn:'静推需稀释缓推防类过敏；PT纠正反映疗效'}},
 thromb_pow:{n:'凝血酶冻干粉（局部）',sub:'局部止血',tags:'凝血酶 胃管 出血',rt:'胃管注入',
  ref:'局部用法（严禁静脉）——本院配方',
  src:'2000U（1支）+去甲肾上腺素2mg（1支）+NS 10ml，胃管注入',note:'消化道局部止血；⚠严禁静脉注射（致死性血栓）',
@@ -3138,13 +3138,17 @@ function calcOf(D,li){
     if(lc.dil&&/\d+(\.\d+)?\s*ml/.test(lc.dil)){out.lines.push(lc.dil);return;}
     if(lc.dil&&/无需|即用/.test(lc.dil)){out.lines.push(lc.dil);return;}
     if(mg>0){
-      const dc=lc.conc||lc.dconc||10;
+      let dc=lc.conc||lc.dconc||10;
+      if(mg>2000)dc=lc.conc||lc.dconc||200;   /* μg类药物（值传的是μg），默认稀释到200μg/ml */
       let V=niceVol(mg/dc);
       if(push)V=Math.max(2,Math.min(V,20));else V=Math.max(5,Math.min(V,100));
       out.lines.push(`${lc.dil||'NS'} ${V}ml`);
       note(`稀释后约 ${trimN(mg/V,1)}mg/ml（按≤${dc}mg/ml估算，溶媒与体积按科室常规核对）`);
     }else if(lc.dil){
-      out.lines.push(lc.dil);
+      /* μg/g/U类药：默认小容量稀释 */
+      const V=push?5:20;
+      out.lines.push(`${lc.dil} ${V}ml`);
+      note(`溶媒体积按科室常规核对（默认${V}ml）`);
     }
   }
   if(lc.k==='band'){
@@ -3174,7 +3178,7 @@ function calcOf(D,li){
     const dq=isUg?fmtUg(q):(isU?trimN(q,2)+'U':(isG?trimN(q/1000,2)+'g':fmtMg(q)));
     L1(jn([name,dq,'（'+f(dose)+un+'）',fq,rt]));
     if(capd)warn('已按单次上限截断：'+(isUg?fmtUg(lc.capU):(isU?trimN(lc.capU,2)+'U':fmtMg(lc.capU))));
-    prep(isUg||isG||isU?0:q, rt.indexOf('推')>=0);
+    prep(isUg?q:(isG?q/1000:q), rt.indexOf('推')>=0);
     if(lc.capD){const per=fqN(fq); if(per&&dose*per>lc.capD)warn(fq+' 日剂量 '+f(dose*per)+'mg/kg/d 超上限 '+lc.capD+'mg/kg/d');}
     if(lc.rate)note('输注：'+lc.rate);
     if(lc.ckn)note(lc.ckn);
@@ -3198,7 +3202,13 @@ function calcOf(D,li){
       L1(jn([name,f(ml)+'ml','（'+f(dose)+'ml/kg）',fq,rt]));
       if(lc.capU&&ml>lc.capU){warn('已达单次上限'+f(lc.capU)+'ml');}
     }
-    if(lc.dil)out.lines.push(lc.dil);
+    if(lc.dil&&lc.dilRatio&&ml>0){
+      const total=ml*lc.dilRatio;
+      const diluent=total-ml;
+      out.lines.push(`${lc.dil} ${f(diluent)}ml（稀释${lc.dilRatio}倍，终体积${f(total)}ml）`);
+    }else if(lc.dil){
+      out.lines.push(lc.dil);
+    }
     if(lc.rate)note('输注：'+lc.rate);
     if(lc.ckn)note(lc.ckn);
     out.qty=ml; return out;
