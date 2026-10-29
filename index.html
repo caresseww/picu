@@ -3859,10 +3859,7 @@ function gotoDrugCard(id){
   go(1);   /* 复位后直达所在子类 */
   const sub=((DRUGS[id].sub||'')+'').trim()||'其他';
   p1OpenSub(gi,sub);
-  const c=$('card_'+id);
-  if(c){c.classList.add('open'); c.querySelector('.cbody').style.display='block';
-    const tri=c.querySelector('.tri'); if(tri)tri.textContent='▾';
-    setTimeout(()=>c.scrollIntoView({block:'start'}),60);}
+  p1FocusCard(id);   /* 聚焦到该药卡（同级隐藏），急救直达/情景链接同口径 */
 }
 /* ================= 分组/搜索 ================= */
 function renderGroups(){
@@ -3893,7 +3890,7 @@ function groupBody(g){
   return html;
 }
 /* ===== 层层递进 drill-down 状态 ===== */
-const DRILL={p1:{g:-1,sub:null,all:false}, p3:{g:null}, p4:{g:null}, p5:{g:null}};
+const DRILL={p1:{g:-1,sub:null,all:false,focused:null}, p3:{g:null}, p4:{g:null}, p5:{g:null}};
 function p1Buckets(gi){
   const buckets=[], bmap={};
   GRPS[gi].drugs.forEach(id=>{
@@ -3905,7 +3902,7 @@ function p1Buckets(gi){
   return {buckets:buckets, bmap:bmap};
 }
 function p1Back(){
-  DRILL.p1={g:-1, sub:null, all:false};
+  DRILL.p1={g:-1, sub:null, all:false, focused:null};
   GRPS.forEach((_,i)=>{
     const el=$('grp_'+i); if(!el)return;
     el.style.display=''; el.classList.remove('open');
@@ -3914,7 +3911,7 @@ function p1Back(){
   });
 }
 function p1Open(gi){   /* L1：组内子类 tiles */
-  DRILL.p1={g:gi, sub:null, all:false};
+  DRILL.p1={g:gi, sub:null, all:false, focused:null};
   GRPS.forEach((_,i)=>{
     const el=$('grp_'+i); if(!el)return;
     if(i!==gi){el.style.display='none'; el.classList.remove('open');
@@ -3939,7 +3936,7 @@ function p1SubTiles(gi){
   return h+'</div>';
 }
 function p1OpenSub(gi,sub){   /* L2：子类药卡；sub空=全部 */
-  DRILL.p1={g:gi, sub:sub||null, all:!sub};
+  DRILL.p1={g:gi, sub:sub||null, all:!sub, focused:null};
   const g=$('grp_'+gi), b=g.querySelector('.gbody');
   b.innerHTML='<div class="crumb"><span class="cb-lnk" data-act="p1subback">‹ '+esc(GRPS[gi].t)+'</span><span class="cb-sep">›</span><span class="cb-cur">'+(sub?esc(sub):'全部药物')+'</span></div>'+
     (sub?p1BucketCards(gi,sub):groupBody(GRPS[gi]));
@@ -3952,8 +3949,25 @@ function p1BucketCards(gi,sub){
   const B=p1Buckets(gi);
   return (B.bmap[sub]||[]).map(id=>cardHtml(id)).join('');
 }
+function p1FocusCard(id){   /* L3：点开药卡→同子类其他药卡隐藏 */
+  const gi=DRILL.p1.g; if(gi<0||!DRUGS[id])return;
+  const g=GRPS[gi], bb=$('grp_'+gi).querySelector('.gbody');
+  const sub=DRILL.p1.sub, B=p1Buckets(gi);
+  const sibs=(sub?B.bmap[sub]:g.drugs.filter(x=>DRUGS[x])).filter(x=>x!==id);
+  const listTxt=sub?esc(sub):'全部药物';
+  bb.innerHTML='<div class="crumb"><span class="cb-lnk" data-act="p1listback">‹ '+listTxt+'</span><span class="cb-sep">›</span><span class="cb-cur">'+esc(DRUGS[id].n)+'</span></div>'+
+    cardHtml(id)+
+    (sibs.length&&sibs.length<=10?'<div class="chiprow" style="margin:2px 0 12px;align-items:center;"><span style="font-size:11.5px;color:var(--ink2);font-weight:700;">🔁 同级切换：</span>'+sibs.map(x=>'<button class="chip" data-act="p1card" data-d="'+x+'" type="button">'+DRUGS[x].n+'</button>').join('')+'</div>':'');
+  DRILL.p1.focused=id;
+  const c=$('card_'+id);
+  if(c){c.classList.add('open'); c.querySelector('.cbody').style.display='block';
+    const tri=c.querySelector('.tri'); if(tri)tri.textContent='▾';}
+  updCard(id);
+  window.scrollTo(0,0);
+}
+let p1SearchQ='';   /* 搜索态下cap走手风琴，不触发聚焦 */
 function applySearch(qs){
-  const q=(qs||'').trim();
+  const q=(qs||'').trim(); p1SearchQ=q;
   if(!q){
     if(DRILL.p1.g>=0){p1OpenSub(DRILL.p1.g, DRILL.p1.all?'':(DRILL.p1.sub||''));}
     else p1Back();
@@ -4249,8 +4263,19 @@ document.addEventListener('click',e=>{
   const a=t.dataset.act;
   if(a==='go')go(parseInt(t.dataset.page,10));
   else if(a==='pmore'){$('pmeta').classList.toggle('show');}
-  else if(a==='cap'){const c=$('card_'+t.dataset.card); c.classList.toggle('open');
-    const tri=c.querySelector('.tri'); if(tri)tri.textContent=c.classList.contains('open')?'▾':'▸';}
+  else if(a==='cap'){
+    const cid=t.dataset.card, c=$('card_'+cid);
+    if(p1SearchQ===''&&DRILL.p1.g>=0&&DRILL.p1.focused===cid){
+      p1OpenSub(DRILL.p1.g, DRILL.p1.all?'':(DRILL.p1.sub||''));   /* 聚焦态点卡头=返回药卡列表 */
+    }else if(p1SearchQ===''&&DRILL.p1.g>=0&&(DRILL.p1.sub||DRILL.p1.all)&&c&&!c.classList.contains('open')){
+      p1FocusCard(cid);   /* drill视图内：点药卡→聚焦，同级隐藏 */
+    }else{
+      c.classList.toggle('open');
+      const tri=c.querySelector('.tri'); if(tri)tri.textContent=c.classList.contains('open')?'▾':'▸';
+    }
+  }
+  else if(a==='p1card')p1FocusCard(t.dataset.d);
+  else if(a==='p1listback')p1OpenSub(DRILL.p1.g, DRILL.p1.all?'':(DRILL.p1.sub||''));
   else if(a==='gcap'){
     const gi=+t.dataset.g;
     if(DRILL.p1.g===gi&&(DRILL.p1.sub||DRILL.p1.all))p1Open(gi);   /* L2→L1 */
