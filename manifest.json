@@ -1,0 +1,22 @@
+{
+ "name": "儿童ICU药物计算器 PICU-AI",
+ "short_name": "PICU-AI",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#f6f6f1",
+ "theme_color": "#0a1e3c",
+ "description": "儿科ICU药物/临床情景/评分参考/指南全文",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  }
+ ]
+}
